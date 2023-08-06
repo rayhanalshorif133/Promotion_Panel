@@ -31,39 +31,58 @@
 
                         <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                             <div class="text-center mb-3 font-bold py-5">
-                                <h4 class="text-xl font-bold text-blueGray-400">Sign in with redentials</h4>
+                                <h4 class="text-2xl font-bold text-blueGray-400 uppercase">
+                                    Welcome to <br /> {{ config('app.name', 'Laravel') }}
+                                </h4>
                             </div>
-                            <form>
-                                <div class="relative w-full mb-3"><label
-                                        class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                        for="grid-password">Email</label><input type="email"
+                            <div class="text-gray-400 text-center mb-3 font-bold"><small>Sign in with
+                                    credentials</small></div>
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
+
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        for="grid-password">Email</label>
+                                    <input type="email" id="email" 
                                         class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                        placeholder="Email"></div>
-                                <div class="relative w-full mb-3"><label
-                                        class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                        for="grid-password">Password</label><input type="password"
+                                        placeholder="Email">
+                                </div>
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        for="grid-password">Password</label>
+                                    <input type="password" id="password"
                                         class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                        placeholder="Password"></div>
+                                        placeholder="Password">
+                                </div>
                                 <div>
-                                    <label class="inline-flex items-center cursor-pointer"><input id="customCheckLogin"
-                                            type="checkbox"
-                                            class="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"><span
-                                            class="ml-2 text-sm font-semibold text-blueGray-600">Remember
-                                            me</span>
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" name="remember" id="remember"
+                                            {{ old('remember') ? 'checked' : '' }}
+                                            class="cursor-pointer form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150">
+                                        <span class="ml-2 text-sm font-semibold text-blueGray-600">Remember me</span>
                                     </label>
                                 </div>
-                                <div class="text-center mt-6 bg-[#1E293B]"><button
+                                <div class="text-center mt-6 bg-[#1E293B]">
+                                    <button
                                         class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                                        type="button">Sign In</button></div>
+                                        type="submit">
+                                        Sign In
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
                     <div class="flex flex-wrap mt-6 relative">
-                        <div class="w-1/2"><a href="#pablo" class="text-blueGray-200"><small>Forgot
-                                    password?</small></a>
+                        <div class="w-1/2">
+                            @if (Route::has('password.request'))
+                                <a href="{{ route('password.request') }}" class="text-gray-200"><small>Forgot
+                                        password?</small></a>
+                            @endif
                         </div>
-                        <div class="w-1/2 text-right"><a href="#pablo" class="text-blueGray-200"><small>Create new
-                                    account</small></a></div>
+                        <div class="w-1/2 text-right">
+                            <a href="{{ route('register') }}" class="text-gray-200"><small>Create new
+                                    account</small></a>
+                        </div>
                     </div>
                 </div>
             </div>
