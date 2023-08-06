@@ -9,7 +9,7 @@ class HomeController extends Controller
     public function welcome()
     {
         if(Auth::check()){
-            return redirect()->route('home');
+            return redirect()->route('dashboard');
         }else{
             return redirect()->route('login');
         }
@@ -18,7 +18,7 @@ class HomeController extends Controller
     public function index()
     {
         if(Auth::check()){
-            return view('home');
+            return view('dashboard');
         }else{
             return redirect()->route('login');
         }
