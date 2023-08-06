@@ -3,18 +3,17 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
-class DatabaseSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
+     
     public function __construct()
     {
         $this->run();
     }
-
-    
     public function run()
     {
-        new RoleSeeder();
-        new UserSeeder();
+        Role::create(['name' => 'admin']);
     }
 }
