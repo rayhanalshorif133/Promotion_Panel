@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         new RoleSeeder();
         new UserSeeder();
+        new OperatorSeeder();
     }
 }

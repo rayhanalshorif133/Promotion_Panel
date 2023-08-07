@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Operator extends Model
 {
     use HasFactory;
+
+    protected $table = 'operators';
+
+    protected $fillable = [
+        'name',
+        'status',
+    ];
 }

@@ -24,7 +24,7 @@ class CreatePersonalAccessTokensTable extends Migration
             $table->timestamps();
         });
 
-        new DatabaseSeeder();
+        
     }
 
     /**

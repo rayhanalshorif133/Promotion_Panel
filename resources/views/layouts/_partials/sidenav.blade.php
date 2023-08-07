@@ -68,32 +68,10 @@
                 <a href="{{ route('country.index') }}" class="@if ($routeName == 'country.index') shadow-soft-xl rounded-lg bg-white @endif py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors">
                     <div
                         class="@if ($routeName == 'country.index') bg-gradient-to-tl from-purple-700 to-pink-500 @endif shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center fill-current stroke-0 text-center xl:p-2.5">
-                        <i class="text-[12px] @if($routeName == 'country.index') text-white @else text-slate-800 @endif fa-solid fa-box-open"></i>
+                        <i class="text-[12px] @if($routeName == 'country.index') text-white @else text-slate-800 @endif fa-solid fa-earth-europe"></i>
                     </div>
                     <span class="@if ($routeName == 'country.index') text-slate-800 font-semibold @endif ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
                        Country
-                    </span>
-                </a>
-            </li>
-            <li class="mt-0.5 w-full">
-                <a href="{{ route('operator.index') }}" class="@if ($routeName == 'operator.index') shadow-soft-xl rounded-lg bg-white @endif py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors">
-                    <div
-                        class="@if ($routeName == 'operator.index') bg-gradient-to-tl from-purple-700 to-pink-500 @endif shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center fill-current stroke-0 text-center xl:p-2.5">
-                        <i class="text-[12px] @if($routeName == 'operator.index') text-white @else text-slate-800 @endif fa-solid fa-box-open"></i>
-                    </div>
-                    <span class="@if ($routeName == 'operator.index') text-slate-800 font-semibold @endif ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
-                       Operator
-                    </span>
-                </a>
-            </li>
-            <li class="mt-0.5 w-full">
-                <a href="{{ route('operator.index') }}" class="@if ($routeName == 'operator.index') shadow-soft-xl rounded-lg bg-white @endif py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors">
-                    <div
-                        class="@if ($routeName == 'operator.index') bg-gradient-to-tl from-purple-700 to-pink-500 @endif shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center fill-current stroke-0 text-center xl:p-2.5">
-                        <i class="text-[12px] @if($routeName == 'operator.index') text-white @else text-slate-800 @endif fa-solid fa-box-open"></i>
-                    </div>
-                    <span class="@if ($routeName == 'operator.index') text-slate-800 font-semibold @endif ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
-                       Operator
                     </span>
                 </a>
             </li>
