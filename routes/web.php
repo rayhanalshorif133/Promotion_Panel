@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\HomeController;
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +21,16 @@ Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
 
 Auth::routes();
 
-Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+Route::middleware('auth')
+    ->group(function () {
+        Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::name('campaigns.')
+        ->prefix('campaigns')
+        ->group(function() {
+            Route::get('/', [CampaignController::class, 'index'])->name('index');
+            Route::get('/report', [CampaignController::class, 'reportIndex'])->name('report.index');
+    });
+});
+
+
+
