@@ -4,6 +4,7 @@ use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -78,6 +79,10 @@ Route::middleware('auth')
             ->prefix('publisher')
             ->group(function () {
                 Route::get('/', [PublisherController::class, 'index'])->name('index');
+                Route::get('/fetch/{id}', [PublisherController::class, 'fetchById'])->name('fetch-by-id');
+                Route::post('/store', [PublisherController::class, 'store'])->name('store');
+                Route::post('/update', [PublisherController::class, 'update'])->name('update');
+                Route::delete('/delete/{id}', [PublisherController::class, 'destroy'])->name('destroy');
             });
 
         // campaigns

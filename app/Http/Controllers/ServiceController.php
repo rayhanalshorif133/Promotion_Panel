@@ -97,8 +97,8 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         try {
-            $country = Service::find($id);
-            $country->delete();
+            $service = Service::find($id);
+            $service->delete();
             return $this->respondWithSuccess('Successfully deleted this service');
         } catch (\Throwable $th) {
             return $this->respondWithError('Failed to delete this service');
