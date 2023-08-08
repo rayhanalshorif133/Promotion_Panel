@@ -7,8 +7,7 @@ $(function () {
                 const data = res.data.data;
                 $("#publisher_id").val(data.id);
                 $("#updateName").val(data.name);
-                $("#updateType").val(data.type);
-                $("#update_traffic_redirect_url").val(data.traffic_redirect_url);
+                $("#updateShortName").val(data.short_name);
                 $("#updateStatus").val(data.status);
             });
     });

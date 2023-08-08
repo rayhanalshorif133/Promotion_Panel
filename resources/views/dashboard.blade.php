@@ -8,16 +8,18 @@
           <div class="row">
             <div class="col-8">
               <div class="numbers">
-                <p class="mb-0 text-sm text-capitalize font-weight-bold">Today's Money</p>
+                <p class="mb-0 text-sm text-capitalize font-weight-bold">
+                  Total Operators
+                </p>
                 <h5 class="mb-0 font-weight-bolder">
-                  $53,000
-                  <span class="text-sm text-success font-weight-bolder">+55%</span>
+                  {{$operators}}
                 </h5>
               </div>
             </div>
             <div class="col-4 text-end">
               <div class="text-center shadow icon icon-shape bg-gradient-primary border-radius-md">
-                <i class="text-lg ni ni-money-coins opacity-10" aria-hidden="true"></i>
+                <i class="text-lg fa-solid fa-handshake opacity-10" aria-hidden="true"></i>
+                
               </div>
             </div>
           </div>
@@ -30,16 +32,15 @@
           <div class="row">
             <div class="col-8">
               <div class="numbers">
-                <p class="mb-0 text-sm text-capitalize font-weight-bold">Today's Users</p>
+                <p class="mb-0 text-sm text-capitalize font-weight-bold">Total Services</p>
                 <h5 class="mb-0 font-weight-bolder">
-                  2,300
-                  <span class="text-sm text-success font-weight-bolder">+3%</span>
+                  {{$services}}
                 </h5>
               </div>
             </div>
             <div class="col-4 text-end">
               <div class="text-center shadow icon icon-shape bg-gradient-primary border-radius-md">
-                <i class="text-lg ni ni-world opacity-10" aria-hidden="true"></i>
+                <i class="text-lg fa-solid fa-server opacity-10" aria-hidden="true"></i>
               </div>
             </div>
           </div>
@@ -52,16 +53,17 @@
           <div class="row">
             <div class="col-8">
               <div class="numbers">
-                <p class="mb-0 text-sm text-capitalize font-weight-bold">New Clients</p>
+                <p class="mb-0 text-sm text-capitalize font-weight-bold">
+                  Total Publishers
+                </p>
                 <h5 class="mb-0 font-weight-bolder">
-                  +3,462
-                  <span class="text-sm text-danger font-weight-bolder">-2%</span>
+                  {{$publishers}}
                 </h5>
               </div>
             </div>
             <div class="col-4 text-end">
               <div class="text-center shadow icon icon-shape bg-gradient-primary border-radius-md">
-                <i class="text-lg ni ni-paper-diploma opacity-10" aria-hidden="true"></i>
+                <i class="text-lg fa-solid fa-user-check opacity-10" aria-hidden="true"></i>
               </div>
             </div>
           </div>
@@ -74,10 +76,11 @@
           <div class="row">
             <div class="col-8">
               <div class="numbers">
-                <p class="mb-0 text-sm text-capitalize font-weight-bold">Sales</p>
+                <p class="mb-0 text-sm text-capitalize font-weight-bold">
+                  Total Campaigns
+                </p>
                 <h5 class="mb-0 font-weight-bolder">
-                  $103,430
-                  <span class="text-sm text-success font-weight-bolder">+5%</span>
+                  {{$campaigns}}
                 </h5>
               </div>
             </div>

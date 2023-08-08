@@ -28,7 +28,6 @@
                 <li class="text-sm breadcrumb-item"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
                 <li class="text-sm breadcrumb-item text-dark active" aria-current="page">Default</li>
             </ol>
-            <h6 class="mb-0 font-weight-bolder">Default</h6>
         </nav>
         <div class="mt-0 mt-sm-0 me-md-0 me-sm-4" id="navbar">
             <ul class="navbar-nav justify-content-end">

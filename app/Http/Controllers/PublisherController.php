@@ -10,7 +10,7 @@ class PublisherController extends Controller
 {
     public function index()
     {
-        $publishers = Publisher::select('id','name', 'type', 'traffic_redirect_url', 'status')
+        $publishers = Publisher::select('id','name','short_name','post_back_url','status')
             ->orderBy('id', 'desc')
             ->get();
         return view('publisher.index', compact('publishers'));
@@ -27,34 +27,28 @@ class PublisherController extends Controller
     {
         // validate
         $request->validate([
-            'name' => 'required|unique:services',
-            'type' => 'required',
-            'traffic_redirect_url' => 'required',
+            'name' => 'required',
+            'short_name' => 'required|unique:publishers',
             'status' => 'required'
         ]);
 
-        if (!filter_var($request->traffic_redirect_url, FILTER_VALIDATE_URL)) {
-            Session::flash('message', 'Invalid URL');
-            Session::flash('type', 'error');
-            return redirect()->route('service.index');
-        }
 
         try {
             // store
-            $service = new Publisher();
-            $service->name = $request->name;
-            $service->type = $request->type;
-            $service->traffic_redirect_url = $request->traffic_redirect_url;
-            $service->status = $request->status;
-            $service->save();
+            $publisher = new Publisher();
+            $publisher->name = $request->name;
+            $shortName = str_replace(' ', '', $request->short_name);
+            $publisher->short_name = $shortName;
+            $publisher->status = $request->status;
+            $publisher->save();
 
             // redirect
-            Session::flash('message', 'Successfully created a new service');
-            return redirect()->route('service.index');
+            Session::flash('message', 'Successfully created a new publisher');
+            return redirect()->route('publisher.index');
         } catch (\Throwable $th) {
-            Session::flash('message', 'Failed to create a new service');
+            Session::flash('message', 'Failed to create a new publisher');
             Session::flash('type', 'error');
-            return redirect()->route('service.index');
+            return redirect()->route('publisher.index');
         }
     }
 
@@ -62,35 +56,26 @@ class PublisherController extends Controller
     {
         // validate
         $request->validate([
-            'name' => 'required|unique:services,name,' . $request->id,
-            'type' => 'required',
-            'traffic_redirect_url' => 'required',
+            'name' => 'required',
+            'short_name' => 'required|unique:publishers,short_name,' . $request->id,
             'status' => 'required'
         ]);
 
 
-        if (!filter_var($request->traffic_redirect_url, FILTER_VALIDATE_URL)) {
-            Session::flash('message', 'Invalid URL');
-            Session::flash('type', 'error');
-            return redirect()->route('service.index');
-        }
-
         try {
             // store
-            $service = Publisher::find($request->id);
-            $service->name = $request->name;
-            $service->type = $request->type;
-            $service->traffic_redirect_url = $request->traffic_redirect_url;
-            $service->status = $request->status;
-            $service->save();
-
-            // redirect
-            Session::flash('message', 'Successfully update this service');
-            return redirect()->route('service.index');
+            $publisher = Publisher::find($request->id);
+            $publisher->name = $request->name;
+            $shortName = str_replace(' ', '', $request->short_name);
+            $publisher->short_name = $shortName;
+            $publisher->status = $request->status;
+            $publisher->save();
+            Session::flash('message', 'Successfully update this publisher');
+            return redirect()->route('publisher.index');
         } catch (\Throwable $th) {
-            Session::flash('message', 'Failed to update this service');
+            Session::flash('message', 'Failed to update this publisher');
             Session::flash('type', 'error');
-            return redirect()->route('service.index');
+            return redirect()->route('publisher.index');
         }
     }
 
