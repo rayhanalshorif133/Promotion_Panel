@@ -1,5 +1,5 @@
 @if (Session::has('message'))
-<p class="text-white alert alert-info">{{ Session::get('message') }}</p>
+<p class="text-white alert @if (Session::has('type') && Session::get('type') == 'error') alert-danger @else alert-info @endif">{{ Session::get('message') }}</p>
 @endif
 @if (count($errors) > 0)
 <div class="text-white alert alert-danger alert-info">

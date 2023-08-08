@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         new UserSeeder();
         new OperatorSeeder();
         new CountrySeeder();
+        new ServiceSeeder();
     }
 }

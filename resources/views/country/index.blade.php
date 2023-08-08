@@ -7,7 +7,7 @@
 
     <div class="w-8/12 mx-auto card">
         <div class="flex justify-between px-4 my-4">
-            <h6>Operator's List</h6>
+            <h6>Country's List</h6>
             <button class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#createCountry">
                 Add Country
             </button>
