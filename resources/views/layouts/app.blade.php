@@ -54,6 +54,7 @@
         @include('layouts._partials.nav_bar')
         <!-- end Navbar -->
         <div class="py-4 container-fluid">
+            @include('layouts._partials.alert')
             @yield('content')
         </div>
         <!-- end cards -->
@@ -105,7 +106,7 @@
 <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
-<script src="{{ asset('assets/js/customChart.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/customChart.js') }}"></script> --}}
 
 <script>
     var win = navigator.platform.indexOf('Win') > -1;
@@ -120,6 +121,16 @@
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script src="{{ asset('assets/js/soft-ui-dashboard.min.js?v=1.0.7') }}"></script>
+
+{{-- toastr js --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+<script>
+    $(document).ready(function() {
+        toastr.options.timeOut = 10000;
+        toastr.error('Ok error');
+    });
+</script>
 
 @stack('scripts')
 

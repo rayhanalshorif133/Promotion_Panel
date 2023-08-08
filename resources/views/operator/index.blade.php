@@ -53,7 +53,7 @@
             </table>
         </div>
     </div>
-    @include('operator.create')
+    @include('operator.createAndUpdate')
 @endsection
 
 @push('scripts')

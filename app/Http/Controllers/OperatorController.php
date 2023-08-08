@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Operator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class OperatorController extends Controller
 {
@@ -13,7 +14,15 @@ class OperatorController extends Controller
         return view('operator.index', compact('operators'));
     }
 
-    public function store(Request $request){
+    public function fetchById($id)
+    {
+        $operator = Operator::find($id);
+        if ($operator) return $this->respondWithSuccess('Successfully fetched operator data', $operator);
+        else  return $this->respondWithError('Operator not found');
+    }
+
+    public function store(Request $request)
+    {
         // validate
         $request->validate([
             'name' => 'required|unique:operators',
@@ -22,18 +31,24 @@ class OperatorController extends Controller
 
         // store
         $operator = new Operator();
+
+        // $request->name remove space
+        
+
         $operator->name = $request->name;
         $operator->status = $request->status;
         $operator->save();
 
         // redirect
+        Session::flash('message', 'Successfully created a new operator');
         return redirect()->route('operator.index');
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         // validate
         $request->validate([
-            'name' => 'required|unique:operators,name,'.$request->id,
+            'name' => 'required|unique:operators,name,' . $request->id,
             'status' => 'required'
         ]);
 
@@ -44,10 +59,12 @@ class OperatorController extends Controller
         $operator->save();
 
         // redirect
+        Session::flash('message', 'Successfully updated this operator');
         return redirect()->route('operator.index');
     }
 
-    public function destroy(Request $request){
+    public function destroy(Request $request)
+    {
         // find
         $operator = Operator::find($request->id);
 
@@ -55,6 +72,7 @@ class OperatorController extends Controller
         $operator->delete();
 
         // redirect
+        Session::flash('message', 'Successfully deleted this operator');
         return redirect()->route('operator.index');
     }
 }
