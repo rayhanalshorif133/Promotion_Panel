@@ -1,16 +1,16 @@
 $(function () {
-    $(".operatorEditBtn").click(function () {
+    $(".countryEditBtn").click(function () {
         const id = $(this).parent().attr('data-id');
-        axios.get(`operator/fetch/${id}`)
+        axios.get(`country/fetch/${id}`)
             .then(function (res) {
                 const data = res.data.data;
-                $("#operator_id").val(data.id);
+                $("#country_id").val(data.id);
                 $("#updateName").val(data.name);
                 $("#updateStatus").val(data.status);
             });
     });
 
-    $(".operatorDeleteBtn").click(function () {
+    $(".countryDeleteBtn").click(function () {
         const id = $(this).parent().attr('data-id');
         Swal.fire({
             title: 'Are you sure?',
@@ -22,7 +22,7 @@ $(function () {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`operator/delete/${id}`)
+                axios.delete(`country/delete/${id}`)
                     .then(function (res) {
                         Swal.fire(
                             'Deleted!',

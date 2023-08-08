@@ -32,6 +32,14 @@
             <span class="nav-link-text ms-1">Operator</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link  @if ($currentRoute == 'country.index') active @endif" href="{{route('country.index')}}">
+            <div class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
+              <i class="@if ($currentRoute == 'country.index') text-white @else text-dark @endif fa-solid fa-earth-americas fa-xl"></i>
+            </div>
+            <span class="nav-link-text ms-1">Country</span>
+          </a>
+        </li>
       </ul>
     <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>  
     <div class="mx-3 sidenav-footer ">

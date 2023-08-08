@@ -1,23 +1,23 @@
 {{-- Create Modal --}}
-<div class="modal fade" id="createOperator" tabindex="-1" role="dialog" aria-labelledby="createOperatorLabel"
+<div class="modal fade" id="createCountry" tabindex="-1" role="dialog" aria-labelledby="createCountryLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createOperatorLabel">
-                    Create New Operator
+                <h5 class="modal-title" id="createCountryLabel">
+                    Create New Country
                 </h5>
                 <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('operator.store') }}" method="POST">
+            <form action="{{ route('country.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" name="name"
-                            placeholder="Operator name">
+                            placeholder="Country name">
                         <label for="name" class="required text-danger">Space not allowed </label>
                     </div>
                     <div class="form-group">
@@ -38,26 +38,26 @@
 </div>
 
 {{-- update Modal --}}
-<div class="modal fade" id="updateOperator" tabindex="-1" role="dialog" aria-labelledby="updateOperatorLabel"
+<div class="modal fade" id="updateCountry" tabindex="-1" role="dialog" aria-labelledby="updateCountryLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="updateOperatorLabel">
-                    Update Operator
+                <h5 class="modal-title" id="updateCountryLabel">
+                    Update Country
                 </h5>
                 <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('operator.update') }}" method="POST">
+            <form action="{{ route('country.update') }}" method="POST">
                 @csrf
                 <div class="modal-body">
-                    <input type="hidden" name="id" id="operator_id">
+                    <input type="hidden" name="id" id="country_id">
                     <div class="form-group">
                         <label for="updateName" class="required">Name</label>
                         <input type="text" class="form-control" id="updateName" name="name"
-                            placeholder="Operator name">
+                            placeholder="Country name">
                         <label for="updateName" class="required text-danger">Space not allowed </label>
                     </div>
                     <div class="form-group">

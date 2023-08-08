@@ -36,6 +36,7 @@ Route::middleware('auth')
             Route::get('/fetch/{id}', [OperatorController::class, 'fetchById'])->name('fetch-by-id');
             Route::post('/store', [OperatorController::class, 'store'])->name('store');
             Route::post('/update', [OperatorController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [OperatorController::class, 'destroy'])->name('destroy');
     });
 
     // country
@@ -43,6 +44,10 @@ Route::middleware('auth')
         ->prefix('country')
         ->group(function() {
             Route::get('/', [CountryController::class, 'index'])->name('index');
+            Route::get('/fetch/{id}', [CountryController::class, 'fetchById'])->name('fetch-by-id');
+            Route::post('/store', [CountryController::class, 'store'])->name('store');
+            Route::post('/update', [CountryController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [CountryController::class, 'destroy'])->name('destroy');
     });
 
     // service

@@ -32,10 +32,8 @@ class OperatorController extends Controller
         // store
         $operator = new Operator();
 
-        // $request->name remove space
-        
-
-        $operator->name = $request->name;
+        $name = str_replace(' ', '', $request->name);
+        $operator->name = $name;
         $operator->status = $request->status;
         $operator->save();
 
@@ -63,16 +61,14 @@ class OperatorController extends Controller
         return redirect()->route('operator.index');
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        // find
-        $operator = Operator::find($request->id);
-
-        // delete
-        $operator->delete();
-
-        // redirect
-        Session::flash('message', 'Successfully deleted this operator');
-        return redirect()->route('operator.index');
+        try {
+            $operator = Operator::find($id);
+            $operator->delete();
+            return $this->respondWithSuccess('Successfully deleted this operator');
+        } catch (\Throwable $th) {
+            return $this->respondWithError('Failed to delete this operator');
+        }
     }
 }
