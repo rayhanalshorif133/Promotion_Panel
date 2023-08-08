@@ -47,7 +47,7 @@
                             </td>
                             <td class="text-sm text-center align-middle">
                                 @if ($service->type == 'daily')
-                                    <span class="badge badge-sm bg-gradient-success">
+                                    <span class="badge badge-sm bg-gradient-warning">
                                         {{ $service->type }}
                                     </span>
                                 @else

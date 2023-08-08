@@ -10,7 +10,7 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        $services = Service::select('name', 'type', 'traffic_redirect_url', 'status')
+        $services = Service::select('id','name', 'type', 'traffic_redirect_url', 'status')
             ->orderBy('id', 'desc')
             ->get();
         return view('service.index', compact('services'));
@@ -42,9 +42,7 @@ class ServiceController extends Controller
         try {
             // store
             $service = new Service();
-
-            $name = str_replace(' ', '', $request->name);
-            $service->name = $name;
+            $service->name = $request->name;
             $service->type = $request->type;
             $service->traffic_redirect_url = $request->traffic_redirect_url;
             $service->status = $request->status;
@@ -80,9 +78,7 @@ class ServiceController extends Controller
         try {
             // store
             $service = Service::find($request->id);
-
-            $name = str_replace(' ', '', $request->name);
-            $service->name = $name;
+            $service->name = $request->name;
             $service->type = $request->type;
             $service->traffic_redirect_url = $request->traffic_redirect_url;
             $service->status = $request->status;

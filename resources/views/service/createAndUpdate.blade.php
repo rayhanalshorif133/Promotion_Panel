@@ -69,7 +69,7 @@
                     <div class="form-group">
                         <input type="hidden" name="id" id="service_id">
                         <label for="updateName" class="required">Name</label>
-                        <input type="text" class="form-control" name="updateName" name="name"
+                        <input type="text" class="form-control" id="updateName" name="name"
                             placeholder="service name">
                         <label for="name" class="required text-danger">Space not allowed </label>
                     </div>
