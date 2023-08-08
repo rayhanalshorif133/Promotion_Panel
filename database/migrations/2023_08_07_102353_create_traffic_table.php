@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCampaignDetailsTable extends Migration
+class CreateTrafficTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateCampaignDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('campaign_details', function (Blueprint $table) {
+        Schema::create('traffic', function (Blueprint $table) {
             $table->id();
             $table->foreignId('campaign_id')->constrained('campaigns')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('operator_id')->constrained('operators')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('service_id')->constrained('services')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('ratio');
-            $table->string('url')->nullable();
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->foreignId('operator_id')->constrained('operators')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('clicked_id')->nullable();
+            $table->string('others')->nullable();
+            $table->dateTime('received_at');
+            $table->enum('callback_received_status', ['succeed', 'failed'])->default('failed');
+            $table->enum('callback_sent_status', ['sent', 'unsent'])->default('unsent');
             $table->timestamps();
         });
     }
@@ -32,6 +34,6 @@ class CreateCampaignDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('campaign_details');
+        Schema::dropIfExists('traffic');
     }
 }

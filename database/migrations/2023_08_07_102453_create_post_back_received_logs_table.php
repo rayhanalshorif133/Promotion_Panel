@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,8 @@ class CreatePostBackReceivedLogsTable extends Migration
             $table->id();
             $table->timestamps();
         });
+
+        new DatabaseSeeder();
     }
 
     /**
