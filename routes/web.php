@@ -86,10 +86,11 @@ Route::middleware('auth')
             });
 
         // campaigns
-        Route::name('campaigns.')
-            ->prefix('campaigns')
+        Route::name('campaign.')
+            ->prefix('campaign')
             ->group(function () {
                 Route::get('/', [CampaignController::class, 'index'])->name('index');
+                Route::get('/create', [CampaignController::class, 'create'])->name('create');
                 Route::get('/report', [CampaignController::class, 'reportIndex'])->name('report.index');
             });
 

@@ -5,7 +5,7 @@
 <aside class="my-3 border-0 sidenav navbar navbar-vertical navbar-expand-xs border-radius-xl fixed-start ms-3 " id="sidenav-main">
     <div class="flex sidenav-header">
       <i class="top-0 p-3 cursor-pointer fas fa-times text-secondary opacity-5 position-absolute end-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="m-0 navbar-brand d-flex" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">
+      <a class="m-0 navbar-brand d-flex" href="{{route('dashboard')}}">
         <img src="{{asset('assets/img/logo-ct-dark.png')}}" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold">
           Promotion Portal
@@ -59,18 +59,18 @@
           </a>
         </li>
         <li class="mt-3 nav-item">
-          <h6 class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6">Management sections</h6>
+          <h6 class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6">Campaign sections</h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  @if ($currentRoute == 'campaign.index') active @endif" href="{{route('campaign.index')}}">
+            <div class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
+              <i class="@if ($currentRoute == 'campaign.index') text-white @else text-dark @endif fa-solid fa-paper-plane fa-xl"></i>
+            </div>
+            <span class="nav-link-text ms-1">Campaign</span>
+          </a>
         </li>
         <li class="mt-3 nav-item">
           <h6 class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6">Postback sections</h6>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link  @if ($currentRoute == 'service.index') active @endif" href="{{route('service.index')}}">
-            <div class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
-              <i class="@if ($currentRoute == 'service.index') text-white @else text-dark @endif fa-solid fa-server fa-xl"></i>
-            </div>
-            <span class="nav-link-text ms-1">Service</span>
-          </a>
         </li>
       </ul>
     <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>  

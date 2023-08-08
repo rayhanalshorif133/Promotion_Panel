@@ -1065,6 +1065,10 @@ input:checked + .toggle-bg {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
 .mb-0 {
   margin-bottom: 0px;
 }
@@ -1136,6 +1140,9 @@ input:checked + .toggle-bg {
 }
 .mt-6 {
   margin-top: 1.5rem;
+}
+.mb-5 {
+  margin-bottom: 1.25rem;
 }
 .block {
   display: block;
@@ -1583,6 +1590,9 @@ input:checked + .toggle-bg {
 }
 .pt-3 {
   padding-top: 0.75rem;
+}
+.pl-3 {
+  padding-left: 0.75rem;
 }
 .text-left {
   text-align: left;
