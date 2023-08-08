@@ -33,6 +33,7 @@ Route::middleware('auth')
         ->prefix('operator')
         ->group(function() {
             Route::get('/', [OperatorController::class, 'index'])->name('index');
+            Route::post('/store', [OperatorController::class, 'store'])->name('store');
     });
 
     // country

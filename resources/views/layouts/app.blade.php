@@ -32,88 +32,94 @@
     <!-- Popper -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <!-- Main Styling -->
-    <link href="{{ asset('assets/css/soft-ui-dashboard-tailwind.css?v=1.0.5') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/soft-ui-dashboard.css?v=1.0.7') }}" rel="stylesheet" />
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <!-- jQuery Modal -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
 
 </head>
 
-<body class="relative m-0 font-sans text-base antialiased font-normal leading-default bg-gray-50 text-slate-500">
+<body class="bg-gray-100 g-sidenav-show">
     <!-- sidenav  -->
     @include('layouts._partials.sidenav')
 
     <!-- end sidenav -->
 
-    <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200">
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
         <!-- Navbar -->
         @include('layouts._partials.nav_bar')
         <!-- end Navbar -->
-        <!-- cards -->
-        <div class="w-full px-6 py-6 mx-auto">
+        <div class="py-4 container-fluid">
             @yield('content')
-            <footer class="fixed left-0 right-0 px-10 bottom-10">
-                <div class="w-full px-6 mx-auto">
-                    <div class="flex flex-wrap items-center -mx-3 lg:justify-between">
-                        <div class="w-full max-w-full px-3 mt-0 mb-6 shrink-0 lg:mb-0 lg:w-1/2 lg:flex-none">
-                            <div class="text-sm leading-normal text-center text-slate-500 lg:text-left">
-                                ©
-                                <script>
-                                    document.write(new Date().getFullYear() + ",");
-                                </script>
-                                made with <i class="fa fa-heart"></i> by
-                                <a href="https://www.creative-tim.com" class="font-semibold text-slate-700"
-                                    target="_blank">Creative Tim</a>
-                                for a better web.
-                            </div>
-                        </div>
-                        <div class="w-full max-w-full px-3 mt-0 shrink-0 lg:w-1/2 lg:flex-none">
-                            <ul class="flex flex-wrap justify-center pl-0 mb-0 list-none lg:justify-end">
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com"
-                                        class="block px-4 pt-0 pb-1 text-sm font-normal transition-colors ease-soft-in-out text-slate-500"
-                                        target="_blank">Creative Tim</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/presentation"
-                                        class="block px-4 pt-0 pb-1 text-sm font-normal transition-colors ease-soft-in-out text-slate-500"
-                                        target="_blank">About Us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://creative-tim.com/blog"
-                                        class="block px-4 pt-0 pb-1 text-sm font-normal transition-colors ease-soft-in-out text-slate-500"
-                                        target="_blank">Blog</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/license"
-                                        class="block px-4 pt-0 pb-1 pr-0 text-sm font-normal transition-colors ease-soft-in-out text-slate-500"
-                                        target="_blank">License</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
         <!-- end cards -->
+        <footer class="pt-3 footer">
+            <div class="container-fluid">
+                <div class="row align-items-center justify-content-lg-between">
+                    <div class="mb-4 col-lg-6 mb-lg-0">
+                        <div class="text-sm text-center copyright text-muted text-lg-start">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>,
+                            made with <i class="fa fa-heart"></i> by
+                            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative
+                                Tim</a>
+                            for a better web.
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                            <li class="nav-item">
+                                <a href="https://www.creative-tim.com" class="nav-link text-muted"
+                                    target="_blank">Creative Tim</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted"
+                                    target="_blank">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted"
+                                    target="_blank">Blog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
+                                    target="_blank">License</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </main>
     @include('layouts._partials.config_sidebar')
 </body>
 
 <!-- plugin for charts  -->
-<script src="{{ asset('assets/js/plugins/chartjs.min.js') }}" async></script>
-<!-- plugin for scrollbar  -->
-<script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}" async></script>
-<!-- github button -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-<!-- main script file  -->
-<script src="{{ asset('assets/js/soft-ui-dashboard-tailwind.js?v=1.0.5') }}" async></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
+<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
+<script src="{{ asset('assets/js/customChart.js') }}"></script>
 
+<script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+            damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+</script>
+
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<script src="{{ asset('assets/js/soft-ui-dashboard.min.js?v=1.0.7') }}"></script>
 
 @stack('scripts')
 

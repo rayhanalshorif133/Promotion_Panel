@@ -1,108 +1,94 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="w-full px-6 py-6 mx-auto">
-        <!-- row 1 -->
-        <div class="flex flex-wrap -mx-3">
-            <!-- card1 -->
-            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
-                <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
-                    <div class="flex-auto p-4">
-                        <div class="flex flex-row -mx-3">
-                            <div class="flex-none w-2/3 max-w-full px-3">
-                                <div>
-                                    <p class="mb-0 font-sans text-sm font-semibold leading-normal">Today's Money</p>
-                                    <h5 class="mb-0 font-bold">
-                                        $53,000
-                                        <span class="text-sm leading-normal font-weight-bolder text-lime-500">+55%</span>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="px-3 text-right basis-1/3">
-                                <div
-                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
-                                    <i class="ni leading-none ni-money-coins text-lg relative top-3.5 text-white"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="row">
+    <div class="mb-4 col-xl-3 col-sm-6 mb-xl-0">
+      <div class="card">
+        <div class="p-3 card-body">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="mb-0 text-sm text-capitalize font-weight-bold">Today's Money</p>
+                <h5 class="mb-0 font-weight-bolder">
+                  $53,000
+                  <span class="text-sm text-success font-weight-bolder">+55%</span>
+                </h5>
+              </div>
             </div>
-
-            <!-- card2 -->
-            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
-                <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
-                    <div class="flex-auto p-4">
-                        <div class="flex flex-row -mx-3">
-                            <div class="flex-none w-2/3 max-w-full px-3">
-                                <div>
-                                    <p class="mb-0 font-sans text-sm font-semibold leading-normal">Today's Users</p>
-                                    <h5 class="mb-0 font-bold">
-                                        2,300
-                                        <span class="text-sm leading-normal font-weight-bolder text-lime-500">+3%</span>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="px-3 text-right basis-1/3">
-                                <div
-                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
-                                    <i class="ni leading-none ni-world text-lg relative top-3.5 text-white"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-4 text-end">
+              <div class="text-center shadow icon icon-shape bg-gradient-primary border-radius-md">
+                <i class="text-lg ni ni-money-coins opacity-10" aria-hidden="true"></i>
+              </div>
             </div>
-
-            <!-- card3 -->
-            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
-                <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
-                    <div class="flex-auto p-4">
-                        <div class="flex flex-row -mx-3">
-                            <div class="flex-none w-2/3 max-w-full px-3">
-                                <div>
-                                    <p class="mb-0 font-sans text-sm font-semibold leading-normal">New Clients</p>
-                                    <h5 class="mb-0 font-bold">
-                                        +3,462
-                                        <span class="text-sm leading-normal text-red-600 font-weight-bolder">-2%</span>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="px-3 text-right basis-1/3">
-                                <div
-                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
-                                    <i class="ni leading-none ni-paper-diploma text-lg relative top-3.5 text-white"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- card4 -->
-            <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
-                <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
-                    <div class="flex-auto p-4">
-                        <div class="flex flex-row -mx-3">
-                            <div class="flex-none w-2/3 max-w-full px-3">
-                                <div>
-                                    <p class="mb-0 font-sans text-sm font-semibold leading-normal">Sales</p>
-                                    <h5 class="mb-0 font-bold">
-                                        $103,430
-                                        <span class="text-sm leading-normal font-weight-bolder text-lime-500">+5%</span>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="px-3 text-right basis-1/3">
-                                <div
-                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
-                                    <i class="ni leading-none ni-cart text-lg relative top-3.5 text-white"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
+    <div class="mb-4 col-xl-3 col-sm-6 mb-xl-0">
+      <div class="card">
+        <div class="p-3 card-body">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="mb-0 text-sm text-capitalize font-weight-bold">Today's Users</p>
+                <h5 class="mb-0 font-weight-bolder">
+                  2,300
+                  <span class="text-sm text-success font-weight-bolder">+3%</span>
+                </h5>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="text-center shadow icon icon-shape bg-gradient-primary border-radius-md">
+                <i class="text-lg ni ni-world opacity-10" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mb-4 col-xl-3 col-sm-6 mb-xl-0">
+      <div class="card">
+        <div class="p-3 card-body">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="mb-0 text-sm text-capitalize font-weight-bold">New Clients</p>
+                <h5 class="mb-0 font-weight-bolder">
+                  +3,462
+                  <span class="text-sm text-danger font-weight-bolder">-2%</span>
+                </h5>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="text-center shadow icon icon-shape bg-gradient-primary border-radius-md">
+                <i class="text-lg ni ni-paper-diploma opacity-10" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-sm-6">
+      <div class="card">
+        <div class="p-3 card-body">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="mb-0 text-sm text-capitalize font-weight-bold">Sales</p>
+                <h5 class="mb-0 font-weight-bolder">
+                  $103,430
+                  <span class="text-sm text-success font-weight-bolder">+5%</span>
+                </h5>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="text-center shadow icon icon-shape bg-gradient-primary border-radius-md">
+                <i class="text-lg ni ni-cart opacity-10" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
