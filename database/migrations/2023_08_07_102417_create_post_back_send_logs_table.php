@@ -15,6 +15,12 @@ class CreatePostBackSendLogsTable extends Migration
     {
         Schema::create('post_back_send_logs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('operator_id')->constrained('operators')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('service_id')->constrained('services')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('channel');
+            $table->string('clicked_id');
+            $table->string('others')->nullable();
+            $table->dateTime('sent_at')->nullable();
             $table->timestamps();
         });
     }

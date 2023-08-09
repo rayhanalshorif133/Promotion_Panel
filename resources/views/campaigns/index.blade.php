@@ -8,7 +8,7 @@
             </a>
         </li>
         <li class="text-sm breadcrumb-item text-dark active" aria-current="page">
-            Dashboard
+            Campaigns List
         </li>
     </ol>
 </nav>

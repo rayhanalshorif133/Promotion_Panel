@@ -1379,6 +1379,9 @@ input:checked + .toggle-bg {
 .border-b-0 {
   border-bottom-width: 0px;
 }
+.border-r-\[1px\] {
+  border-right-width: 1px;
+}
 .border-solid {
   border-style: solid;
 }
@@ -1404,6 +1407,10 @@ input:checked + .toggle-bg {
 }
 .border-transparent {
   border-color: transparent;
+}
+.border-gray-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity));
 }
 .border-b-transparent {
   border-bottom-color: transparent;
@@ -1743,6 +1750,16 @@ input:checked + .toggle-bg {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.text-blue-400 {
+  --tw-text-opacity: 1;
+  color: rgb(118 169 250 / var(--tw-text-opacity));
+}
+.underline {
+  text-decoration-line: underline;
+}
+.underline-offset-1 {
+  text-underline-offset: 1px;
 }
 .opacity-0 {
   opacity: 0;

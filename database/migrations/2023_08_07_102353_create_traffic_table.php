@@ -21,8 +21,10 @@ class CreateTrafficTable extends Migration
             $table->string('clicked_id')->nullable();
             $table->string('others')->nullable();
             $table->dateTime('received_at');
-            $table->enum('callback_received_status', ['succeed', 'failed'])->default('failed');
-            $table->enum('callback_sent_status', ['sent', 'unsent'])->default('unsent');
+            $table->string('callback_received_status')->default(0)
+                 ->comment('0 = failed, 1 = success');
+            $table->string('callback_sent_status')->default(0)
+                 ->comment('0 = unsent, 1 = sent');
             $table->timestamps();
         });
     }

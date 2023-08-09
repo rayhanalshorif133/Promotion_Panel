@@ -89,4 +89,7 @@ class PublisherController extends Controller
             return $this->respondWithError('Failed to delete this publisher');
         }
     }
+
+    
+
 }

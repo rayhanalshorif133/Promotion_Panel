@@ -4,8 +4,10 @@ use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\PostBackController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\TrafficController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -113,4 +115,24 @@ Route::middleware('auth')
             ->group(function () {
                 Route::get('/', [TrafficController::class, 'index'])->name('index');
             });
+
+        // Post Back URL
+        Route::name('post-back.')
+            ->prefix('post-back')
+            ->group(function () {
+                Route::get('/send-logs', [PostBackController::class, 'sendLogs'])->name('send-logs');
+                Route::get('/received-logs', [PostBackController::class, 'receivedLogs'])->name('received-logs');
+            });
     });
+
+// traffic
+Route::prefix('traffic')
+    ->name('traffic.')
+    ->group(function(){
+    Route::get('/{campaignId}/{serviceId}/{operatorName}/{clickedID}', [TrafficController::class, 'redirect'])
+        ->name('redirect');
+    // post-back
+    Route::get('/post-back/{serviceId}/{channel}/{operatorName}/{clickedID}', [TrafficController::class, 'postBack'])
+        ->name('post-back');
+});
+

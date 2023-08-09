@@ -3,7 +3,7 @@
 @endphp
 
 <aside class="my-3 border-0 sidenav navbar navbar-vertical navbar-expand-xs border-radius-xl fixed-start ms-3 " id="sidenav-main">
-    <div class="flex sidenav-header">
+    <div class="flex sidenav-header border-r-[1px] border-gray-200">
       <i class="top-0 p-3 cursor-pointer fas fa-times text-secondary opacity-5 position-absolute end-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="m-0 navbar-brand d-flex" href="{{route('dashboard')}}">
         <img src="{{asset('assets/img/logo-ct-dark.png')}}" class="navbar-brand-img h-100" alt="main_logo">
@@ -13,7 +13,7 @@
       </a>
     </div>
     <hr class="mt-0 horizontal dark">
-    <div class="w-auto navbar-collapse ps" id="sidenav-collapse-main">
+    <div class="w-auto navbar-collapse ps border-r-[1px] border-gray-200" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link @if ($currentRoute == 'dashboard') active @endif" href="{{route('dashboard')}}">
@@ -69,12 +69,36 @@
             <span class="nav-link-text ms-1">Campaign</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link  @if ($currentRoute == 'traffic.index') active @endif" href="{{route('traffic.index')}}">
+            <div class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
+              <i class="@if ($currentRoute == 'traffic.index') text-white @else text-dark @endif fa-solid fa-signal fa-xl"></i>
+            </div>
+            <span class="nav-link-text ms-1">Traffic</span>
+          </a>
+        </li>
         <li class="mt-3 nav-item">
           <h6 class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6">Postback sections</h6>
         </li>
+        <li class="nav-item">
+          <a class="nav-link  @if ($currentRoute == 'post-back.send-logs') active @endif" href="{{route('post-back.send-logs')}}">
+            <div class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
+              <i class="@if ($currentRoute == 'post-back.send-logs') text-white @else text-dark @endif fa-solid fa-arrow-up-right-dots fa-xl"></i>
+            </div>
+            <span class="nav-link-text ms-1">Send-logs</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  @if ($currentRoute == 'post-back.received-logs') active @endif" href="{{route('post-back.received-logs')}}">
+            <div class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
+              <i class="@if ($currentRoute == 'post-back.received-logs') text-white @else text-dark @endif fa-solid fa-arrow-up-right-dots fa-flip-vertical fa-xl"></i>
+            </div>
+            <span class="nav-link-text ms-1">received-logs</span>
+          </a>
+        </li>
       </ul>
     <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>  
-    <div class="mx-3 sidenav-footer ">
+    <div class="mx-3 sidenav-footer">
       <a class="mt-3 btn bg-gradient-primary w-100" href="{{route('dashboard')}}">Home</a>
     </div>
   </aside>

@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class PostBackSendLog extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'operator_id',
+        'service_id',
+        'channel',
+        'clicked_id',
+        'others',
+        'sent_at'
+    ];
 }

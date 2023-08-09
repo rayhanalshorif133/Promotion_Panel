@@ -14,6 +14,7 @@ class CampaignController extends Controller
 {
     public function index()
     {
+        
 
         $campaigns = Campaign::select()
             ->with('publisher', 'campaignDetail')
@@ -59,9 +60,15 @@ class CampaignController extends Controller
             $campaignDetail->service_id = $request->service_id;
             $campaignDetail->ratio = $request->ratio;
             if($findOperator){
+                // https or http
+                $currentDomain = $_SERVER['SERVER_PROTOCOL'];
+                $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+                // domain
                 $currentDomain = $_SERVER['SERVER_NAME'];
-                $url = "http://" . $currentDomain . "/traffic/" . $campaign->id ."/". $request->service_id ."/". $findOperator->name .
-                "/{clickedID?}/?a=1&b=1&c=1";
+                // url
+                $url = $protocol . $currentDomain . "/traffic/" . $campaign->id ."/". $request->service_id ."/". $findOperator->name .
+                "/{clickedID}/";
+
                 $campaignDetail->url = $url;
             }
             $campaignDetail->status = $request->status;
