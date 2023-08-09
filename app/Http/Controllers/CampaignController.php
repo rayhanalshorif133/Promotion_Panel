@@ -81,7 +81,7 @@ class CampaignController extends Controller
 
         $campaign = Campaign::select()
             ->where('id', $id)
-            ->with('publisher', 'campaignDetail')
+            ->with('publisher', 'campaignDetail','campaignDetail.operator', 'campaignDetail.service')
             ->first();
         return view('campaigns.show', compact('campaign'));
     }

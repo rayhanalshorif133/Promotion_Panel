@@ -41,35 +41,47 @@
                     <div class="w-full h-[1px] bg-gray-200"></div>
                 </div>
                 <div class="p-3 card-body">
-                    <h6 class="text-xs text-uppercase text-body font-weight-bolder">Account</h6>
                     <ul class="list-group">
-                        <li class="px-0 border-0 list-group-item">
-                            Helo
+                        <li class="px-0 border-0 list-group-item test-base">
+                            <span class="mr-1 font-semibold text-gray-500">Campaign Name:</span> <span>{{ $campaign->name }}</span>
+                        </li>
+                        <li class="px-0 border-0 list-group-item test-base">
+                            <span class="mr-1 font-semibold text-gray-500">Publisher Name:</span> <span>{{ $campaign->publisher->name }}</span>
                         </li>
                     </ul>
-                    <h6 class="mt-4 text-xs text-uppercase text-body font-weight-bolder">Application</h6>
+                </div>
+            </div>
+        </div>
+        <div class="px-3 col-12 col-xl-8">
+            <div class="card h-100">
+                <div class="p-3 pb-0 card-header">
+                    <h5 class="mb-2">Campaign Details Information</h5>
+                    <div class="w-full h-[1px] bg-gray-200"></div>
+                </div>
+                <div class="p-3 card-body">
                     <ul class="list-group">
-                        <li class="px-0 border-0 list-group-item">
-                            <div class="form-check form-switch ps-0">
-                                <input class="form-check-input ms-auto" type="checkbox" id="flexSwitchCheckDefault3">
-                                <label class="mb-0 form-check-label text-body ms-3 text-truncate w-80"
-                                    for="flexSwitchCheckDefault3">New launches and projects</label>
-                            </div>
+                        <li class="px-0 border-0 list-group-item test-base">
+                            <span class="mr-1 font-semibold text-gray-500">Operator Name:</span> 
+                            <span> {{ $campaign->campaignDetail->operator->name }}</span>
                         </li>
-                        <li class="px-0 border-0 list-group-item">
-                            <div class="form-check form-switch ps-0">
-                                <input class="form-check-input ms-auto" type="checkbox" id="flexSwitchCheckDefault4"
-                                    checked="">
-                                <label class="mb-0 form-check-label text-body ms-3 text-truncate w-80"
-                                    for="flexSwitchCheckDefault4">Monthly product updates</label>
-                            </div>
+                        <li class="px-0 border-0 list-group-item test-base">
+                            <span class="mr-1 font-semibold text-gray-500">Service Name:</span> <span>{{ $campaign->campaignDetail->service->name }}</span>
                         </li>
-                        <li class="px-0 pb-0 border-0 list-group-item">
-                            <div class="form-check form-switch ps-0">
-                                <input class="form-check-input ms-auto" type="checkbox" id="flexSwitchCheckDefault5">
-                                <label class="mb-0 form-check-label text-body ms-3 text-truncate w-80"
-                                    for="flexSwitchCheckDefault5">Subscribe to newsletter</label>
-                            </div>
+                        <li class="px-0 border-0 list-group-item test-base">
+                            <span class="mr-1 font-semibold text-gray-500">Ratio:</span> 
+                            <span class="badge bg-gradient-info">{{ $campaign->campaignDetail->ratio }}</span>
+                        </li>
+                        <li class="px-0 border-0 list-group-item test-base">
+                            <span class="mr-1 font-semibold text-gray-500">Campaign URL:</span> <br>
+                            <div class="mt-2 text-white alert alert-secondary" role="alert">
+                                {{ $campaign->campaignDetail->url }} 
+                                <strong class="absolute right-5">
+                                    <div class="bg-gray-400 rounded-full cursor-pointer" data-url="{{$campaign->campaignDetail->url}}" id="campaignUrlCopyBtn">
+                                        <i class="p-2 text-gray-800 rounded-full hover:text-white hover:bg-gray-800 fa-solid fa-copy"></i>
+                                        {{-- <i class="fa-solid fa-check"></i> --}}
+                                    </div>
+                                </strong>
+                            </div> 
                         </li>
                     </ul>
                 </div>
