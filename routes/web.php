@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -41,6 +42,14 @@ Route::middleware('auth')
     ->group(function () {
         Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
+        // User
+        Route::name('user.')
+            ->prefix('user')
+            ->group(function () {
+                Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
+                Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
+            });
+            
         // Operator
         Route::name('operator.')
             ->prefix('operator')

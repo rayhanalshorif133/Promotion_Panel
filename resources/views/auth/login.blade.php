@@ -26,6 +26,17 @@
         <div class="container mx-auto px-4 h-full">
             <div class="flex content-center items-center justify-center h-full">
                 <div class="w-full lg:w-4/12 px-4">
+                    {{-- alert --}}
+                    @if (count($errors) > 0)
+                        <div class="text-white bg-red-500 rounded-xl my-2 py-5 text-center justify-center mx-auto">
+                            <ul class="p-0 m-0" style="list-style: none;">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    {{-- alert --}}
                     <div
                         class="relative bg-white flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
 
@@ -43,7 +54,7 @@
                                 <div class="relative w-full mb-3">
                                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                         for="grid-password">Email</label>
-                                    <input type="email" id="email"  name="email"
+                                    <input type="email" id="email" name="email"
                                         class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                         placeholder="Email" value="admin@example.com">
                                 </div>
@@ -70,18 +81,6 @@
                                     </button>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap mt-6 relative">
-                        <div class="w-1/2">
-                            @if (Route::has('password.request'))
-                                <a href="{{ route('password.request') }}" class="text-gray-200"><small>Forgot
-                                        password?</small></a>
-                            @endif
-                        </div>
-                        <div class="w-1/2 text-right">
-                            <a href="{{ route('register') }}" class="text-gray-200"><small>Create new
-                                    account</small></a>
                         </div>
                     </div>
                 </div>

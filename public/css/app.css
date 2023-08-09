@@ -1224,6 +1224,9 @@ input:checked + .toggle-bg {
 .w-full {
   width: 100%;
 }
+.w-6\/12 {
+  width: 50%;
+}
 .min-w-0 {
   min-width: 0px;
 }
@@ -1443,6 +1446,18 @@ input:checked + .toggle-bg {
 .bg-white\/50 {
   background-color: rgb(255 255 255 / 0.5);
 }
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+}
+.bg-green-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(14 159 110 / var(--tw-bg-opacity));
+}
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 82 82 / var(--tw-bg-opacity));
+}
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -1502,6 +1517,9 @@ input:checked + .toggle-bg {
 }
 .p-6 {
   padding: 1.5rem;
+}
+.p-5 {
+  padding: 1.25rem;
 }
 .px-0 {
   padding-left: 0px;
@@ -1605,6 +1623,9 @@ input:checked + .toggle-bg {
 }
 .pt-3 {
   padding-top: 0.75rem;
+}
+.pt-5 {
+  padding-top: 1.25rem;
 }
 .text-left {
   text-align: left;

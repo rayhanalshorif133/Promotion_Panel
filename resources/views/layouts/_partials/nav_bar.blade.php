@@ -4,11 +4,21 @@
         @yield('breadcrumb')
         <div class="mt-0 mt-sm-0 me-md-0 me-sm-4" id="navbar">
             <ul class="navbar-nav justify-content-end">
-                <li class="nav-item d-flex align-items-center">
-                    {{-- logout --}}
+                <li class="nav-item d-flex align-items-center px-2">
+                    <a href="{{ route('user.edit',Auth::user()->id) }}">
+                        @csrf
+                        <button type="submit" class="btn btn-sm bg-gradient-info">
+                            {{Auth::user()->roles[0]->name}}
+                        </button>
+                    </a>
+                </li>
+                <li class="nav-item d-flex align-items-center" title="Log out">
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-sm bg-gradient-danger">Logout</button>
+                        <button type="submit" class="btn btn-sm bg-gradient-danger" 
+                        >
+                            <i class="fa-solid fa-sign-out"></i>
+                        </button>
                     </form>
                 </li>
                 <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
