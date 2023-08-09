@@ -16,7 +16,7 @@ class CreateCampaignsTable extends Migration
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
             $table->foreignId('publisher_id')->constrained('publishers')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }

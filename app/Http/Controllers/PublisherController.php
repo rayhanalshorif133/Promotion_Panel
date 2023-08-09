@@ -82,11 +82,11 @@ class PublisherController extends Controller
     public function destroy($id)
     {
         try {
-            $country = Publisher::find($id);
-            $country->delete();
-            return $this->respondWithSuccess('Successfully deleted this service');
+            $publisher = Publisher::find($id);
+            $publisher->delete();
+            return $this->respondWithSuccess('Successfully deleted this publisher');
         } catch (\Throwable $th) {
-            return $this->respondWithError('Failed to delete this service');
+            return $this->respondWithError('Failed to delete this publisher');
         }
     }
 }

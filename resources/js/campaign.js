@@ -2,7 +2,37 @@
 $(function(){
     handleRatioErrorMsg();
     handleCampaignUrlCopyBtn();
+    handleCampaignDeleteBtn();
 });
+
+const handleCampaignDeleteBtn = () => {
+    $(".campaignDeleteBtn").click(function () {
+        const id = $(this).parent().attr('data-id');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`campaign/delete/${id}`)
+                    .then(function (res) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        ).then((result) => {
+                            location.reload();
+                        });
+                    });
+                    
+            }
+        })
+    });
+}
 
 const handleCampaignUrlCopyBtn = () => {
     $("#campaignUrlCopyBtn").click(function(){

@@ -92,8 +92,10 @@ Route::middleware('auth')
                 Route::get('/', [CampaignController::class, 'index'])->name('index');
                 Route::get('/create', [CampaignController::class, 'create'])->name('create');
                 Route::get('/show/{id}', [CampaignController::class, 'show'])->name('show');
+                Route::get('/edit/{id}', [CampaignController::class, 'edit'])->name('edit');
                 Route::post('/store', [CampaignController::class, 'store'])->name('store');
-                Route::get('/report', [CampaignController::class, 'reportIndex'])->name('report.index');
+                Route::post('/update', [CampaignController::class, 'update'])->name('update');
+                Route::delete('/delete/{id}', [CampaignController::class, 'destroy'])->name('destroy');
             });
 
         // traffic

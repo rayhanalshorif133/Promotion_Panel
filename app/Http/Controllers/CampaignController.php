@@ -36,7 +36,7 @@ class CampaignController extends Controller
     {
         // validate
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:campaigns',
             'publisher_id' => 'required',
             'operator_id' => 'required',
             'service_id' => 'required',
@@ -75,6 +75,8 @@ class CampaignController extends Controller
         }
     }
 
+   
+
 
     public function show($id)
     {
@@ -86,10 +88,67 @@ class CampaignController extends Controller
         return view('campaigns.show', compact('campaign'));
     }
 
-
-
-    public function reportIndex()
+    public function edit($id)
     {
-        return view('campaigns.report.index');
+
+        $campaign = Campaign::select()
+            ->where('id', $id)
+            ->with('publisher', 'campaignDetail','campaignDetail.operator', 'campaignDetail.service')
+            ->first();
+        $publishers = Publisher::select('id', 'name', 'short_name')->get();
+        $operators = Operator::select('id', 'name')->get();
+        $services = Service::select('id', 'name')->get();
+        return view('campaigns.edit', compact('campaign', 'publishers', 'operators', 'services'));
     }
+
+    public function update(Request $request)
+    {
+        // validate
+        $request->validate([
+            'name' => 'required|unique:campaigns,name,' . $request->id,
+            'publisher_id' => 'required',
+            'operator_id' => 'required',
+            'service_id' => 'required',
+            'ratio' => 'required',
+            'status' => 'required'
+        ]);
+
+
+        try {
+            // store
+            $campaign = Campaign::find($request->id);
+            $campaign->name = $request->name;
+            $campaign->publisher_id = $request->publisher_id;
+            $campaign->save();
+            
+            $findOperator = Operator::find($request->operator_id);
+            $campaignDetail = CampaignDetail::where('campaign_id', $campaign->id)->first();
+            $campaignDetail->campaign_id = $campaign->id;
+            $campaignDetail->operator_id = $request->operator_id;
+            $campaignDetail->service_id = $request->service_id;
+            $campaignDetail->ratio = $request->ratio;
+            $campaignDetail->url = $request->url;
+            $campaignDetail->status = $request->status;
+            $campaignDetail->save();
+            Session::flash('message', 'Successfully created a new campaign');
+            return redirect()->route('campaign.index');
+        } catch (\Throwable $th) {
+            Session::flash('message', $th->getMessage());
+            Session::flash('type', 'error');
+            return redirect()->route('campaign.index');
+        }
+    }
+
+
+    public function destroy($id)
+    {
+        try {
+            $campaign = Campaign::find($id);
+            $campaign->delete();
+            return $this->respondWithSuccess('Successfully deleted this campaign');
+        } catch (\Throwable $th) {
+            return $this->respondWithError('Failed to delete this campaign');
+        }
+    }
+
 }
