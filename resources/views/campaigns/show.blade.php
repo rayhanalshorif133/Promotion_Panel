@@ -76,9 +76,8 @@
                             <div class="mt-2 text-white alert alert-secondary" role="alert">
                                 {{ $campaign->campaignDetail->url }} 
                                 <strong class="absolute right-5">
-                                    <div class="bg-gray-400 rounded-full cursor-pointer" data-url="{{$campaign->campaignDetail->url}}" id="campaignUrlCopyBtn">
+                                    <div class="bg-gray-400 rounded-full cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to clipboard" data-url="{{$campaign->campaignDetail->url}}" id="campaignUrlCopyBtn">
                                         <i class="p-2 text-gray-800 rounded-full hover:text-white hover:bg-gray-800 fa-solid fa-copy"></i>
-                                        {{-- <i class="fa-solid fa-check"></i> --}}
                                     </div>
                                 </strong>
                             </div> 
