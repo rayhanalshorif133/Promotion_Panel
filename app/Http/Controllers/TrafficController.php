@@ -18,6 +18,16 @@ class TrafficController extends Controller
         return view('traffic.index', compact('traffics'));
     }
 
+    public function fetchById($id){
+        $traffic = Traffic::with(['campaign', 'service', 'operator'])->find($id);
+        $traffic->others = json_decode($traffic->others);
+
+        if(!$traffic){
+            return $this->respondWithError('Traffic not found.');
+        }
+        return $this->respondWithSuccess('Traffic found.', $traffic);
+    }
+
     public function redirect($campaignId, $serviceId , $operatorName,  $clickedID, Request $request)
     {
 

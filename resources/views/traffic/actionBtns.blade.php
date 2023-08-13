@@ -1,5 +1,5 @@
 <div class="mt-2 btn-group" data-id="{{$id}}" role="group" aria-label="Basic outlined example">
-    <button class="px-3 btn btn-sm bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#showTraffic"
+    <button class="px-3 btn btn-sm bg-gradient-primary showTrafficDetailsBtn" data-bs-toggle="modal" data-bs-target="#showTraffic"
         type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Show Details">
         <i class="fa fa-eye"></i>
     </button>

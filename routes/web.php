@@ -114,6 +114,7 @@ Route::middleware('auth')
             ->prefix('traffic')
             ->group(function () {
                 Route::get('/', [TrafficController::class, 'index'])->name('index');
+                Route::get('/fetch/{id}', [TrafficController::class, 'fetchById'])->name('fetch-by-id');
             });
 
         // Post Back URL

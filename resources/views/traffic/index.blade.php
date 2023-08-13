@@ -59,7 +59,7 @@
                                 <p class="mb-0 text-xs font-weight-bold">{{ $traffic->clicked_id }}</p>
                             </td>
                             <td class="text-center align-middle">
-                                <a href="{{route('campaign.show', $traffic->campaign->id)}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Details" class="mb-0 text-xs font-weight-bold text-blue-600">{{ $traffic->campaign->name }}</a>
+                                <a href="{{route('campaign.show', $traffic->campaign->id)}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Details" class="mb-0 text-xs text-blue-600 font-weight-bold">{{ $traffic->campaign->name }}</a>
                             </td>
                             <td class="text-center align-middle">
                                 <p class="mb-0 text-xs font-weight-bold">{{ $traffic->service->name }}</p>
@@ -77,6 +77,7 @@
             </table>
         </div>
     </div>
+    @include('traffic.show')
 @endsection
 
 @push('scripts')
