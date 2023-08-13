@@ -100,4 +100,15 @@ class TrafficController extends Controller
         ], 200);
 
     }
+
+
+    public function destroy($id)
+    {
+        $traffic = Traffic::find($id);
+        if(!$traffic){
+            return $this->respondWithError('Traffic not found.');
+        }
+        $traffic->delete();
+        return $this->respondWithSuccess('Traffic deleted successfully.');
+    }   
 }

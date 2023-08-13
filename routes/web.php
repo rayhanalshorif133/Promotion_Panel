@@ -115,6 +115,7 @@ Route::middleware('auth')
             ->group(function () {
                 Route::get('/', [TrafficController::class, 'index'])->name('index');
                 Route::get('/fetch/{id}', [TrafficController::class, 'fetchById'])->name('fetch-by-id');
+                Route::delete('/delete/{id}', [TrafficController::class, 'destroy'])->name('destroy');
             });
 
         // Post Back URL
