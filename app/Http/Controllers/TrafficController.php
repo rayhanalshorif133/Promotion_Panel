@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Operator;
 use App\Models\PostBackReceivedLog;
+use App\Models\PostBackSentLog;
 use App\Models\Publisher;
 use App\Models\Service;
 use App\Models\Traffic;
@@ -74,7 +75,8 @@ class TrafficController extends Controller
     public function postBack($serviceId , $channel, $operatorName,  $clickedID, Request $request)
     {
 
-        $traffic = Traffic::select()->where('clicked_id', $clickedID)->first();
+        try{
+            $traffic = Traffic::select()->where('clicked_id', $clickedID)->first();
         $traffic->callback_received_status =  1;
         $traffic->save();
 
@@ -93,12 +95,24 @@ class TrafficController extends Controller
         $postBackReceivedLog->received_at = now();
         $postBackReceivedLog->save();
 
+
+        // PostBackSentLog
+        $postBackSentLog = new PostBackSentLog();
+        $postBackSentLog->operator_id = $traffic->operator_id;
+
         return response()->json([
             'status'   => true,
             'errors'  => false,
             'message'  => 'Post back successfully received.',
         ], 200);
 
+        }catch (\Throwable $e){
+            return response()->json([
+                'status'   => false,
+                'errors'  => true,
+                'message'  => 'Post back failed to receive.',
+            ], 203);
+        }
     }
 
 

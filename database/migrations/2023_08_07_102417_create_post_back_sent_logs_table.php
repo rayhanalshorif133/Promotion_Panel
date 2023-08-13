@@ -13,7 +13,7 @@ class CreatePostBackSendLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_back_send_logs', function (Blueprint $table) {
+        Schema::create('post_back_sent_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('operator_id')->constrained('operators')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('service_id')->constrained('services')->onUpdate('cascade')->onDelete('cascade');
@@ -32,6 +32,6 @@ class CreatePostBackSendLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_back_send_logs');
+        Schema::dropIfExists('post_back_sent_logs');
     }
 }
