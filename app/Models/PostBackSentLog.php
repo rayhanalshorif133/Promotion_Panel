@@ -9,8 +9,7 @@ class PostBackSentLog extends Model
 {
     use HasFactory;
 
-    protected $table = 'post_back_sent_logs';
-
+    
     protected $fillable = [
         'operator_id',
         'service_id',
@@ -19,4 +18,16 @@ class PostBackSentLog extends Model
         'others',
         'sent_at'
     ];
+
+
+
+    public function operator()
+    {
+        return $this->belongsTo(Operator::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
 }

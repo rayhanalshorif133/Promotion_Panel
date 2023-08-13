@@ -17,4 +17,14 @@ class PostBackReceivedLog extends Model
         'others',
         'received_at'
     ];
+
+    public function operator()
+    {
+        return $this->belongsTo(Operator::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
 }

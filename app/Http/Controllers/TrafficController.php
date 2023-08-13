@@ -76,35 +76,56 @@ class TrafficController extends Controller
     {
 
         try{
-            $traffic = Traffic::select()->where('clicked_id', $clickedID)->first();
-        $traffic->callback_received_status =  1;
-        $traffic->save();
 
-        // find publisher by short_name like
-        $publisher = Publisher::where('short_name', 'like', '%'.$channel.'%')->first();
-        $publisher->post_back_url = $request->fullUrl();
-        $publisher->save();
+            $traffic = Traffic::select()->where('clicked_id', $clickedID)
+            ->with(['campaign', 'service', 'operator'])    
+            ->first();
+            $traffic->callback_received_status =  1;
+            $traffic->save();
 
-
-        // PostBackReceivedLog
-        $postBackReceivedLog = new PostBackReceivedLog();
-        $postBackReceivedLog->operator_id = $traffic->operator_id;
-        $postBackReceivedLog->service_id = $traffic->service_id;
-        $postBackReceivedLog->channel = $channel;
-        $postBackReceivedLog->clicked_id = $clickedID;
-        $postBackReceivedLog->received_at = now();
-        $postBackReceivedLog->save();
+            // find publisher by short_name like
+            $publisher = Publisher::where('short_name', 'like', '%'.$channel.'%')->first();
+            $publisher->post_back_url = $request->fullUrl();
+            $publisher->save();
 
 
-        // PostBackSentLog
-        $postBackSentLog = new PostBackSentLog();
-        $postBackSentLog->operator_id = $traffic->operator_id;
+            // PostBackReceivedLog
+            $postBackReceivedLog = new PostBackReceivedLog();
+            $postBackReceivedLog->operator_id = $traffic->operator_id;
+            $postBackReceivedLog->service_id = $traffic->service_id;
+            $postBackReceivedLog->channel = $channel;
+            $postBackReceivedLog->clicked_id = $clickedID;
+            $postBackReceivedLog->received_at = now();
+            $postBackReceivedLog->save();
 
-        return response()->json([
-            'status'   => true,
-            'errors'  => false,
-            'message'  => 'Post back successfully received.',
-        ], 200);
+
+            // PostBackSentLog
+            $postBackSentLog = new PostBackSentLog();
+            $postBackSentLog->operator_id = $traffic->operator_id;
+            $postBackSentLog->service_id = $traffic->service_id;
+            $postBackSentLog->channel = $channel;
+            $postBackSentLog->clicked_id = $clickedID;
+            $postBackSentLog->others = json_encode($request->all());
+            $postBackSentLog->sent_at = now();
+            $postBackSentLog->save();
+
+            $postBackData = [
+                'operator' => [
+                    'id' => $traffic->operator_id,
+                    'name' => $traffic->operator->name,
+                ],
+                'service' => [
+                    'id' => $traffic->service_id,
+                    'name' => $traffic->service->name,
+                ],
+                'channel' => $channel,
+                'clickedId' => $clickedID,
+                'others' => $request->all(),
+                'received_at' => now(),
+                'sent_at' => now(),
+            ];
+
+            return $this->respondWithSuccess('Post back received successfully.', $postBackData);
 
         }catch (\Throwable $e){
             return response()->json([
