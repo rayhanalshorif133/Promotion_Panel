@@ -24,6 +24,25 @@
           </a>
         </li>
         <li class="mt-3 nav-item">
+          <h6 class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6">Campaign sections</h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  @if ($currentRoute == 'campaign.index' || $currentRoute == 'campaign.create' || $currentRoute == 'campaign.show') active @endif" href="{{route('campaign.index')}}">
+            <div class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
+              <i class="@if ($currentRoute == 'campaign.index' || $currentRoute == 'campaign.create' || $currentRoute == 'campaign.show') text-white @else text-dark @endif fa-solid fa-paper-plane fa-xl"></i>
+            </div>
+            <span class="nav-link-text ms-1">Campaign</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  @if ($currentRoute == 'traffic.index') active @endif" href="{{route('traffic.index')}}">
+            <div class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
+              <i class="@if ($currentRoute == 'traffic.index') text-white @else text-dark @endif fa-solid fa-signal fa-xl"></i>
+            </div>
+            <span class="nav-link-text ms-1">Traffic</span>
+          </a>
+        </li>
+        <li class="mt-3 nav-item">
           <h6 class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6">Management sections</h6>
         </li>
         <li class="nav-item">
@@ -58,25 +77,7 @@
             <span class="nav-link-text ms-1">Publisher</span>
           </a>
         </li>
-        <li class="mt-3 nav-item">
-          <h6 class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6">Campaign sections</h6>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link  @if ($currentRoute == 'campaign.index' || $currentRoute == 'campaign.create' || $currentRoute == 'campaign.show') active @endif" href="{{route('campaign.index')}}">
-            <div class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
-              <i class="@if ($currentRoute == 'campaign.index' || $currentRoute == 'campaign.create' || $currentRoute == 'campaign.show') text-white @else text-dark @endif fa-solid fa-paper-plane fa-xl"></i>
-            </div>
-            <span class="nav-link-text ms-1">Campaign</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link  @if ($currentRoute == 'traffic.index') active @endif" href="{{route('traffic.index')}}">
-            <div class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
-              <i class="@if ($currentRoute == 'traffic.index') text-white @else text-dark @endif fa-solid fa-signal fa-xl"></i>
-            </div>
-            <span class="nav-link-text ms-1">Traffic</span>
-          </a>
-        </li>
+        
         <li class="mt-3 nav-item">
           <h6 class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6">Postback sections</h6>
         </li>
@@ -94,6 +95,17 @@
               <i class="@if ($currentRoute == 'post-back.received-logs') text-white @else text-dark @endif fa-solid fa-arrow-up-right-dots fa-flip-vertical fa-xl"></i>
             </div>
             <span class="nav-link-text ms-1">received-logs</span>
+          </a>
+        </li>
+        <li class="mt-3 nav-item">
+          <h6 class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6">Report sections</h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  @if ($currentRoute == 'campaign.report') active @endif" href="{{route('campaign.report')}}">
+            <div class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
+              <i class="@if ($currentRoute == 'campaign.report') text-white @else text-dark @endif fa-solid fa-bolt fa-xl"></i>
+            </div>
+            <span class="nav-link-text ms-1">Campaign Report</span>
           </a>
         </li>
       </ul>

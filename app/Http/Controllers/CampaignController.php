@@ -14,14 +14,14 @@ class CampaignController extends Controller
 {
     public function index()
     {
-        
+
 
         $campaigns = Campaign::select()
             ->with('publisher', 'campaignDetail')
             ->get();
         return view('campaigns.index', compact('campaigns'));
-    } 
-    
+    }
+
 
     public function create()
     {
@@ -52,22 +52,22 @@ class CampaignController extends Controller
             $campaign->name = $request->name;
             $campaign->publisher_id = $request->publisher_id;
             $campaign->save();
-            
+
             $findOperator = Operator::find($request->operator_id);
             $campaignDetail = new CampaignDetail();
             $campaignDetail->campaign_id = $campaign->id;
             $campaignDetail->operator_id = $request->operator_id;
             $campaignDetail->service_id = $request->service_id;
             $campaignDetail->ratio = $request->ratio;
-            if($findOperator){
+            if ($findOperator) {
                 // https or http
                 $currentDomain = $_SERVER['SERVER_PROTOCOL'];
                 $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
                 // domain
                 $currentDomain = $_SERVER['SERVER_NAME'];
                 // url
-                $url = $protocol . $currentDomain . "/traffic/" . $campaign->id ."/". $request->service_id ."/". $findOperator->name .
-                "/{clickedID}/";
+                $url = $protocol . $currentDomain . "/traffic/" . $campaign->id . "/" . $request->service_id . "/" . $findOperator->name .
+                    "/{clickedID}/";
 
                 $campaignDetail->url = $url;
             }
@@ -82,7 +82,7 @@ class CampaignController extends Controller
         }
     }
 
-   
+
 
 
     public function show($id)
@@ -90,7 +90,7 @@ class CampaignController extends Controller
 
         $campaign = Campaign::select()
             ->where('id', $id)
-            ->with('publisher', 'campaignDetail','campaignDetail.operator', 'campaignDetail.service')
+            ->with('publisher', 'campaignDetail', 'campaignDetail.operator', 'campaignDetail.service')
             ->first();
         return view('campaigns.show', compact('campaign'));
     }
@@ -100,13 +100,15 @@ class CampaignController extends Controller
 
         $campaign = Campaign::select()
             ->where('id', $id)
-            ->with('publisher', 'campaignDetail','campaignDetail.operator', 'campaignDetail.service')
+            ->with('publisher', 'campaignDetail', 'campaignDetail.operator', 'campaignDetail.service')
             ->first();
         $publishers = Publisher::select('id', 'name', 'short_name')->get();
         $operators = Operator::select('id', 'name')->get();
         $services = Service::select('id', 'name')->get();
         return view('campaigns.edit', compact('campaign', 'publishers', 'operators', 'services'));
     }
+
+
 
     public function update(Request $request)
     {
@@ -127,7 +129,7 @@ class CampaignController extends Controller
             $campaign->name = $request->name;
             $campaign->publisher_id = $request->publisher_id;
             $campaign->save();
-            
+
             $findOperator = Operator::find($request->operator_id);
             $campaignDetail = CampaignDetail::where('campaign_id', $campaign->id)->first();
             $campaignDetail->campaign_id = $campaign->id;
@@ -146,6 +148,14 @@ class CampaignController extends Controller
         }
     }
 
+    public function report()
+    {
+        $campaigns = Campaign::select()
+            ->with('publisher', 'campaignDetail', 'campaignDetail.operator', 'campaignDetail.service')
+            ->get();
+        return view('campaigns.report', compact('campaigns'));
+    }
+
 
     public function destroy($id)
     {
@@ -157,5 +167,4 @@ class CampaignController extends Controller
             return $this->respondWithError('Failed to delete this campaign');
         }
     }
-
 }

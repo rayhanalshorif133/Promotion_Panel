@@ -107,6 +107,7 @@ Route::middleware('auth')
                 Route::post('/store', [CampaignController::class, 'store'])->name('store');
                 Route::post('/update', [CampaignController::class, 'update'])->name('update');
                 Route::delete('/delete/{id}', [CampaignController::class, 'destroy'])->name('destroy');
+                Route::get('/report', [CampaignController::class, 'report'])->name('report');
             });
 
         // traffic
