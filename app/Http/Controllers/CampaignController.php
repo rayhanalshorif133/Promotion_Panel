@@ -9,6 +9,7 @@ use App\Models\Publisher;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Yajra\DataTables\DataTables;
 
 class CampaignController extends Controller
 {
@@ -150,10 +151,21 @@ class CampaignController extends Controller
 
     public function report()
     {
-        $campaigns = Campaign::select()
-            ->with('publisher', 'campaignDetail', 'campaignDetail.operator', 'campaignDetail.service')
-            ->get();
-        return view('campaigns.report', compact('campaigns'));
+        $campaigns = Campaign::all();
+        $operators = Operator::all();
+        return view('campaigns.report', compact('campaigns', 'operators'));
+    }
+    
+    public function campaignReportData(DataTables $dataTables)
+    {
+        $model = Campaign::query();
+        return $dataTables->eloquent($model)
+            ->addColumn('action', function ($row) {
+                $btn = '<a href="' . route('campaign.show', $row->id) . '" class="btn btn-primary btn-sm">View</a>';
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
 

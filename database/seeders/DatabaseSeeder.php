@@ -14,12 +14,12 @@ class DatabaseSeeder extends Seeder
     
     public function run()
     {
-        new RoleSeeder();
-        new UserSeeder();
-        new OperatorSeeder();
-        new CountrySeeder();
-        new ServiceSeeder();
-        new PublisherSeeder();
+        // new RoleSeeder();
+        // new UserSeeder();
+        // new OperatorSeeder();
+        // new CountrySeeder();
+        // new ServiceSeeder();
+        // new PublisherSeeder();
         new CampaignSeeder();
     }
 }

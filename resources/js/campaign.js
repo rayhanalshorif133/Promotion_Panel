@@ -3,6 +3,7 @@ $(function(){
     handleRatioErrorMsg();
     handleCampaignUrlCopyBtn();
     handleCampaignDeleteBtn();
+    handleCampaignReportSearch();
 });
 
 const handleCampaignDeleteBtn = () => {
@@ -63,3 +64,17 @@ const handleRatioErrorMsg = () => {
         }
     });
 }
+
+const handleCampaignReportSearch = () => {
+    $(".campaignReportSearchBtn").click(function(){
+        var html = "";
+        html += "<tr>";
+        html += "<td class='text-center align-middle'>1</td>";
+        html += "<td class='text-center align-middle'>2</td>";
+        html += "<td class='text-center align-middle'>3</td>";
+        html += "<td class='text-center align-middle'>4</td>";
+        html += "</tr>";
+        $(".campaignReportTableBody").html(html);
+    });
+}
+

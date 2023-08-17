@@ -15,6 +15,24 @@ class CampaignSeeder extends Seeder
 
     public function run()
     {
+
+        for ($index = 120; $index < 2000; $index++) { 
+            $campaign = Campaign::create([
+                'publisher_id' => 1,
+                'name' => 'Campaign ' . $index,
+            ]);
+    
+            CampaignDetail::create([
+                'campaign_id' => $campaign->id,
+                'operator_id' => 1,
+                'service_id' => 1,
+                'ratio' => 0.4,
+                'url' => 'http://localhost:3000/traffic/1/1/GP/{clickedID}/',
+                'status' => 'active',
+            ]);
+        }
+
+
         $campaign = Campaign::create([
             'publisher_id' => 1,
             'name' => 'Campaign 1',
