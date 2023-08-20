@@ -1545,6 +1545,10 @@ input:checked + .toggle-bg {
   font-size: 1.875rem;
   line-height: 2.25rem;
 }
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -1556,10 +1560,6 @@ input:checked + .toggle-bg {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-.text-base {
-  font-size: 1rem;
-  line-height: 1.5rem;
 }
 .font-bold {
   font-weight: 700;
@@ -1578,6 +1578,10 @@ input:checked + .toggle-bg {
 }
 .leading-9 {
   line-height: 2.25rem;
+}
+.text-\[\#E00991\] {
+  --tw-text-opacity: 1;
+  color: rgb(224 9 145 / var(--tw-text-opacity));
 }
 .text-blue-600 {
   --tw-text-opacity: 1;
@@ -1610,26 +1614,6 @@ input:checked + .toggle-bg {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-.text-red-400 {
-  --tw-text-opacity: 1;
-  color: rgb(249 128 128 / var(--tw-text-opacity));
-}
-.text-red-700 {
-  --tw-text-opacity: 1;
-  color: rgb(200 30 30 / var(--tw-text-opacity));
-}
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgb(240 82 82 / var(--tw-text-opacity));
-}
-.text-\[\#B117AB\] {
-  --tw-text-opacity: 1;
-  color: rgb(177 23 171 / var(--tw-text-opacity));
-}
-.text-\[\#E00991\] {
-  --tw-text-opacity: 1;
-  color: rgb(224 9 145 / var(--tw-text-opacity));
 }
 .opacity-0 {
   opacity: 0;

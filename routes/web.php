@@ -108,7 +108,7 @@ Route::middleware('auth')
                 Route::post('/update', [CampaignController::class, 'update'])->name('update');
                 Route::delete('/delete/{id}', [CampaignController::class, 'destroy'])->name('destroy');
                 Route::get('/report', [CampaignController::class, 'report'])->name('report');
-                Route::get('/fetch-report-data', [CampaignController::class, 'campaignReportData'])->name('fetch-report-data');
+                Route::get('/fetch-report-data/{campaign_id}/{operator}/{start_date}/{end_date?}', [CampaignController::class, 'campaignReportData'])->name('fetch-report-data');
             });
 
         // traffic

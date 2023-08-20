@@ -26,11 +26,11 @@
             <div class="col-md-3">
                     <label for="report_campaign_id" class="required">Campaign Selection</label>
                     <select class="form-control" required name="report_campaign_id" id="report_campaign_id">
-                        <option selected disabled value="">
+                        <option disabled value="">
                             Select a campaign
                         </option>
                         @foreach ($campaigns as $campaign)
-                            <option value="{{ $campaign->id }}">
+                            <option selected value="{{ $campaign->id }}">
                                 {{ $campaign->name }}
                             </option>                        
                         @endforeach
@@ -39,20 +39,20 @@
             </div>
             <div class="col-md-3">
                     <label for="report_campaign_start_date" class="required">Start Date</label>
-                    <input type="date" class="form-control" id="report_campaign_start_date" required>
+                    <input type="date" class="form-control" value="2023-08-01" id="report_campaign_start_date" required>
             </div>
             <div class="col-md-3">
-                    <label for="end_date" class="optional">End Date</label>
-                    <input type="date" class="form-control" name="end_date" id="end_date">
+                    <label for="report_campaign_end_date" class="optional">End Date</label>
+                    <input type="date" class="form-control" value="2023-08-10" id="report_campaign_end_date">
             </div> 
             <div class="col-md-3">
-                <label for="operator" class="required">Operator Selection</label>
-                <select class="form-control" required name="operator_id" id="operator">
-                    <option selected disabled value="">
+                <label for="report_campaign_operator" class="required">Operator Selection</label>
+                <select class="form-control" required id="report_campaign_operator">
+                    <option  disabled value="">
                         Select a operator
                     </option>
                     @foreach ($operators as $operator)
-                    <option value="{{ $operator->id }}">
+                    <option selected value="{{ $operator->id }}">
                         {{ $operator->name }}
                     </option>                        
                 @endforeach
@@ -70,10 +70,7 @@
                 <tr>
                     <th class="text-center align-middle text-uppercase text-secondary text-xs font-weight-bolder opacity-9">#</th>
                     <th class="text-center align-middle text-uppercase text-secondary text-xs font-weight-bolder opacity-9">
-                        Campaign Name
-                    </th>
-                    <th class="text-center align-middle text-uppercase text-secondary text-xs font-weight-bolder opacity-9">
-                        Date Range
+                        Date
                     </th>
                     <th class="text-center align-middle text-uppercase text-secondary text-xs font-weight-bolder opacity-9 ps-2">
                         Traffic Received

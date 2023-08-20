@@ -67,14 +67,29 @@ const handleRatioErrorMsg = () => {
 
 const handleCampaignReportSearch = () => {
     $(".campaignReportSearchBtn").click(function(){
-        var html = "";
-        html += "<tr>";
-        html += "<td class='text-center align-middle'>1</td>";
-        html += "<td class='text-center align-middle'>2</td>";
-        html += "<td class='text-center align-middle'>3</td>";
-        html += "<td class='text-center align-middle'>4</td>";
-        html += "</tr>";
-        $(".campaignReportTableBody").html(html);
+
+        const campaign_id = $("#report_campaign_id").val();
+        const start_date = $("#report_campaign_start_date").val();
+        const end_date = $("#report_campaign_end_date").val();
+        const operator = $("#report_campaign_operator").val();
+
+        axios.get(`/campaign/fetch-report-data/${campaign_id}/${operator}/${start_date}/${end_date}`)
+            .then(function (res) {
+                const {days,start_date} = res.data.data;
+                var html = "";
+
+                for (let index = 0; index < days; index++) {
+                    startDate = moment(start_date).add(index, 'days').format('DD-MMM-YYYY');
+                    html += `<tr>
+                    <td class='text-center align-middle'>${index+1}</td>
+                    <td class='text-center align-middle'>${startDate}</td>
+                    <td class='text-center align-middle'>3</td>
+                    <td class='text-center align-middle'>4</td>
+                    <td class='text-center align-middle'>5</td>
+                    </tr>`; 
+                }
+                $(".campaignReportTableBody").html(html);
+            });
     });
 }
 

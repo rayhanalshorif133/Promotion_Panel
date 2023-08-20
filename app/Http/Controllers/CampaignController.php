@@ -155,17 +155,31 @@ class CampaignController extends Controller
         $operators = Operator::all();
         return view('campaigns.report', compact('campaigns', 'operators'));
     }
-    
-    public function campaignReportData(DataTables $dataTables)
+    // DataTables $dataTables
+    // campaign_id, start_date, end_date, operator
+    public function campaignReportData($campaign_id,$operator, $start_date, $end_date = null)
     {
-        $model = Campaign::query();
-        return $dataTables->eloquent($model)
-            ->addColumn('action', function ($row) {
-                $btn = '<a href="' . route('campaign.show', $row->id) . '" class="btn btn-primary btn-sm">View</a>';
-                return $btn;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+
+        // count of days 
+        $start_date = date('Y-m-d', strtotime($start_date));
+        $end_date = date('Y-m-d', strtotime($end_date));
+        $days = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24);
+        $days = $days + 1;
+        $data = [];
+        $data['campaign_id'] = $campaign_id;
+        $data['operator'] = $operator;
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
+        $data['days'] = $days;
+        return $this->respondWithSuccess('Successfully fetch campaign report\'s data', $data);
+        // $model = Campaign::query();
+        // return $dataTables->eloquent($model)
+        //     ->addColumn('action', function ($row) {
+        //         $btn = '<a href="' . route('campaign.show', $row->id) . '" class="btn btn-primary btn-sm">View</a>';
+        //         return $btn;
+        //     })
+        //     ->rawColumns(['action'])
+        //     ->make(true);
     }
 
 
