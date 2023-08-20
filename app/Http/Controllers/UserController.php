@@ -11,6 +11,12 @@ use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
+
+    public function index(){
+        $users = User::all();
+        return view('user.index', compact('users'));
+    }
+
     public function edit($id)
     {
         $user = User::select()

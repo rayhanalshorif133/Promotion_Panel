@@ -19,6 +19,7 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'user']);
 
         Permission::create(['name' => 'dashboard']);
+        Permission::create(['name' => 'user']);
         Permission::create(['name' => 'campaign']);
         Permission::create(['name' => 'traffic']);
         Permission::create(['name' => 'operator']);

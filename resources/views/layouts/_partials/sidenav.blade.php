@@ -84,6 +84,19 @@
                 <h6 class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6">Management sections</h6>
             </li>
             @endif
+            @if (auth()->user()->can('user'))
+                <li class="nav-item">
+                    <a class="nav-link  @if ($currentRoute == 'user.index') active @endif"
+                        href="{{ route('user.index') }}">
+                        <div
+                            class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
+                            <i
+                                class="@if ($currentRoute == 'user.index') text-white @else text-dark @endif fa-solid fa-user fa-xl"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">User</span>
+                    </a>
+                </li>
+            @endif
             @if (auth()->user()->can('operator'))
                 <li class="nav-item">
                     <a class="nav-link  @if ($currentRoute == 'operator.index') active @endif"

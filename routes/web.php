@@ -48,6 +48,7 @@ Route::middleware('auth')
         Route::name('user.')
             ->prefix('user')
             ->group(function () {
+                Route::get('/index', [UserController::class, 'index'])->name('index');
                 Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
                 Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
             });

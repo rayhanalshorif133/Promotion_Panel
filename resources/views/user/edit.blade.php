@@ -83,7 +83,9 @@
 @push('scripts')
     <script>
         $(function() {
-            new TomSelect('#userEditAccessPermissions');
+            new TomSelect('#userEditAccessPermissions',{
+                plugins: ['remove_button'],
+            });
         });
     </script>
 @endpush
