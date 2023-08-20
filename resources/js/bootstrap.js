@@ -1,5 +1,6 @@
 window._ = require('lodash');
 window.moment = require('moment');
+window.TomSelect = require('tom-select');
 
 try {
     require('bootstrap');

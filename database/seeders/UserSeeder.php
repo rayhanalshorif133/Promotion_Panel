@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class UserSeeder extends Seeder
@@ -28,5 +27,14 @@ class UserSeeder extends Seeder
             ]);
 
         $admin->assignRole('admin');
+        $admin->givePermissionTo(Permission::all());
+
+        $user = User::create([
+            'name' => 'user',
+            'email' => 'user@example.com',
+            'password' => Hash::make('password'),
+            ]);
+        $user->assignRole('user');
+        $user->givePermissionTo('dashboard','campaign','traffic');
     }
 }

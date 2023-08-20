@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "flowbite": "^1.8.1",
-        "moment": "^2.29.4"
+        "moment": "^2.29.4",
+        "tom-select": "^2.2.2"
     }
 }
