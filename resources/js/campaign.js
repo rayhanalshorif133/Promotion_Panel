@@ -1,5 +1,5 @@
 
-$(function(){
+$(function () {
     handleRatioErrorMsg();
     handleCampaignUrlCopyBtn();
     handleCampaignDeleteBtn();
@@ -29,14 +29,14 @@ const handleCampaignDeleteBtn = () => {
                             location.reload();
                         });
                     });
-                    
+
             }
         })
     });
 }
 
 const handleCampaignUrlCopyBtn = () => {
-    $("#campaignUrlCopyBtn").click(function(){
+    $("#campaignUrlCopyBtn").click(function () {
         let url = $(this).attr("data-url");
         // copyToClipboard(url);
         navigator.clipboard.writeText(url);
@@ -44,7 +44,7 @@ const handleCampaignUrlCopyBtn = () => {
         $(this).find('.fa-copy').removeClass('fa-copy').addClass('fa-check');
         // data-bs-original-title
         $(this).attr('data-bs-original-title', 'Copied!').tooltip('show');
-        setTimeout(function(){
+        setTimeout(function () {
             $("#campaignUrlCopyBtn").find('.fa-check').removeClass('fa-check').addClass('fa-copy');
             $("#campaignUrlCopyBtn").attr('data-bs-original-title', 'Copy to clipboard').tooltip('hide');
         }, 1000);
@@ -54,41 +54,64 @@ const handleCampaignUrlCopyBtn = () => {
 
 
 const handleRatioErrorMsg = () => {
-    $("#campaign_create_ratio").keyup(function(){
+    $("#campaign_create_ratio").keyup(function () {
         let ratio = $(this).val();
-        if(ratio > 1){
+        if (ratio > 1) {
             $(this).val(1);
             $("#ratioErrorMsg").text("Ratio must be less than 1");
-        }else{
+        } else {
             $("#ratioErrorMsg").text("");
         }
     });
 }
 
 const handleCampaignReportSearch = () => {
-    $(".campaignReportSearchBtn").click(function(){
+    $(".campaignReportSearchBtn").click(function () {
 
         const campaign_id = $("#report_campaign_id").val();
+        const campaignName = $("#report_campaign_id").find(":selected").text().trim();
         const start_date = $("#report_campaign_start_date").val();
         const end_date = $("#report_campaign_end_date").val();
         const operator = $("#report_campaign_operator").val();
+        const operatorName = $("#report_campaign_operator").find(":selected").text().trim();
+        $("#setCampaignName").parent().removeClass('hidden');
+        $("#setOperatorName").parent().removeClass('hidden');
+        $("#setCampaignName").text(campaignName);
+        $("#setOperatorName").text(operatorName);
+
+        if (!campaign_id || !start_date || !operator) {
+            toastr.error('campaign name, start date,operator name are required');
+            return false;
+        }
 
         axios.get(`/campaign/fetch-report-data/${campaign_id}/${operator}/${start_date}/${end_date}`)
             .then(function (res) {
-                const {days,start_date} = res.data.data;
+                const data = res.data.data;
+                console.log(data);
                 var html = "";
 
-                for (let index = 0; index < days; index++) {
-                    startDate = moment(start_date).add(index, 'days').format('DD-MMM-YYYY');
+                data.forEach((element, index) => {
+                    date = moment(element?.date).format('DD-MMM-YYYY');
                     html += `<tr>
-                    <td class='text-center align-middle'>${index+1}</td>
-                    <td class='text-center align-middle'>${startDate}</td>
-                    <td class='text-center align-middle'>3</td>
-                    <td class='text-center align-middle'>4</td>
-                    <td class='text-center align-middle'>5</td>
-                    </tr>`; 
-                }
+                    <td class='text-center align-middle'>${index + 1}</td>
+                    <td class='text-center align-middle'>${date}</td>
+                    <td class='text-center align-middle'>${element?.traffic_received}</td>
+                    <td class='text-center align-middle'>${element?.post_back_sent}</td>
+                    <td class='text-center align-middle'>${element?.post_back_received}</td>
+                    </tr>`;
+                });
                 $(".campaignReportTableBody").html(html);
+
+                // for (let index = 0; index < days; index++) {
+                //     startDate = moment(start_date).add(index, 'days').format('DD-MMM-YYYY');
+                //     html += `<tr>
+                //     <td class='text-center align-middle'>${index+1}</td>
+                //     <td class='text-center align-middle'>${startDate}</td>
+                //     <td class='text-center align-middle'>3</td>
+                //     <td class='text-center align-middle'>4</td>
+                //     <td class='text-center align-middle'>5</td>
+                //     </tr>`; 
+                // }
             });
     });
 }

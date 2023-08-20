@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Campaign;
 use App\Models\CampaignDetail;
 use App\Models\Operator;
+use App\Models\PostBackReceivedLog;
+use App\Models\PostBackSentLog;
 use App\Models\Publisher;
 use App\Models\Service;
+use App\Models\Traffic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\DataTables;
@@ -157,7 +160,7 @@ class CampaignController extends Controller
     }
     // DataTables $dataTables
     // campaign_id, start_date, end_date, operator
-    public function campaignReportData($campaign_id,$operator, $start_date, $end_date = null)
+    public function campaignReportData($campaign_id, $operator, $start_date, $end_date = null)
     {
 
         // count of days 
@@ -166,20 +169,39 @@ class CampaignController extends Controller
         $days = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24);
         $days = $days + 1;
         $data = [];
-        $data['campaign_id'] = $campaign_id;
-        $data['operator'] = $operator;
-        $data['start_date'] = $start_date;
-        $data['end_date'] = $end_date;
-        $data['days'] = $days;
+
+        for ($index = 0; $index < $days; $index++) {
+            $date = date('Y-m-d', strtotime($start_date . ' + ' . $index . ' days'));
+            $data[$index]['date'] = $date;
+            $data[$index]['traffic_received'] = $this->countOfTrafficReceived($campaign_id, $operator, $date);
+            $data[$index]['post_back_sent'] = $this->countOfPostBackSent($operator, $date);
+            $data[$index]['post_back_received'] = $this->countOfPostBackReceived($operator, $date);
+        }
         return $this->respondWithSuccess('Successfully fetch campaign report\'s data', $data);
-        // $model = Campaign::query();
-        // return $dataTables->eloquent($model)
-        //     ->addColumn('action', function ($row) {
-        //         $btn = '<a href="' . route('campaign.show', $row->id) . '" class="btn btn-primary btn-sm">View</a>';
-        //         return $btn;
-        //     })
-        //     ->rawColumns(['action'])
-        //     ->make(true);
+    }
+
+    public function countOfTrafficReceived($campaign_id, $operator, $date)
+    {
+        $count = Traffic::where('campaign_id', $campaign_id)
+            ->where('received_at', 'like', '%' . $date . '%')
+            ->where('operator_id', $operator)
+            ->count();
+        return $count;
+    }
+
+    public function countOfPostBackReceived($operator, $date)
+    {
+        $count = PostBackReceivedLog::where('received_at', 'like', '%' . $date . '%')
+            ->where('operator_id', $operator)
+            ->count();
+        return $count;
+    }
+    public function countOfPostBackSent($operator, $date)
+    {
+        $count = PostBackSentLog::where('sent_at', 'like', '%' . $date . '%')
+            ->where('operator_id', $operator)
+            ->count();
+        return $count;
     }
 
 

@@ -26,11 +26,11 @@
             <div class="col-md-3">
                     <label for="report_campaign_id" class="required">Campaign Selection</label>
                     <select class="form-control" required name="report_campaign_id" id="report_campaign_id">
-                        <option disabled value="">
+                        <option disabled selected value="">
                             Select a campaign
                         </option>
                         @foreach ($campaigns as $campaign)
-                            <option selected value="{{ $campaign->id }}">
+                            <option  value="{{ $campaign->id }}">
                                 {{ $campaign->name }}
                             </option>                        
                         @endforeach
@@ -39,26 +39,34 @@
             </div>
             <div class="col-md-3">
                     <label for="report_campaign_start_date" class="required">Start Date</label>
-                    <input type="date" class="form-control" value="2023-08-01" id="report_campaign_start_date" required>
+                    <input type="date" class="form-control" value="2023-08-10" id="report_campaign_start_date" required>
             </div>
             <div class="col-md-3">
                     <label for="report_campaign_end_date" class="optional">End Date</label>
-                    <input type="date" class="form-control" value="2023-08-10" id="report_campaign_end_date">
+                    <input type="date" class="form-control" value="2023-08-15" id="report_campaign_end_date">
             </div> 
             <div class="col-md-3">
                 <label for="report_campaign_operator" class="required">Operator Selection</label>
                 <select class="form-control" required id="report_campaign_operator">
-                    <option  disabled value="">
+                    <option  disabled selected value="">
                         Select a operator
                     </option>
                     @foreach ($operators as $operator)
-                    <option selected value="{{ $operator->id }}">
+                    <option value="{{ $operator->id }}">
                         {{ $operator->name }}
                     </option>                        
                 @endforeach
                 </select>
             </div>
-            <div class="flex justify-end my-4 col-md-12">
+            <div class="flex justify-between my-4 col-md-12">
+                <div class="">
+                    <h2 class="text-base text-gray-500 font-semibold hidden">
+                        Campaign Name : <span class="text-gray-600 font-bold" id="setCampaignName"></span>
+                    </h2>
+                    <h2 class="text-base text-gray-500 font-semibold hidden">
+                        Operator Name : <span class="text-gray-600 font-bold" id="setOperatorName"></span>
+                    </h2>
+                </div>
                 <button class="btn bg-gradient-primary campaignReportSearchBtn" id="search">
                     Search
                 </button>

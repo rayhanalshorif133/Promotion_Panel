@@ -76,6 +76,13 @@
                 </tbody>
             </table>
         </div>
+        <div class="px-4 py-2">
+            <h1 class="text-sm font-semibold">
+                <span class="font-bold mr-2">Note:</span> <br>
+                <span class="font-semibold mr-2">Post Back URL:</span>
+                <span class="text-blue-600">//{base_url}/traffic/post-back/{serviceId}/{channel}/{operatorName}/{clickedID}/?...</span>
+            </h1>
+        </div>
     </div>
     @include('traffic.show')
 @endsection
