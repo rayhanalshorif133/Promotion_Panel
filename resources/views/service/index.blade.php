@@ -20,15 +20,15 @@
         <h2 class="text-3xl font-bold text-gray-700">Service</h2>
     </div>
 
-    <div class="w-8/12 mx-auto card">
+    <div class="w-8/12 px-5 mx-auto card">
         <div class="flex justify-between px-4 my-4">
-            <h6>Service's List</h6>
+            <h6 class="text-xl">Service's List</h6>
             <button class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#createService">
                 Add Service
             </button>
         </div>
-        <div class="table-responsive">
-            <table class="table px-2 pb-3 mb-0 align-items-center">
+        <div class="pb-5 table-responsive">
+            <table class="table px-2 pb-3 mb-0 align-items-center" id="serviceTableId">
                 <thead>
                     <tr>
                         <th
@@ -98,4 +98,9 @@
 @endsection
 
 @push('scripts')
+<script>
+    $(function(){
+        $('#serviceTableId').DataTable();
+    });
+</script>
 @endpush

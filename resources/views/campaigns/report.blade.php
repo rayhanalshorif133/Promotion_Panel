@@ -76,7 +76,7 @@
                 Please select a campaign and operator to view the report
             </p>
         </div>
-        <div class="table-responsive">
+        <div class="pb-5 table-responsive">
             <table class="table px-2 pb-3 mb-0 align-items-center" id="campaignReportTableId">
                 <thead>
                     <tr>
@@ -125,6 +125,7 @@
                 const end_date = $("#report_campaign_end_date").val();
                 const operator = $("#report_campaign_operator").val();
                 const operatorName = $("#report_campaign_operator").find(":selected").text().trim();
+                const today = moment().format('YYYY-MM-DD');
                 $("#setCampaignName").parent().removeClass('hidden');
                 $("#setOperatorName").parent().removeClass('hidden');
                 $("#setCampaignName").text(campaignName);
@@ -132,6 +133,24 @@
 
                 if (!campaign_id || !start_date || !operator) {
                     toastr.error('campaign name, start date,operator name are required');
+                    return false;
+                }
+
+                const countDays = moment(end_date).diff(moment(start_date), 'days') + 1;
+
+                if (countDays < 0) {
+                    toastr.error('End date must be greater than start date');
+                    return false;
+                }
+                
+                if(countDays > 365){
+                    $(".campaignReportLoading p").html('Date range must be less than 365 days');
+                    toastr.error('Date range must be less than 365 days');
+                    setTimeout(() => {
+                        $(".campaignReportLoading p").html('Please select a campaign and operator to view the report');
+                        $("#report_campaign_start_date").val(today);
+                        $("#report_campaign_end_date").val(today);
+                    }, 3000);
                     return false;
                 }
 

@@ -86,12 +86,12 @@
             @endif
             @if (auth()->user()->can('user'))
                 <li class="nav-item">
-                    <a class="nav-link  @if ($currentRoute == 'user.index') active @endif"
+                    <a class="nav-link  @if ($currentRoute == 'user.index' || $currentRoute == 'user.view' || $currentRoute == 'user.create' || $currentRoute == 'user.edit') active @endif"
                         href="{{ route('user.index') }}">
                         <div
                             class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
                             <i
-                                class="@if ($currentRoute == 'user.index') text-white @else text-dark @endif fa-solid fa-user fa-xl"></i>
+                                class="@if ($currentRoute == 'user.index' || $currentRoute == 'user.view' || $currentRoute == 'user.create' || $currentRoute == 'user.edit') text-white @else text-dark @endif fa-solid fa-user fa-xl"></i>
                         </div>
                         <span class="nav-link-text ms-1">User</span>
                     </a>
