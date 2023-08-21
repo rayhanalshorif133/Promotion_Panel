@@ -173,22 +173,34 @@ class CampaignController extends Controller
     // campaign_id, start_date, end_date, operator
     public function campaignReportData($campaign_id, $operator, $start_date, $end_date = null)
     {
+        // ajax request
+        if (request()->ajax()) {
+            // count of days 
+            $start_date = date('Y-m-d', strtotime($start_date));
+            $end_date = date('Y-m-d', strtotime($end_date));
+            $days = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24);
+            $days = $days + 1;
+            $data = [];
 
-        // count of days 
-        $start_date = date('Y-m-d', strtotime($start_date));
-        $end_date = date('Y-m-d', strtotime($end_date));
-        $days = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24);
-        $days = $days + 1;
-        $data = [];
+            for ($index = 0; $index < $days; $index++) {
+                $date = date('Y-m-d', strtotime($start_date . ' + ' . $index . ' days'));
+                $data[$index]['date'] = $date;
+                $data[$index]['traffic_received'] = $this->countOfTrafficReceived($campaign_id, $operator, $date);
+                $data[$index]['post_back_sent'] = $this->countOfPostBackSent($operator, $date);
+                $data[$index]['post_back_received'] = $this->countOfPostBackReceived($operator, $date);
+            }
 
-        for ($index = 0; $index < $days; $index++) {
-            $date = date('Y-m-d', strtotime($start_date . ' + ' . $index . ' days'));
-            $data[$index]['date'] = $date;
-            $data[$index]['traffic_received'] = $this->countOfTrafficReceived($campaign_id, $operator, $date);
-            $data[$index]['post_back_sent'] = $this->countOfPostBackSent($operator, $date);
-            $data[$index]['post_back_received'] = $this->countOfPostBackReceived($operator, $date);
+            return DataTables::collection($data)
+                ->addColumn('DT_RowIndex', function () {
+                    static $index = 1;
+                    return $index++;
+                })
+                ->addColumn('action', function ($data) {
+                    return '';
+                })
+                ->toJson();
         }
-        return $this->respondWithSuccess('Successfully fetch campaign report\'s data', $data);
+        return view('campaigns.index');
     }
 
     public function countOfTrafficReceived($campaign_id, $operator, $date)
