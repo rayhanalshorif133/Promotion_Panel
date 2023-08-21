@@ -1067,6 +1067,10 @@ input:checked + .toggle-bg {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+.mx-10 {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
 .-mt-4 {
   margin-top: -1rem;
 }
@@ -1184,6 +1188,9 @@ input:checked + .toggle-bg {
 .h-full {
   height: 100%;
 }
+.h-\[2px\] {
+  height: 2px;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1213,6 +1220,15 @@ input:checked + .toggle-bg {
 }
 .w-full {
   width: 100%;
+}
+.w-9\/12 {
+  width: 75%;
+}
+.w-11\/12 {
+  width: 91.666667%;
+}
+.w-\[90\%\] {
+  width: 90%;
 }
 .min-w-0 {
   min-width: 0px;
@@ -1406,6 +1422,10 @@ input:checked + .toggle-bg {
 .bg-white\/50 {
   background-color: rgb(255 255 255 / 0.5);
 }
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -1426,6 +1446,9 @@ input:checked + .toggle-bg {
 }
 .p-4 {
   padding: 1rem;
+}
+.p-5 {
+  padding: 1.25rem;
 }
 .px-0 {
   padding-left: 0px;
@@ -1567,6 +1590,10 @@ input:checked + .toggle-bg {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 .font-bold {
   font-weight: 700;

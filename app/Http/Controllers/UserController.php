@@ -32,6 +32,9 @@ class UserController extends Controller
                 ->addColumn('action', function (User $user) {
                     return '';
                 })
+                ->addColumn('status', function (User $user) {
+                    return $user->status;
+                })
                 ->toJson();
         }
         return view('user.index');
@@ -49,6 +52,20 @@ class UserController extends Controller
             $permission->checked = $user->hasPermissionTo($permission->name);
         }
         return view('user.edit', compact('user', 'roles', 'permissions'));
+    } 
+    
+    public function view($id)
+    {
+        $user = User::select()
+            ->where('id', $id)
+            ->with('roles', 'permissions')
+            ->first();
+        $roles = Role::all();
+        $permissions = Permission::all();
+        foreach ($permissions as $permission) {
+            $permission->badge = $this->randomBadge();
+        }
+        return view('user.view', compact('user', 'roles', 'permissions'));
     }
 
     // update
@@ -81,5 +98,32 @@ class UserController extends Controller
 
         Session::flash('message', 'User updated successfully');
         return redirect()->back();
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $user = User::find($id);
+            $user->delete();
+            return $this->respondWithSuccess('User deleted successfully');
+        } catch (\Throwable $th) {
+            return $this->respondWithError($th->getMessage());
+        }
+        
+    }
+
+    public function randomBadge()
+    {
+        $badge = [
+            'primary',
+            'secondary',
+            'success',
+            'danger',
+            'warning',
+            'info',
+            'light',
+            'dark',
+        ];
+        return $badge[array_rand($badge)];
     }
 }
