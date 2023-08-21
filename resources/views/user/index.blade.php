@@ -105,35 +105,6 @@
                                     });
                                 }
                             });
-
-                        $.ajax({
-                            url: url,
-                            type: 'DELETE',
-                            data: {
-                                _token: token
-                            },
-                            success: function(response) {
-                                if (response.status) {
-                                    Swal.fire({
-                                        title: 'Deleted!',
-                                        text: 'User has been deleted.',
-                                        icon: 'success',
-                                        confirmButtonColor: '#0d6efd',
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            $('#userTableId').DataTable().ajax.reload();
-                                        }
-                                    });
-                                } else {
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: 'Something went wrong.',
-                                        icon: 'error',
-                                        confirmButtonColor: '#0d6efd',
-                                    });
-                                }
-                            }
-                        });
                     }
                 });
             });

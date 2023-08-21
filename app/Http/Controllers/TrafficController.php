@@ -9,14 +9,36 @@ use App\Models\Publisher;
 use App\Models\Service;
 use App\Models\Traffic;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class TrafficController extends Controller
 {
 
     public function index()
     {
-        $traffics = Traffic::with(['campaign', 'service', 'operator'])->get();
-        return view('traffic.index', compact('traffics'));
+        // ajax request
+        if (request()->ajax()) {
+            $model = Traffic::query()->with('campaign', 'service', 'operator')->orderBy('id', 'desc');
+            return DataTables::eloquent($model)
+                ->addColumn('DT_RowIndex', function () {
+                    static $index = 1;
+                    return $index++;
+                })
+                ->addColumn('campaign_name', function (Traffic $traffic) {
+                    return $traffic->campaign->name;
+                })
+                ->addColumn('service_name', function (Traffic $traffic) {
+                    return $traffic->service->name;
+                })
+                ->addColumn('operator_name', function (Traffic $traffic) {
+                    return $traffic->operator->name;
+                })
+                ->addColumn('action', function (Traffic $traffic) {
+                    return '';
+                })
+                ->toJson();
+        }
+        return view('traffic.index');
     }
 
     public function fetchById($id){
