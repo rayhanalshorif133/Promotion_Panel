@@ -43,6 +43,9 @@
                         <th
                             class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
                             Role</th>
+                        <th
+                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                            Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,7 +71,7 @@
                         },
                         searchable: false,
                         orderable: false,
-                        className: "text-center",
+                        className: "align-self-start text-start",
                         name: 'item'
                     },
                     {
@@ -89,6 +92,15 @@
                         orderable: false,
                         className: "text-center",
                         name: 'role'
+                    },
+                    {
+                        data: function(row) {
+                            return `<a href='/user/edit/${row.id}' class='btn btn-sm bg-gradient-warning'>Edit</a>`;
+                        },
+                        searchable: false,
+                        orderable: false,
+                        className: "text-center",
+                        name: 'action'
                     },
                 ]
             });

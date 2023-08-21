@@ -73,6 +73,7 @@
                         @endrole
 
                         <button type="submit" class="mt-2 btn bg-gradient-primary">Save</button>
+                        <a href="{{ route('user.index') }}" class="mt-2 btn bg-gradient-secondary">Cancel</a>
                     </div>
                 </div>
             </div>

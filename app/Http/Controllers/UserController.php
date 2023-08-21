@@ -29,6 +29,9 @@ class UserController extends Controller
                         return $role->name;
                     })->implode(', ');
                 })
+                ->addColumn('action', function (User $user) {
+                    return '';
+                })
                 ->toJson();
         }
         return view('user.index');
