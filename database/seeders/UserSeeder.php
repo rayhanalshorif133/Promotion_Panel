@@ -36,5 +36,16 @@ class UserSeeder extends Seeder
             ]);
         $user->assignRole('user');
         $user->givePermissionTo('dashboard','campaign','traffic');
+
+        for ($index=0; $index < 20; $index++) { 
+            $user = User::create([
+                'name' => 'user'.$index,
+                'email' => 'user_'.$index . '@gmail.com',
+                'password' => Hash::make('password'),
+                ]);
+            $user->assignRole('user');
+            $user->givePermissionTo('dashboard','campaign','traffic');
+    
+        }
     }
 }
