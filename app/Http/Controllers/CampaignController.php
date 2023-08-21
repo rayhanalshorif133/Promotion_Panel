@@ -12,18 +12,29 @@ use App\Models\Service;
 use App\Models\Traffic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class CampaignController extends Controller
 {
     public function index()
     {
-
-
-        $campaigns = Campaign::select()
-            ->with('publisher', 'campaignDetail')
-            ->get();
-        return view('campaigns.index', compact('campaigns'));
+        // ajax request
+        if (request()->ajax()) {
+            $model = Campaign::query()->with('publisher', 'campaignDetail')->orderBy('id', 'desc');
+            return DataTables::eloquent($model)
+                ->addColumn('DT_RowIndex', function () {
+                    static $index = 1;
+                    return $index++;
+                })
+                ->addColumn('status', function (Campaign $campaign) {
+                    return $campaign->campaignDetail->status;
+                })
+                ->addColumn('action', function (Campaign $user) {
+                    return '';
+                })
+                ->toJson();
+        }
+        return view('campaigns.index');
     }
 
 

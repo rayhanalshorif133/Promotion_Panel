@@ -22,64 +22,40 @@
 
     <div class="w-8/12 mx-auto card">
         <div class="flex justify-between px-4 my-4">
-            <h6>Traffic's List</h6>
+            <h6 class="text-xl">Traffic's List</h6>
         </div>
         <div class="table-responsive">
-            <table class="table px-2 pb-3 mb-0 align-items-center">
+            <table class="table px-2 pb-3 mb-0 align-items-center" id="trafficTableId">
                 <thead>
                     <tr>
                         <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7">
                             #</th>
                         <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
                             Clicked Id</th>
                         <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
                             Campaign Name</th>
                         <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
                             Service Name
                         </th>
                         <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
                             Operator Name
                         </th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions
+                        <th class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7">Actions
                         </th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($traffics as $traffic)
-                        <tr>
-                            <td class="text-center align-middle">
-                                <p class="mb-0 text-xs font-weight-bold">{{ $loop->index + 1 }}</p>
-                            </td>
-                            <td class="text-center align-middle">
-                                <p class="mb-0 text-xs font-weight-bold">{{ $traffic->clicked_id }}</p>
-                            </td>
-                            <td class="text-center align-middle">
-                                <a href="{{route('campaign.show', $traffic->campaign->id)}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Details" class="mb-0 text-xs text-blue-600 font-weight-bold">{{ $traffic->campaign->name }}</a>
-                            </td>
-                            <td class="text-center align-middle">
-                                <p class="mb-0 text-xs font-weight-bold">{{ $traffic->service->name }}</p>
-                            </td>
-                            <td class="text-center align-middle">
-                                <p class="mb-0 text-xs font-weight-bold">{{ $traffic->operator->name }}</p>
-                            </td>
-
-                            <td class="text-center align-middle">
-                                @include('traffic.actionBtns', ['id' => $traffic->id])
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
         <div class="px-4 py-2">
             <h1 class="text-sm font-semibold">
-                <span class="font-bold mr-2">Note:</span> <br>
-                <span class="font-semibold mr-2">Post Back URL:</span>
+                <span class="mr-2 font-bold">Note:</span> <br>
+                <span class="mr-2 font-semibold">Post Back URL:</span>
                 <span class="text-blue-600">//{base_url}/traffic/post-back/{serviceId}/{channel}/{operatorName}/{clickedID}/?...</span>
             </h1>
         </div>

@@ -19,11 +19,11 @@
 
 @section('content')
     <div class="w-full mx-auto">
-        <h2 class="text-3xl font-bold text-gray-700">User</h2>
+        <h2 class="text-3xl font-bold text-gray-700">Users</h2>
     </div>
     <div class="w-8/12 px-5 mx-auto card">
         <div class="flex justify-between px-4 my-4">
-            <h6>User's List</h6>
+            <h6 class="text-xl">User's List</h6>
             <a href="{{route('user.create')}}" class="btn bg-gradient-primary">
                 Add User
             </a>
@@ -137,7 +137,7 @@
                     }
                 });
             });
-        }
+        };
 
 
         const handleDataTable = () => {
@@ -219,6 +219,6 @@
                     },
                 ]
             });
-        }
+        };
     </script>
 @endpush
