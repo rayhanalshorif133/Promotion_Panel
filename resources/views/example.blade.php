@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('head')
+    
+@endsection
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="px-0 pt-1 pb-0 mb-0 bg-transparent breadcrumb me-sm-6 me-5">

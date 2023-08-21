@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-@section('head')
-    <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-@endsection
+
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
@@ -25,10 +23,10 @@
     </div>
     <div class="w-8/12 px-5 mx-auto card">
         <div class="flex justify-between px-4 my-4">
-            <h6>Country's List</h6>
-            <button class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#createCountry">
-                Add Country
-            </button>
+            <h6>User's List</h6>
+            <a href="{{route('user.create')}}" class="btn bg-gradient-primary">
+                Add User
+            </a>
         </div>
         <div class="table-responsive">
             <table class="table px-2 pb-3 mb-0 align-items-start" id="userTableId">
@@ -42,7 +40,16 @@
                             Name</th>
                         <th
                             class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                            Email</th>
+                        <th
+                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
                             Role</th>
+                        <th
+                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                            Status</th>
+                        <th
+                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                            Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,11 +60,87 @@
 @endsection
 
 @push('scripts')
-    {{-- data: 'DT_RowIndex',
-                        name: 'DT_RowIndex' --}}
-    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    
     <script>
         $(function() {
+            handleDataTable();
+            handleDeleteUserItem();
+        });
+
+
+        const handleDeleteUserItem = () => {
+            $('#userTableId').on('click', '.userDeleteBtn', function() {
+                let id = $(this).attr('data-id');
+           
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0d6efd',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        axios.delete(`/user/delete/${id}`)
+                            .then(function(response){
+                                
+                                if (response.status) {
+                                    Swal.fire({
+                                        title: 'Deleted!',
+                                        text: 'User has been deleted.',
+                                        icon: 'success',
+                                        confirmButtonColor: '#0d6efd',
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            $('#userTableId').DataTable().ajax.reload();
+                                        }
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: 'Something went wrong.',
+                                        icon: 'error',
+                                        confirmButtonColor: '#0d6efd',
+                                    });
+                                }
+                            });
+
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                _token: token
+                            },
+                            success: function(response) {
+                                if (response.status) {
+                                    Swal.fire({
+                                        title: 'Deleted!',
+                                        text: 'User has been deleted.',
+                                        icon: 'success',
+                                        confirmButtonColor: '#0d6efd',
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            $('#userTableId').DataTable().ajax.reload();
+                                        }
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: 'Something went wrong.',
+                                        icon: 'error',
+                                        confirmButtonColor: '#0d6efd',
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        }
+
+
+        const handleDataTable = () => {
             $('#userTableId').DataTable({
                 processing: true,
                 serverSide: true,
@@ -68,7 +151,7 @@
                         },
                         searchable: false,
                         orderable: false,
-                        className: "text-center",
+                        className: "align-self-start text-start",
                         name: 'item'
                     },
                     {
@@ -76,12 +159,16 @@
                         name: 'name'
                     },
                     {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
                         data: function(row) {
                             if (row.role == 'admin') {
-                                return "<span class='badge bg-gradient-success'>" + row.role +
+                                return "<span class='badge bg-gradient-primary'>" + row.role +
                                     "</span>";
                             } else {
-                                return "<span class='badge bg-gradient-primary'>" + row.role +
+                                return "<span class='badge bg-gradient-info'>" + row.role +
                                     "</span>";
                             }
                         },
@@ -90,8 +177,48 @@
                         className: "text-center",
                         name: 'role'
                     },
+                    {
+                        data: function(row) {
+                            if (row.status == 'active') {
+                                return "<span class='badge bg-gradient-success'>" + row.status +
+                                    "</span>";
+                            } else {
+                                return "<span class='badge bg-gradient-primary'>" + row.status +
+                                    "</span>";
+                            }
+                        },
+                        searchable: false,
+                        orderable: false,
+                        className: "text-center",
+                        name: 'status'
+                    },
+                    {
+                        data: function(row) {
+
+                            return `
+                            <div class="mt-2 btn-group"  role="group" aria-label="Basic outlined example">
+                                <a href="/user/view/${row.id}" class="px-3 btn btn-sm bg-gradient-primary" type="button"
+                                 data-bs-toggle="tooltip" data-bs-placement="top" title="show details">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a href="/user/edit/${row.id}" class="px-3 btn btn-sm bg-gradient-info campaignEditBtn" type="button"
+                                     data-bs-toggle="tooltip" data-bs-placement="top" title="Edit item">
+                                     <i class="fa fa-pen"></i>
+                                 </a>
+                                 <button class="px-3 btn btn-sm bg-gradient-danger userDeleteBtn" data-id="${row.id}" type="button" data-bs-toggle="tooltip"
+                                     data-bs-placement="top" title="Remove item">
+                                     <i class="fa fa-trash"></i>
+                                 </button>
+                            </div>
+                            `;
+                        },
+                        searchable: false,
+                        orderable: false,
+                        className: "text-center",
+                        name: 'action'
+                    },
                 ]
             });
-        });
+        }
     </script>
 @endpush
