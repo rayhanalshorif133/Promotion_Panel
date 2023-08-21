@@ -24,9 +24,9 @@
     <div class="w-8/12 px-5 mx-auto card">
         <div class="flex justify-between px-4 my-4">
             <h6>User's List</h6>
-            <button class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#createCountry">
+            <a href="{{route('user.create')}}" class="btn bg-gradient-primary">
                 Add User
-            </button>
+            </a>
         </div>
         <div class="table-responsive">
             <table class="table px-2 pb-3 mb-0 align-items-start" id="userTableId">

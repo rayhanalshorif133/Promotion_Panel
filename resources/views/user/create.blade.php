@@ -9,13 +9,13 @@
                 </a>
             </li>
             <li class="text-sm breadcrumb-item text-dark" aria-current="page">
-                <a href="{{route('dashboard')}}" class="text-blue-400">Dashboard</a>
-            </li> 
+                <a href="{{ route('dashboard') }}" class="text-blue-400">Dashboard</a>
+            </li>
             <li class="text-sm breadcrumb-item text-dark" aria-current="page">
-                <a href="{{route('user.index')}}" class="text-blue-400">User List</a>
+                <a href="{{ route('user.index') }}" class="text-blue-400">User List</a>
             </li>
             <li class="text-sm breadcrumb-item text-dark active" aria-current="page">
-                User Update
+                New User
             </li>
 
         </ol>
@@ -25,26 +25,25 @@
 @section('content')
     <div class="w-full mx-auto mb-5">
         <h2 class="text-3xl font-bold text-gray-700">
-            Update User
+            Create a new User
         </h2>
     </div>
     <div class="w-6/12 mx-auto card">
-        <form method="POST" action="{{ route('user.update', $user->id) }}">
+        <form method="POST" action="{{ route('user.store') }}">
             @csrf
-            @method('PUT')
             <div class="px-5 pt-5 pb-3 row">
                 <div class="col-md-12">
                     <h5 class="text-lg">User Basic Info</h5>
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name" class="required">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="User name"
-                                value="{{ $user->name }}">
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="User name">
                         </div>
                         <div class="form-group">
                             <label for="email" class="required">Email</label>
                             <input type="email" class="form-control" id="email" name="email"
-                                placeholder="User email" value="{{ $user->email }}">
+                                placeholder="User email">
                         </div>
                         <div class="form-group">
                             <label for="password" class="optional">Password</label>
@@ -56,34 +55,33 @@
                             <input type="password" class="form-control" id="password" name="password_confirmation"
                                 placeholder="User password">
                         </div>
-                        @role('admin')
-                            <div class="form-group">
-                                <label for="role" class="required">Roles</label>
-                                <select class="form-control" id="role" name="role">
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->name }}" @if ($user->roles[0]->id == $role->id) selected @endif>
-                                            {{ $role->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="userEditAccessPermissions" class="required">Permissions</label>
-                                <select id="userEditAccessPermissions" name="permissions[]" data-placeholder="Select permissions..." autocomplete="off" multiple>
-                                    @foreach ($permissions as $permission)
-                                        <option value="{{ $permission->id }}" @if ($permission->checked == true) selected @endif>
-                                            {{ $permission->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        @endrole
+                        <div class="form-group">
+                            <label for="role" class="required">Roles</label>
+                            <select class="form-control" id="role" name="role">
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->name }}">
+                                        {{ $role->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="userEditAccessPermissions" class="required">Permissions</label>
+                            <select id="userEditAccessPermissions" name="permissions[]"
+                                data-placeholder="Select permissions..." autocomplete="off" multiple>
+                                @foreach ($permissions as $permission)
+                                    <option value="{{ $permission->id }}">
+                                        {{ $permission->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
                         <button type="submit" class="mt-2 btn bg-gradient-primary">Save</button>
                         @php
                             $previousUrl = url()->previous();
                         @endphp
-                        <a href="{{$previousUrl}}" class="mt-2 btn bg-gradient-secondary">Back</a>
+                        <a href="{{ $previousUrl }}" class="mt-2 btn bg-gradient-secondary">Back</a>
                     </div>
                 </div>
             </div>
@@ -94,7 +92,7 @@
 @push('scripts')
     <script>
         $(function() {
-            new TomSelect('#userEditAccessPermissions',{
+            new TomSelect('#userEditAccessPermissions', {
                 plugins: ['remove_button'],
             });
         });

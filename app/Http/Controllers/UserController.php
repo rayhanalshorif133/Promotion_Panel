@@ -18,7 +18,7 @@ class UserController extends Controller
         
         // ajax request
         if (request()->ajax()) {
-            $model = User::query();
+            $model = User::query()->orderBy('id', 'desc');
             return DataTables::eloquent($model)
                 ->addColumn('DT_RowIndex', function () {
                     static $index = 1;
@@ -40,6 +40,13 @@ class UserController extends Controller
         return view('user.index');
     }
 
+    public function create()
+    {
+        $roles = Role::all();
+        $permissions = Permission::all();
+        return view('user.create', compact('roles', 'permissions'));
+    }
+    
     public function edit($id)
     {
         $user = User::select()
@@ -51,6 +58,8 @@ class UserController extends Controller
         foreach ($permissions as $permission) {
             $permission->checked = $user->hasPermissionTo($permission->name);
         }
+
+
         return view('user.edit', compact('user', 'roles', 'permissions'));
     } 
     
@@ -60,12 +69,42 @@ class UserController extends Controller
             ->where('id', $id)
             ->with('roles', 'permissions')
             ->first();
-        $roles = Role::all();
-        $permissions = Permission::all();
-        foreach ($permissions as $permission) {
+        foreach ($user->permissions as $permission) {
             $permission->badge = $this->randomBadge();
         }
-        return view('user.view', compact('user', 'roles', 'permissions'));
+        return view('user.view', compact('user'));
+    }
+
+    // update
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|min:3|max:50',
+            'email' => 'email|required|unique:users,email|max:50',
+            'role' => 'required',
+            'permissions' => 'required'
+        ]);
+
+        $user = new User();
+
+
+
+        if ($request->password != null) {
+            $this->validate($request, [
+                'password' => 'confirmed|min:6|max:50',
+            ]);
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->name = $request->name;
+        $user->email  = $request->email;
+        $user->save();
+
+        $user->assignRole($request->role);
+        $user->givePermissionTo($request->permissions);
+
+        Session::flash('message', 'User created successfully');
+        return redirect()->route('user.index');
     }
 
     // update
@@ -121,9 +160,8 @@ class UserController extends Controller
             'danger',
             'warning',
             'info',
-            'light',
             'dark',
         ];
-        return $badge[array_rand($badge)];
+        return 'badge bg-gradient-' . $badge[array_rand($badge)];
     }
 }

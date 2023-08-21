@@ -8,8 +8,11 @@
                     <i class="fa-solid fa-house"></i>
                 </a>
             </li>
+            <li class="text-sm breadcrumb-item text-dark" aria-current="page">
+                <a href="{{route('user.index')}}" class="text-blue-400">User List</a>
+            </li>
             <li class="text-sm breadcrumb-item text-dark active" aria-current="page">
-                Dashboard
+                User Details
             </li>
         </ol>
     </nav>
@@ -24,7 +27,12 @@
     <div class="row">
         <div class="col-md-6">
             <div class="px-5 py-4 card">
-                <h5 class="text-xl">User Basic Info</h5>
+                <div class="flex justify-between">
+                    <h5 class="text-xl">User Basic Info</h5>
+                    <a href="{{ route('user.edit', $user->id) }}" class="px-3 btn btn-sm btn-primary">
+                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                    </a>
+                </div>
                 <div class="h-[1px] w-[90%] bg-gray-200 my-2"></div>
                 <div class="flex justify-start space-x-2">
                     <div>
@@ -74,13 +82,15 @@
                 <div class="h-[1px] w-[90%] bg-gray-200 my-2"></div>
                 <div class="flex justify-start space-x-2">
                     <div>
-                        @if ($user->status == 'active') 
-                            <span class='badge bg-gradient-info'>{{ $user->status}}</span>
-                        @else
-                            <span class='badge bg-gradient-warning'>{{ $user->status}}</span>
-                        @endif
+                        <p class="mr-2 font-semibold text-gray-700">Permissions:</p>
+                    </div>
+                    <div>
+                        @foreach ($user->permissions as $permission)
+                            <span class="{{$permission->badge}}">{{ $permission->name}}</span>
+                        @endforeach
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
