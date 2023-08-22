@@ -20,6 +20,13 @@ class OperatorController extends Controller
         if ($operator) return $this->respondWithSuccess('Successfully fetched operator data', $operator);
         else  return $this->respondWithError('Operator not found');
     }
+    
+    public function fetchAll()
+    {
+        $operators = Operator::all();
+        if ($operators) return $this->respondWithSuccess('Successfully fetched operator data', $operators);
+        else  return $this->respondWithError('Operator not found');
+    }
 
     public function store(Request $request)
     {

@@ -186,7 +186,7 @@
                                 for (var i = 0; i < row.service.length; i++) {
                                     names.push({
                                         name: row.service[i].name,
-                                        count : row.service[i].count
+                                        count: row.service[i].count
                                     });
                                 }
                                 if (names.length > 0) {
@@ -207,29 +207,34 @@
                         },
                         {
                             data: function(row) {
-
-                                const operatorNames = row?.traffic_received.map(function(traffic_received) {
-                                    return traffic_received.operator_name;
+                                var operators = [];
+                                row?.traffic_received.map(function(traffic_received) {
+                                    operators.push({
+                                        'name': traffic_received.operator_name,
+                                        'count': 0
+                                    });
                                 });
-                                // operatorNames remove duplicates
-                                const uniqueOperatorNames = [...new Set(operatorNames)];
+                                console.log(operators);
 
-                                console.log(uniqueOperatorNames);
-
-                                row?.traffic_received.map(function(traffic_received) { 
-                                    console.log(traffic_received);
-                                })
-                                for (var index = 0; index < row?.traffic_received; index++){
-                                    var html = "";
-                                    console.log(row?.traffic_received[index]);
-                                    for (var i = 0; i < row?.traffic_received[index].length; i++) {
-                                        html += `<div class="py-2">
-                                                <span class="text-xs px-[10px] text-gray-700 font-semibold border-l border-r border-gray-400">${row?.traffic_received[index][i].count}</span>
-                                            </div>`;
+                                row?.traffic_received.map(function(traffic_received) {
+                                    for (var i = 0; i < operators.length; i++) {
+                                        if (operators[i].name == traffic_received
+                                            .operator_name) {
+                                            operators[i].count == 0 ? operators[i]
+                                                .count = traffic_received.count :
+                                                operators[i].count = operators[i].count;
+                                        }
                                     }
-                                    return html;
+                                })
+                                var html = `<div class="flex">`;
+                                for (let index = 0; index < operators.length; index++) {
+                                    html += `<div class="py-2">
+                                                    <span class="text-xs px-[10px] text-gray-700 font-semibold border-l border-r border-gray-400">${operators[index].count}</span>
+                                                </div>`;
                                 }
-                                return 23;
+                                html += `</div>`;
+                                return html;
+
                             },
                             searchable: false,
                             orderable: false,

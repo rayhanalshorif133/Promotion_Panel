@@ -62,6 +62,7 @@ Route::middleware('auth')
             ->prefix('operator')
             ->group(function () {
                 Route::get('/', [OperatorController::class, 'index'])->name('index');
+                Route::get('/fetch-all', [OperatorController::class, 'fetchAll'])->name('fetch-all');
                 Route::get('/fetch/{id}', [OperatorController::class, 'fetchById'])->name('fetch-by-id');
                 Route::post('/store', [OperatorController::class, 'store'])->name('store');
                 Route::post('/update', [OperatorController::class, 'update'])->name('update');
