@@ -207,7 +207,28 @@
                         },
                         {
                             data: function(row) {
-                                console.log(row?.traffic_received);
+
+                                const operatorNames = row?.traffic_received.map(function(traffic_received) {
+                                    return traffic_received.operator_name;
+                                });
+                                // operatorNames remove duplicates
+                                const uniqueOperatorNames = [...new Set(operatorNames)];
+
+                                console.log(uniqueOperatorNames);
+
+                                row?.traffic_received.map(function(traffic_received) { 
+                                    console.log(traffic_received);
+                                })
+                                for (var index = 0; index < row?.traffic_received; index++){
+                                    var html = "";
+                                    console.log(row?.traffic_received[index]);
+                                    for (var i = 0; i < row?.traffic_received[index].length; i++) {
+                                        html += `<div class="py-2">
+                                                <span class="text-xs px-[10px] text-gray-700 font-semibold border-l border-r border-gray-400">${row?.traffic_received[index][i].count}</span>
+                                            </div>`;
+                                    }
+                                    return html;
+                                }
                                 return 23;
                             },
                             searchable: false,

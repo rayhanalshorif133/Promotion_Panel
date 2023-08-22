@@ -268,14 +268,24 @@ class CampaignController extends Controller
     public function countOfTrafficReceived($services, $campaign_id,$date)
     {
         // $services
+        $operators = Operator::all();
         $trafficReceived = [];
         foreach ($services as $value) {
-            $count = $this->countOfTrafficReceivedByService($value['id'],$campaign_id,$date);
-            array_push($trafficReceived, [
-                'service_id' => $value['id'],
-                'service_name' => $value['name'],
-                'count' => $count
-            ]);
+            $service_id = $value['id'];
+            foreach ($operators as $operator) {
+                $operatorIds = Traffic::select('operator_id')
+                    ->where('campaign_id', $campaign_id)
+                    ->where('service_id', $service_id)
+                    ->where('received_at', 'like', '%' . $date . '%')
+                    ->where('operator_id', $operator->id)
+                    ->with('operator')
+                    ->get();
+                array_push($trafficReceived, [
+                    'operator_name' => $operator->name,
+                    'count' => count($operatorIds)
+                ]);
+            }
+
         }
         return $trafficReceived;
     }
