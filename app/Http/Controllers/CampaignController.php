@@ -150,7 +150,7 @@ class CampaignController extends Controller
 
         $campaign = Campaign::select()
             ->where('id', $id)
-            ->with('publisher', 'campaignDetail', 'campaignDetail.operator', 'campaignDetail.service')
+            ->with('publisher', 'campaignDetails')
             ->first();
         $publishers = Publisher::select('id', 'name', 'short_name')->get();
         $operators = Operator::select('id', 'name')->get();
