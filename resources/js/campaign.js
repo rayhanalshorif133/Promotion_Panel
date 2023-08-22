@@ -35,7 +35,7 @@ const handleCampaignDeleteBtn = () => {
 }
 
 const handleCampaignUrlCopyBtn = () => {
-    $("#campaignUrlCopyBtn").click(function () {
+    $(".campaignUrlCopyBtn").click(function () {
         let url = $(this).attr("data-url");
         // copyToClipboard(url);
         navigator.clipboard.writeText(url);
@@ -47,7 +47,6 @@ const handleCampaignUrlCopyBtn = () => {
             $("#campaignUrlCopyBtn").find('.fa-check').removeClass('fa-check').addClass('fa-copy');
             $("#campaignUrlCopyBtn").attr('data-bs-original-title', 'Copy to clipboard').tooltip('hide');
         }, 1000);
-        console.log(url);
     });
 }
 

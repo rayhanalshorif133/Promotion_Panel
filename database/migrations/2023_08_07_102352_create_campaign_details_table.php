@@ -18,9 +18,7 @@ class CreateCampaignDetailsTable extends Migration
             $table->foreignId('campaign_id')->constrained('campaigns')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('operator_id')->constrained('operators')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('service_id')->constrained('services')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('ratio');
             $table->string('url')->nullable();
-            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }

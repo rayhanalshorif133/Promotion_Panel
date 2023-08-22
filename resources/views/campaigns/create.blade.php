@@ -60,32 +60,6 @@
                 <div class="col-md-6">
                     <h5 class="text-lg">Campaign Details Info</h5>
                     <div class="form-group">
-                        <label for="operator" class="required">Select Operator</label>
-                        <select class="form-control" required name="operator_id" id="operator">
-                            <option selected disabled value="">
-                                Select a operator
-                            </option>
-                            @foreach ($operators as $operator)
-                                <option value="{{ $operator->id }}">
-                                    {{ $operator->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="service" class="required">Select service</label>
-                        <select class="form-control" required name="service_id" id="service">
-                            <option selected disabled value="">
-                                Select a service
-                            </option>
-                            @foreach ($services as $service)
-                                <option value="{{ $service->id }}">
-                                    {{ $service->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="ratio" class="required">Ratio</label>
                         <input type="number" class="form-control" required id="campaign_create_ratio" name="ratio"
                             placeholder="Ratio" min="0" max="1" step="any">
@@ -98,11 +72,82 @@
                             <option value="inactive">Inactive</option>
                         </select>
                     </div>
-                    <div class="float-right mx-auto">
-                        <button type="submit" class="btn bg-gradient-primary">Submit</button>
+                    
+                </div>
+                <h5 class="text-lg">Campaign's operator and service Info</h5>
+                <div class="row copyCampaignOperatorAndService">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="operator" class="required">Select Operator</label>
+                            <select class="form-control" required name="operatorIds[]" id="operator">
+                                <option selected disabled value="">
+                                    Select a operator
+                                </option>
+                                @foreach ($operators as $operator)
+                                    <option value="{{ $operator->id }}">
+                                        {{ $operator->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="service" class="required">Select service</label>
+                            <select class="form-control" required name="serviceIds[]" id="service">
+                                <option selected disabled value="">
+                                    Select a service
+                                </option>
+                                @foreach ($services as $service)
+                                    <option value="{{ $service->id }}">
+                                        {{ $service->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="md:float-left text-center md:mt-[30px]">
+                            <button type="button" class="btn bg-gradient-secondary campaignAddedNewInfo">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row insertAddedInfo"></div>
+                <div class="float-right mx-auto">
+                    <button type="submit" class="btn bg-gradient-success">Submit</button>
                 </div>
             </div>
         </form>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    console.log("clicked");
+    $(function(){
+        handleNewInsetInfo();
+    });
+
+    const handleNewInsetInfo = () => {
+        $(document).on("click",".campaignAddedNewInfo",function(){
+            var html = $(".copyCampaignOperatorAndService").html();
+            $(".insertAddedInfo").append(html);
+            $(".insertAddedInfo").find(".col-md-4 .campaignAddedNewInfo")
+            .removeClass("campaignAddedNewInfo").addClass("campaignRemoveInfo")
+            .html('<i class="fa-solid fa-minus"></i>').removeClass("bg-gradient-secondary").addClass("btn bg-gradient-primary");
+            removeAddedInfo();
+        });
+        
+    };
+    const removeAddedInfo = () => {
+        $(document).on("click",".campaignRemoveInfo",function(){
+            const thisParent = $(this).closest(".col-md-4");
+            $(thisParent).prev().prev().remove();
+            $(thisParent).prev().remove();
+            $(thisParent).remove();
+        });
+    };
+</script>
+@endpush

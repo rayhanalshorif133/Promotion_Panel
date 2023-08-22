@@ -13,7 +13,9 @@ class Campaign extends Model
 
     protected $fillable = [
         'publisher_id',
-        'name'
+        'name',
+        'ratio',
+        'status'
     ];
 
     public function publisher()
@@ -21,8 +23,8 @@ class Campaign extends Model
         return $this->belongsTo(Publisher::class);
     }
 
-    public function campaignDetail()
+    public function campaignDetails()
     {
-        return $this->hasOne(CampaignDetail::class);
+        return $this->hasMany(CampaignDetail::class);
     }
 }

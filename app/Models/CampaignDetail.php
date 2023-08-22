@@ -15,9 +15,7 @@ class CampaignDetail extends Model
         'campaign_id',
         'operator_id',
         'service_id',
-        'ratio',
         'url',
-        'status'
     ];
 
     public function campaign()

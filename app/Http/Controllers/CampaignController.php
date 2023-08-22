@@ -20,14 +20,17 @@ class CampaignController extends Controller
     {
         // ajax request
         if (request()->ajax()) {
-            $model = Campaign::query()->with('publisher', 'campaignDetail')->orderBy('id', 'desc');
+            $model = Campaign::query()->with('publisher')->orderBy('id', 'desc');
             return DataTables::eloquent($model)
                 ->addColumn('DT_RowIndex', function () {
                     static $index = 1;
                     return $index++;
                 })
+                ->addColumn('ratio', function (Campaign $campaign) {
+                    return $campaign->ratio;
+                })
                 ->addColumn('status', function (Campaign $campaign) {
-                    return $campaign->campaignDetail->status;
+                    return $campaign->status;
                 })
                 ->addColumn('action', function (Campaign $user) {
                     return '';
@@ -50,44 +53,70 @@ class CampaignController extends Controller
 
     public function store(Request $request)
     {
+
+
+
+
         // validate
         $request->validate([
             'name' => 'required|unique:campaigns',
             'publisher_id' => 'required',
-            'operator_id' => 'required',
-            'service_id' => 'required',
+            'operatorIds' => 'required',
+            'serviceIds' => 'required',
             'ratio' => 'required',
             'status' => 'required'
         ]);
 
 
+        if(count($request->operatorIds) != count($request->serviceIds)){
+            Session::flash('message', 'Operator and Service count does not match');
+            Session::flash('type', 'error');
+            return redirect()->back();
+        }
+
+        
         try {
             // store
             $campaign = new Campaign();
             $campaign->name = $request->name;
             $campaign->publisher_id = $request->publisher_id;
+            $campaign->ratio = $request->ratio;
+            $campaign->status = $request->status;
             $campaign->save();
 
-            $findOperator = Operator::find($request->operator_id);
-            $campaignDetail = new CampaignDetail();
-            $campaignDetail->campaign_id = $campaign->id;
-            $campaignDetail->operator_id = $request->operator_id;
-            $campaignDetail->service_id = $request->service_id;
-            $campaignDetail->ratio = $request->ratio;
-            if ($findOperator) {
-                // https or http
-                $currentDomain = $_SERVER['SERVER_PROTOCOL'];
-                $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
-                // domain
-                $currentDomain = $_SERVER['SERVER_NAME'];
-                // url
-                $url = $protocol . $currentDomain . "/traffic/" . $campaign->id . "/" . $request->service_id . "/" . $findOperator->name .
-                    "/{clickedID}/";
+            for ($index=0; $index < count($request->operatorIds) ; $index++) { 
 
-                $campaignDetail->url = $url;
+                $findCampaignDetail = CampaignDetail::where('campaign_id', $campaign->id)
+                ->where('operator_id', $request->operatorIds[$index])
+                ->where('service_id', $request->serviceIds[$index])
+                ->first();
+
+                if($findCampaignDetail){
+                    $campaign->delete();
+                    Session::flash('message', 'Operator and Service already exists');
+                    Session::flash('type', 'error');
+                    return redirect()->back();
+                }
+
+                $campaignDetail = new CampaignDetail();
+                $campaignDetail->campaign_id = $campaign->id;
+                $campaignDetail->operator_id = $request->operatorIds[$index];
+                $campaignDetail->service_id = $request->serviceIds[$index];
+                $findOperator = Operator::find($campaignDetail->operator_id);
+                if ($findOperator) {
+                    // https or http
+                    $currentDomain = $_SERVER['SERVER_PROTOCOL'];
+                    $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+                    // domain
+                    $currentDomain = $_SERVER['SERVER_NAME'];
+                    // url
+                    $url = $protocol . $currentDomain . "/traffic/" . $campaign->id . "/" . $campaignDetail->service_id . "/" . $findOperator->name .
+                        "/{clickedID}/";
+        
+                    $campaignDetail->url = $url;
+                }
+                $campaignDetail->save();
             }
-            $campaignDetail->status = $request->status;
-            $campaignDetail->save();
             Session::flash('message', 'Successfully created a new campaign');
             return redirect()->route('campaign.index');
         } catch (\Throwable $th) {
@@ -105,9 +134,15 @@ class CampaignController extends Controller
 
         $campaign = Campaign::select()
             ->where('id', $id)
-            ->with('publisher', 'campaignDetail', 'campaignDetail.operator', 'campaignDetail.service')
+            ->with('publisher', 'campaignDetails')
             ->first();
-        return view('campaigns.show', compact('campaign'));
+        if($campaign){
+            return view('campaigns.show', compact('campaign'));
+        }else{
+            Session::flash('message', 'No campaign found');
+            Session::flash('type', 'error');
+            return redirect()->route('campaign.index');
+        }
     }
 
     public function edit($id)

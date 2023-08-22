@@ -17,6 +17,8 @@ class CreateCampaignsTable extends Migration
             $table->id();
             $table->foreignId('publisher_id')->constrained('publishers')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name')->unique();
+            $table->string('ratio');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }

@@ -108,8 +108,7 @@
     </div>
 @endsection
 
-@section('script')
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+@push('scripts')
 
     <script>
         $(function() {
@@ -213,3 +212,5 @@
             });
         };
     </script>
+
+@endpush

@@ -19,13 +19,13 @@
         <h2 class="text-3xl font-bold text-gray-700">Campaigns</h2>
     </div>
     <div class="w-8/12 px-5 mx-auto card">
-        <div class="flex justify-between px-4 my-4">
+        <div class="flex justify-between my-4">
             <h6 class="text-xl">Campaign's List</h6>
             <a href="{{ route('campaign.create') }}" class="btn bg-gradient-primary">
                 Add Campaign
             </a>
         </div>
-        <div class="table-responsive">
+        <div class="pb-5 table-responsive">
             <table class="table px-2 pb-3 mb-0 align-items-start" id="campaignTableId">
                 <thead>
                     <tr>
@@ -36,6 +36,8 @@
                             class="align-self-start text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                             Name</th>
                         <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            Ratio</th>
+                        <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             Status</th>
                         <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions
                         </th>
@@ -43,46 +45,10 @@
                 </thead>
                 <tbody></tbody>
             </table>
-            {{-- <tbody>
-                @foreach ($campaigns as $campaign)
-                    <tr>
-                        <td class="text-center align-middle">
-                            <p class="mb-0 text-xs font-weight-bold">{{ $loop->index + 1 }}</p>
-                        </td>
-                        <td class="text-center align-middle">
-                            <p class="mb-0 text-xs font-weight-bold">{{ $campaign->name }}</p>
-                        </td>
-                        <td class="text-center align-middle">
-                            <p class="mb-0 text-xs font-weight-bold">{{ $campaign->publisher->name }}</p>
-                        </td>
-                        <td class="text-sm text-center align-middle">
-                            @if ($campaign->campaignDetail)
-                                @if ($campaign->campaignDetail->status == 'active')
-                                    <span class="badge badge-sm bg-gradient-success">
-                                        {{ $campaign->campaignDetail->status }}
-                                    </span>
-                                @else
-                                    <span class="badge badge-sm bg-gradient-danger">
-                                        {{ $campaign->campaignDetail->status }}
-                                    </span>
-                                @endif
-                            @else
-                                <span class="badge badge-sm bg-gradient-danger">
-                                    Not Active
-                                </span>
-                            @endif
-                        </td>
-                        <td class="text-center align-middle">
-                            @include('campaigns.actionBtns', ['id' => $campaign->id])
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody> --}}
         </div>
     </div>
 @endsection
 @push('scripts')
-    
     <script>
         $(function() {
             handleDataTable();
@@ -93,7 +59,7 @@
         const handleDeleteUserItem = () => {
             $('#campaignTableId').on('click', '.campaignItemDeleteBtn', function() {
                 let id = $(this).attr('data-id');
-           
+
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -105,8 +71,8 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         axios.delete(`/campaign/delete/${id}`)
-                            .then(function(response){
-                                
+                            .then(function(response) {
+
                                 if (response.status) {
                                     Swal.fire({
                                         title: 'Deleted!',
@@ -143,7 +109,8 @@
                                         confirmButtonColor: '#0d6efd',
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            $('#campaignTableId').DataTable().ajax.reload();
+                                            $('#campaignTableId').DataTable().ajax
+                                                .reload();
                                         }
                                     });
                                 } else {
@@ -179,6 +146,16 @@
                     {
                         data: 'name',
                         name: 'name'
+                    },
+                    {
+                        data: function(row) {
+                            return "<span class='badge bg-gradient-secondary'>" + row.ratio +
+                                "</span>";
+                        },
+                        searchable: false,
+                        orderable: false,
+                        className: "text-center",
+                        name: 'ratio'
                     },
                     {
                         data: function(row) {
