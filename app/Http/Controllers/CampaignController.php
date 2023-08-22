@@ -239,16 +239,10 @@ class CampaignController extends Controller
 
             for ($index = 0; $index < $days; $index++) {
                 $date = date('Y-m-d', strtotime($start_date . ' + ' . $index . ' days'));
+                $services = $this->getServices($campaign_id,$date);
                 $data[$index]['date'] = $date;
-                $data[$index]['services'] = $this->getServices($campaign_id,$date);
-                $data[$index]['traffic_received'] = $this->countOfTrafficReceived($campaign_id,$date);
-                $data[$index]['post_back_sent'] = $this->countOfPostBackSent($date);
-                $data[$index]['post_back_received'] = $this->countOfPostBackReceived($date);
-
-                // 
-                $data[$index]['date'] = $date;
-                $data[$index]['services'] = "CFC";
-                $data[$index]['traffic_received'] = $this->countOfTrafficReceived($campaign_id,$date);
+                $data[$index]['services'] = $services;
+                $data[$index]['traffic_received'] = $this->countOfTrafficReceived($services,$campaign_id,$date);
                 $data[$index]['post_back_sent'] = $this->countOfPostBackSent($date);
                 $data[$index]['post_back_received'] = $this->countOfPostBackReceived($date);
             }
@@ -257,6 +251,9 @@ class CampaignController extends Controller
                 ->addColumn('DT_RowIndex', function () {
                     static $index = 1;
                     return $index++;
+                })
+                ->addColumn('traffic_received', function ($data) {
+                    return $data['traffic_received'];
                 })
                 ->addColumn('service', function ($data) {
                     return $data['services'];
@@ -268,9 +265,24 @@ class CampaignController extends Controller
         }
     }
 
-    public function countOfTrafficReceived($campaign_id,$date)
+    public function countOfTrafficReceived($services, $campaign_id,$date)
     {
+        // $services
+        $trafficReceived = [];
+        foreach ($services as $value) {
+            $count = $this->countOfTrafficReceivedByService($value['id'],$campaign_id,$date);
+            array_push($trafficReceived, [
+                'service_id' => $value['id'],
+                'service_name' => $value['name'],
+                'count' => $count
+            ]);
+        }
+        return $trafficReceived;
+    }
+
+    protected function countOfTrafficReceivedByService($service_id,$campaign_id,$date){
         $count = Traffic::where('campaign_id', $campaign_id)
+            ->where('service_id', $service_id)
             ->where('received_at', 'like', '%' . $date . '%')
             ->count();
         return $count;
@@ -287,7 +299,8 @@ class CampaignController extends Controller
         foreach ($services as $key => $value) {
             array_push($serviceNameIds, [
                 'id' => $value->service->id,
-                'name' => $value->service->name
+                'name' => $value->service->name,
+                'count' => $this->countOfTrafficReceivedByService($value->service->id,$campaign_id,$date)
             ]);
         }
         return $serviceNameIds;

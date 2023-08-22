@@ -37,11 +37,11 @@
             </div>
             <div class="col-md-3">
                 <label for="report_campaign_start_date" class="required">Start Date</label>
-                <input type="date" class="form-control" value="2023-08-20" id="report_campaign_start_date" required>
+                <input type="date" class="form-control" value="2023-08-22" id="report_campaign_start_date" required>
             </div>
             <div class="col-md-3">
                 <label for="report_campaign_end_date" class="optional">End Date</label>
-                <input type="date" class="form-control" value="2023-08-24" id="report_campaign_end_date">
+                <input type="date" class="form-control" value="2023-08-22" id="report_campaign_end_date">
             </div>
             <div class="col-md-3 my-4 text-center">
                 <button class="btn bg-gradient-primary campaignReportSearchBtn mt-1" id="search">
@@ -79,7 +79,8 @@
                             Traffic Received
                             <div class="flex py-2">
                                 @foreach ($operators as $key => $operator)
-                                <span class="text-xs px-[10px] text-gray-700 font-semibold @if($key == 0) border-l border-r @else border-r @endif  border-gray-400">{{$operator->name}}</span>
+                                    <span
+                                        class="text-xs px-[10px] text-gray-700 font-semibold @if ($key == 0) border-l border-r @else border-r @endif  border-gray-400">{{ $operator->name }}</span>
                                 @endforeach
                             </div>
                         </th>
@@ -88,7 +89,8 @@
                             Postback Sent
                             <div class="flex py-2">
                                 @foreach ($operators as $key => $operator)
-                                <span class="text-xs px-[10px] text-gray-700 font-semibold @if($key == 0) border-l border-r @else border-r @endif  border-gray-400">{{$operator->name}}</span>
+                                    <span
+                                        class="text-xs px-[10px] text-gray-700 font-semibold @if ($key == 0) border-l border-r @else border-r @endif  border-gray-400">{{ $operator->name }}</span>
                                 @endforeach
                             </div>
                         </th>
@@ -97,7 +99,8 @@
                             Postback Received
                             <div class="flex py-2">
                                 @foreach ($operators as $key => $operator)
-                                <span class="text-xs px-[10px] text-gray-700 font-semibold @if($key == 0) border-l border-r @else border-r @endif  border-gray-400">{{$operator->name}}</span>
+                                    <span
+                                        class="text-xs px-[10px] text-gray-700 font-semibold @if ($key == 0) border-l border-r @else border-r @endif  border-gray-400">{{ $operator->name }}</span>
                                 @endforeach
                             </div>
                         </th>
@@ -179,7 +182,23 @@
                         },
                         {
                             data: function(row) {
-                                return row.service;
+                                var names = [];
+                                for (var i = 0; i < row.service.length; i++) {
+                                    names.push({
+                                        name: row.service[i].name,
+                                        count : row.service[i].count
+                                    });
+                                }
+                                if (names.length > 0) {
+                                    var html = "";
+                                    for (let index = 0; index < names.length; index++) {
+                                        html += `<div class="py-2">
+                                                <span class="text-xs px-[10px] text-gray-700 font-semibold border-l border-r border-gray-400">${names[index].name} (${names[index].count})</span>
+                                            </div>`;
+                                    }
+                                    return html;
+                                } else if (names.length == 0)
+                                    return `<div class="py-2 text-xs px-[10px] text-gray-700 font-semibold border-l border-r border-gray-400">No Traffic</div>`;
                             },
                             searchable: false,
                             orderable: false,
@@ -188,7 +207,8 @@
                         },
                         {
                             data: function(row) {
-                                return row?.traffic_received;
+                                console.log(row?.traffic_received);
+                                return 23;
                             },
                             searchable: false,
                             orderable: false,
