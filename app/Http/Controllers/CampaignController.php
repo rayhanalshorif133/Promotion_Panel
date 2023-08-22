@@ -68,13 +68,13 @@ class CampaignController extends Controller
         ]);
 
 
-        if(count($request->operatorIds) != count($request->serviceIds)){
+        if (count($request->operatorIds) != count($request->serviceIds)) {
             Session::flash('message', 'Operator and Service count does not match');
             Session::flash('type', 'error');
             return redirect()->back();
         }
 
-        
+
         try {
             // store
             $campaign = new Campaign();
@@ -84,14 +84,14 @@ class CampaignController extends Controller
             $campaign->status = $request->status;
             $campaign->save();
 
-            for ($index=0; $index < count($request->operatorIds) ; $index++) { 
+            for ($index = 0; $index < count($request->operatorIds); $index++) {
 
                 $findCampaignDetail = CampaignDetail::where('campaign_id', $campaign->id)
-                ->where('operator_id', $request->operatorIds[$index])
-                ->where('service_id', $request->serviceIds[$index])
-                ->first();
+                    ->where('operator_id', $request->operatorIds[$index])
+                    ->where('service_id', $request->serviceIds[$index])
+                    ->first();
 
-                if($findCampaignDetail){
+                if ($findCampaignDetail) {
                     $campaign->delete();
                     Session::flash('message', 'Operator and Service already exists');
                     Session::flash('type', 'error');
@@ -112,7 +112,7 @@ class CampaignController extends Controller
                     // url
                     $url = $protocol . $currentDomain . "/traffic/" . $campaign->id . "/" . $campaignDetail->service_id . "/" . $findOperator->name .
                         "/{clickedID}/";
-        
+
                     $campaignDetail->url = $url;
                 }
                 $campaignDetail->save();
@@ -136,9 +136,9 @@ class CampaignController extends Controller
             ->where('id', $id)
             ->with('publisher', 'campaignDetails')
             ->first();
-        if($campaign){
+        if ($campaign) {
             return view('campaigns.show', compact('campaign'));
-        }else{
+        } else {
             Session::flash('message', 'No campaign found');
             Session::flash('type', 'error');
             return redirect()->route('campaign.index');
@@ -162,12 +162,14 @@ class CampaignController extends Controller
 
     public function update(Request $request)
     {
+
+
         // validate
         $request->validate([
             'name' => 'required|unique:campaigns,name,' . $request->id,
             'publisher_id' => 'required',
-            'operator_id' => 'required',
-            'service_id' => 'required',
+            'operatorIds' => 'required',
+            'serviceIds' => 'required',
             'ratio' => 'required',
             'status' => 'required'
         ]);
@@ -178,17 +180,37 @@ class CampaignController extends Controller
             $campaign = Campaign::find($request->id);
             $campaign->name = $request->name;
             $campaign->publisher_id = $request->publisher_id;
+            $campaign->ratio = $request->ratio;
+            $campaign->status = $request->status;
             $campaign->save();
+            $campaignDetail = CampaignDetail::where('campaign_id', $request->id)
+                ->get();
+            if ($campaignDetail) {
+                foreach ($campaignDetail as $key => $value) {
+                    $value->delete();
+                }
+            }
+            for ($index = 0; $index < count($request->operatorIds); $index++) {
 
-            $findOperator = Operator::find($request->operator_id);
-            $campaignDetail = CampaignDetail::where('campaign_id', $campaign->id)->first();
-            $campaignDetail->campaign_id = $campaign->id;
-            $campaignDetail->operator_id = $request->operator_id;
-            $campaignDetail->service_id = $request->service_id;
-            $campaignDetail->ratio = $request->ratio;
-            $campaignDetail->url = $request->url;
-            $campaignDetail->status = $request->status;
-            $campaignDetail->save();
+                $campaignDetail = new CampaignDetail();
+                $campaignDetail->campaign_id = $campaign->id;
+                $campaignDetail->operator_id = $request->operatorIds[$index];
+                $campaignDetail->service_id = $request->serviceIds[$index];
+                $findOperator = Operator::find($campaignDetail->operator_id);
+                if ($findOperator) {
+                    // https or http
+                    $currentDomain = $_SERVER['SERVER_PROTOCOL'];
+                    $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+                    // domain
+                    $currentDomain = $_SERVER['SERVER_NAME'];
+                    // url
+                    $url = $protocol . $currentDomain . "/traffic/" . $campaign->id . "/" . $campaignDetail->service_id . "/" . $findOperator->name .
+                        "/{clickedID}/";
+
+                    $campaignDetail->url = $url;
+                }
+                $campaignDetail->save();
+            }
             Session::flash('message', 'Successfully created a new campaign');
             return redirect()->route('campaign.index');
         } catch (\Throwable $th) {
@@ -204,8 +226,6 @@ class CampaignController extends Controller
         $operators = Operator::all();
         return view('campaigns.report', compact('campaigns', 'operators'));
     }
-    // DataTables $dataTables
-    // campaign_id, start_date, end_date, operator
     public function campaignReportData($campaign_id, $operator, $start_date, $end_date = null)
     {
         // ajax request
