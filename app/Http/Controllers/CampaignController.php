@@ -226,7 +226,7 @@ class CampaignController extends Controller
         $operators = Operator::all();
         return view('campaigns.report', compact('campaigns', 'operators'));
     }
-    public function campaignReportData($campaign_id, $operator, $start_date, $end_date = null)
+    public function campaignReportData($campaign_id, $start_date, $end_date = null)
     {
         // ajax request
         if (request()->ajax()) {
@@ -240,9 +240,17 @@ class CampaignController extends Controller
             for ($index = 0; $index < $days; $index++) {
                 $date = date('Y-m-d', strtotime($start_date . ' + ' . $index . ' days'));
                 $data[$index]['date'] = $date;
-                $data[$index]['traffic_received'] = $this->countOfTrafficReceived($campaign_id, $operator, $date);
-                $data[$index]['post_back_sent'] = $this->countOfPostBackSent($operator, $date);
-                $data[$index]['post_back_received'] = $this->countOfPostBackReceived($operator, $date);
+                $data[$index]['services'] = $this->getServices($campaign_id,$date);
+                $data[$index]['traffic_received'] = $this->countOfTrafficReceived($campaign_id,$date);
+                $data[$index]['post_back_sent'] = $this->countOfPostBackSent($date);
+                $data[$index]['post_back_received'] = $this->countOfPostBackReceived($date);
+
+                // 
+                $data[$index]['date'] = $date;
+                $data[$index]['services'] = "CFC";
+                $data[$index]['traffic_received'] = $this->countOfTrafficReceived($campaign_id,$date);
+                $data[$index]['post_back_sent'] = $this->countOfPostBackSent($date);
+                $data[$index]['post_back_received'] = $this->countOfPostBackReceived($date);
             }
 
             return DataTables::collection($data)
@@ -250,34 +258,50 @@ class CampaignController extends Controller
                     static $index = 1;
                     return $index++;
                 })
+                ->addColumn('service', function ($data) {
+                    return $data['services'];
+                })
                 ->addColumn('action', function ($data) {
                     return '';
                 })
                 ->toJson();
         }
-        return view('campaigns.index');
     }
 
-    public function countOfTrafficReceived($campaign_id, $operator, $date)
+    public function countOfTrafficReceived($campaign_id,$date)
     {
         $count = Traffic::where('campaign_id', $campaign_id)
             ->where('received_at', 'like', '%' . $date . '%')
-            ->where('operator_id', $operator)
             ->count();
         return $count;
+    }
+    
+    public function getServices($campaign_id,$date)
+    {
+        $serviceNameIds = [];
+        $services = Traffic::select("service_id")->where('campaign_id', $campaign_id)
+            ->where('received_at', 'like', '%' . $date . '%')
+            ->with('service')
+            ->get()
+            ->unique('service_id');
+        foreach ($services as $key => $value) {
+            array_push($serviceNameIds, [
+                'id' => $value->service->id,
+                'name' => $value->service->name
+            ]);
+        }
+        return $serviceNameIds;
     }
 
-    public function countOfPostBackReceived($operator, $date)
+    public function countOfPostBackReceived($date)
     {
         $count = PostBackReceivedLog::where('received_at', 'like', '%' . $date . '%')
-            ->where('operator_id', $operator)
             ->count();
         return $count;
     }
-    public function countOfPostBackSent($operator, $date)
+    public function countOfPostBackSent($date)
     {
         $count = PostBackSentLog::where('sent_at', 'like', '%' . $date . '%')
-            ->where('operator_id', $operator)
             ->count();
         return $count;
     }
