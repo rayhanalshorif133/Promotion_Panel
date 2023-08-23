@@ -46,10 +46,11 @@
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
+
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     <style>
         .dataTables_wrapper .dataTables_length select {
-            width: 4.2rem!important;
+            width: 4.2rem !important;
         }
     </style>
     @yield('head')
@@ -120,8 +121,8 @@
 <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
 {{-- <script src="{{ asset('assets/js/customChart.js') }}"></script> --}}
-
 <script>
+     
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
         var options = {

@@ -243,8 +243,8 @@ class CampaignController extends Controller
                 $data[$index]['date'] = $date;
                 $data[$index]['services'] = $services;
                 $data[$index]['traffic_received'] = $this->countOfTrafficReceived($services,$campaign_id,$date);
+                $data[$index]['post_back_received'] = $this->countOfPostBackReceived($services,$date);
                 $data[$index]['post_back_sent'] = $this->countOfPostBackSent($date);
-                $data[$index]['post_back_received'] = $this->countOfPostBackReceived($date);
             }
 
             return DataTables::collection($data)
@@ -316,10 +316,28 @@ class CampaignController extends Controller
         return $serviceNameIds;
     }
 
-    public function countOfPostBackReceived($date)
+    public function countOfPostBackReceived($services,$date)
     {
-        $count = PostBackReceivedLog::where('received_at', 'like', '%' . $date . '%')
-            ->count();
+        $operators = Operator::all();
+        $trafficReceived = [];
+        foreach ($services as $value) {
+            $service_id = $value['id'];
+            foreach ($operators as $operator) {
+                // 'operator_id',
+                // 'service_id',
+                // 'channel',
+                // 'clicked_id',
+                // 'others',
+                $count = PostBackReceivedLog::where('received_at', 'like', '%' . $date . '%')
+                    ->count();
+                array_push($trafficReceived, [
+                    'operator_name' => $operator->name,
+                    'count' => count($operatorIds)
+                ]);
+            }
+
+        }
+        return $trafficReceived;
         return $count;
     }
     public function countOfPostBackSent($date)

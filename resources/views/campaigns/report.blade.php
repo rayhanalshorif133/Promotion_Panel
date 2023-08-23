@@ -41,7 +41,7 @@
             </div>
             <div class="col-md-3">
                 <label for="report_campaign_end_date" class="optional">End Date</label>
-                <input type="date" class="form-control" value="2023-08-22" id="report_campaign_end_date">
+                <input type="date" class="form-control" value="2023-08-24" id="report_campaign_end_date">
             </div>
             <div class="col-md-3 my-4 text-center">
                 <button class="btn bg-gradient-primary campaignReportSearchBtn mt-1" id="search">
@@ -86,7 +86,7 @@
                         </th>
                         <th
                             class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-9 ps-2">
-                            Postback Sent
+                            Postback Received
                             <div class="flex py-2">
                                 @foreach ($operators as $key => $operator)
                                     <span
@@ -96,7 +96,7 @@
                         </th>
                         <th
                             class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-9 ps-2">
-                            Postback Received
+                            Postback Sent
                             <div class="flex py-2">
                                 @foreach ($operators as $key => $operator)
                                     <span
@@ -214,25 +214,33 @@
                                         'count': 0
                                     });
                                 });
-                                console.log(operators);
-
+                                // remove duplicates
+                                operators = operators.filter((v, i, a) => a.findIndex(t => (t
+                                    .name === v
+                                    .name)) === i);
                                 row?.traffic_received.map(function(traffic_received) {
                                     for (var i = 0; i < operators.length; i++) {
                                         if (operators[i].name == traffic_received
                                             .operator_name) {
-                                            operators[i].count == 0 ? operators[i]
-                                                .count = traffic_received.count :
+                                            operators[i].count == 0 ? operators[i].count = traffic_received.count :
                                                 operators[i].count = operators[i].count;
                                         }
                                     }
                                 })
+                                var countTotal = 0;
                                 var html = `<div class="flex">`;
                                 for (let index = 0; index < operators.length; index++) {
                                     html += `<div class="py-2">
-                                                    <span class="text-xs px-[10px] text-gray-700 font-semibold border-l border-r border-gray-400">${operators[index].count}</span>
+                                                    <span class="text-base px-[18px] text-gray-700 font-normal border-l border-r border-gray-400 cursor-pointer" title="${operators[index].name}">${operators[index].count}</span>
                                                 </div>`;
+                                    countTotal += operators[index].count;
                                 }
                                 html += `</div>`;
+                                html += `<div class="border mx-auto border-gray-400 cursor-pointer w-[7rem]">
+                                        <h2 class="text-sm text-start px-[18px] text-gray-700 font-normal mt-2 tracking-wide">
+                                            Total: ${countTotal}
+                                        </h2>
+                                    </div>`;
                                 return html;
 
                             },
@@ -243,21 +251,21 @@
                         },
                         {
                             data: function(row) {
-                                return row?.post_back_sent;
-                            },
-                            searchable: false,
-                            orderable: false,
-                            className: "align-self-start text-start",
-                            name: 'post_back_sent'
-                        },
-                        {
-                            data: function(row) {
                                 return row?.post_back_received;
                             },
                             searchable: false,
                             orderable: false,
                             className: "align-self-start text-start",
                             name: 'post_back_received'
+                        },
+                        {
+                            data: function(row) {
+                                return row?.post_back_sent;
+                            },
+                            searchable: false,
+                            orderable: false,
+                            className: "align-self-start text-start",
+                            name: 'post_back_sent'
                         }
                     ]
                 });
@@ -265,5 +273,7 @@
                 $(".campaignReportLoading").html('');
             });
         };
+
+       
     </script>
 @endpush
