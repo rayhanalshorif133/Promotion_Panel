@@ -52,11 +52,11 @@
     <script>
         $(function() {
             handleDataTable();
-            handleDeleteUserItem();
+            handleDeleteItem();
         });
 
 
-        const handleDeleteUserItem = () => {
+        const handleDeleteItem = () => {
             $('#campaignTableId').on('click', '.campaignItemDeleteBtn', function() {
                 let id = $(this).attr('data-id');
 

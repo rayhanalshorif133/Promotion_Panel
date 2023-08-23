@@ -5,15 +5,33 @@ namespace App\Http\Controllers;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Yajra\DataTables\Facades\DataTables;
+
 
 class PublisherController extends Controller
 {
     public function index()
     {
-        $publishers = Publisher::select('id','name','short_name','post_back_url','status')
-            ->orderBy('id', 'desc')
-            ->get();
-        return view('publisher.index', compact('publishers'));
+        // ajax request
+        if (request()->ajax()) {
+            $model = Publisher::query()->orderBy('id', 'desc');
+            return DataTables::eloquent($model)
+                ->addColumn('DT_RowIndex', function () {
+                    static $index = 1;
+                    return $index++;
+                })
+                ->addColumn('post_back_url', function (Publisher $publisher) {
+                    return $publisher->post_back_url;
+                })
+                ->addColumn('status', function (Publisher $publisher) {
+                    return $publisher->status;
+                })
+                ->addColumn('action', function (Publisher $publisher) {
+                    return '';
+                })
+                ->toJson();
+        }
+        return view('publisher.index');
     }
 
     public function fetchById($id)
