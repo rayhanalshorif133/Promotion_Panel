@@ -4,7 +4,7 @@
         @yield('breadcrumb')
         <div class="mt-0 mt-sm-0 me-md-0 me-sm-4" id="navbar">
             <ul class="navbar-nav justify-content-end">
-                <li class="nav-item d-flex align-items-center px-2">
+                <li class="px-2 nav-item d-flex align-items-center">
                     <a href="{{ route('user.edit',Auth::user()->id) }}">
                         @csrf
                         <button type="submit" class="btn btn-sm bg-gradient-info">
@@ -20,7 +20,7 @@
                             <i class="fa-solid fa-sign-out"></i>
                         </button>
                     </form>
-                </li>
+                </li>`
                 <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                     <a href="javascript:;" class="p-0 nav-link text-body" id="iconNavbarSidenav">
                         <div class="sidenav-toggler-inner">

@@ -25,36 +25,27 @@
             <h6 class="text-xl">Traffic's List</h6>
         </div>
         <div class="py-4 table-responsive">
-            <table class="table px-2 pb-3 mb-0 align-items-center" id="trafficTableId">
+            <table class="table table-bordered table-hover dt-responsive" id="trafficTableId">
                 <thead>
                     <tr>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7">
-                            #</th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                        <th>#</th>
+                        <th>
                             Clicked Id</th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                        <th>
                             Campaign Name</th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                        <th>
                             Service Name
                         </th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                        <th>
                             Operator Name
                         </th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                        <th>
                             Post Back Received
                         </th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                        <th>
                             Post Back Sent
                         </th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7">
+                        <th>
                             Actions
                         </th>
                     </tr>
@@ -121,6 +112,7 @@
             $('#trafficTableId').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 ajax: "{{ route('traffic.index') }}",
                 columns: [{
                         data: function(row, type, set, meta) {

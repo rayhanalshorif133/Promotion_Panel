@@ -43,15 +43,15 @@
                 <label for="report_campaign_end_date" class="optional">End Date</label>
                 <input type="date" class="form-control" id="report_campaign_end_date">
             </div>
-            <div class="col-md-3 my-4 text-center">
-                <button class="btn bg-gradient-primary campaignReportSearchBtn mt-1" id="search">
+            <div class="my-4 text-center col-md-3">
+                <button class="mt-1 btn bg-gradient-primary campaignReportSearchBtn" id="search">
                     Search
                 </button>
-                <button class="btn bg-gradient-danger mt-1" id="reset">
+                <button class="mt-1 btn bg-gradient-danger" id="reset">
                     Reset
                 </button>
             </div>
-            <div class="my-0 py-0 col-md-12">
+            <div class="py-0 my-0 col-md-12">
                 <h2 class="hidden text-base font-semibold text-gray-500">
                     Campaign Name : <span class="font-bold text-gray-600" id="setCampaignName"></span>
                 </h2>
@@ -63,22 +63,13 @@
             </p>
         </div>
         <div class="pb-5 table-responsive">
-            <table class="table px-2 pb-3 mb-0 align-items-center" id="campaignReportTableId">
+            <table class="table table-bordered table-hover dt-responsive" id="campaignReportTableId">
                 <thead>
                     <tr>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-9">
-                            #</th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-9">
-                            Date
-                        </th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-9">
-                            Service
-                        </th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-9 ps-2">
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Service</th>
+                        <th>
                             Traffic Received
                             <div class="flex py-2">
                                 @foreach ($operators as $key => $operator)
@@ -87,8 +78,7 @@
                                 @endforeach
                             </div>
                         </th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-9 ps-2">
+                        <th>
                             Postback Received
                             <div class="flex py-2">
                                 @foreach ($operators as $key => $operator)
@@ -97,8 +87,7 @@
                                 @endforeach
                             </div>
                         </th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-9 ps-2">
+                        <th>
                             Postback Sent
                             <div class="flex py-2">
                                 @foreach ($operators as $key => $operator)
@@ -184,6 +173,8 @@
                     processing: true,
                     serverSide: true,
                     searching: false,
+                    responsive: true,
+                    pagingType: 'full_numbers',
                     ajax: `/campaign/fetch-report-data/${campaign_id}/${start_date}/${end_date}`,
                     columns: [{
                             data: function(row, type, set, meta) {

@@ -44,8 +44,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
-    <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-
+    <link rel="stylesheet"
+        href="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/1.0.4/css/dataTables.responsive.css" />
 
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     <style>
@@ -123,7 +124,6 @@
 <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
 {{-- <script src="{{ asset('assets/js/customChart.js') }}"></script> --}}
 <script>
-     
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
         var options = {
@@ -138,7 +138,9 @@
 <script src="{{ asset('assets/js/soft-ui-dashboard.min.js?v=1.0.7') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+<script src="https://cdn.datatables.net/responsive/1.0.4/js/dataTables.responsive.js"></script>
 
 {{-- toastr js --}}
 @stack('scripts')

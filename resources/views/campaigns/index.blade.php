@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('head')
+@endsection
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="px-0 pt-1 pb-0 mb-0 bg-transparent breadcrumb me-sm-6 me-5">
@@ -18,29 +20,22 @@
     <div class="w-full mx-auto mb-5">
         <h2 class="text-3xl font-bold text-gray-700">Campaigns</h2>
     </div>
-    <div class="w-8/12 px-5 mx-auto card">
+    <div class="w-full px-5 mx-auto lg:w-8/12 card">
         <div class="flex justify-between my-4">
             <h6 class="text-xl">Campaign's List</h6>
             <a href="{{ route('campaign.create') }}" class="btn bg-gradient-primary">
                 Add Campaign
             </a>
         </div>
-        <div class="pb-5 table-responsive">
-            <table class="table px-2 pb-3 mb-0 align-items-start" id="campaignTableId">
+        <div class="w-full pb-5 table-responsive">
+            <table class="table table-bordered table-hover dt-responsive" id="campaignTableId">
                 <thead>
                     <tr>
-                        <th
-                            class="align-self-start text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            #</th>
-                        <th
-                            class="align-self-start text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            Name</th>
-                        <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            Ratio</th>
-                        <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            Status</th>
-                        <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions
-                        </th>
+                        <th> #</th>
+                        <th>Name</th>
+                        <th>Ratio</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -133,6 +128,7 @@
             $('#campaignTableId').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 ajax: "{{ route('campaign.index') }}",
                 columns: [{
                         data: function(row, type, set, meta) {

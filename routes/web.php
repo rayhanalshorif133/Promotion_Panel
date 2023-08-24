@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PostBackController;
 use App\Http\Controllers\PublisherController;
+use App\Http\Controllers\ResponsiveTableController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TrafficController;
 use App\Http\Controllers\UserController;
@@ -147,5 +148,7 @@ Route::prefix('traffic')
     Route::get('/check/publisher/url/', [TrafficController::class, 'checkURL'])->name('check-url');
 });
 
+
+Route::get('table', [ResponsiveTableController::class, 'index'])->name('table');
 
 

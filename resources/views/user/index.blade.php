@@ -29,27 +29,15 @@
             </a>
         </div>
         <div class="table-responsive">
-            <table class="table px-2 pb-3 mb-0 align-items-start" id="userTableId">
+            <table class="table table-bordered table-hover dt-responsive" id="userTableId">
                 <thead>
                     <tr>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
-                            #</th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
-                            Name</th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
-                            Email</th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
-                            Role</th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
-                            Status</th>
-                        <th
-                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
-                            Actions</th>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -115,6 +103,7 @@
             $('#userTableId').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 ajax: "{{ route('user.index') }}",
                 columns: [{
                         data: function(row, type, set, meta) {
