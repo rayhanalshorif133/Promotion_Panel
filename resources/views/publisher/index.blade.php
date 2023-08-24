@@ -20,14 +20,14 @@
         <h2 class="text-3xl font-bold text-gray-700">Publisher</h2>
     </div>
 
-    <div class="w-10/12 mx-auto card py-2">
+    <div class="w-10/12 py-2 mx-auto card">
         <div class="flex justify-between px-4 my-4">
             <h6>Publisher's List</h6>
             <button class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#createPublisher">
                 Add Publisher
             </button>
         </div>
-        <div class="table-responsive px-5">
+        <div class="px-5 py-5 table-responsive">
 
             <table class="display nowrap" cellspacing="0" width="100%" id="publisherTableId">
                 <thead>
@@ -43,14 +43,6 @@
                 <tbody>
                 </tbody>
             </table>
-        </div>
-        <div class="px-5 py-2">
-            <h1 class="text-sm font-semibold">
-                <span class="font-bold mr-2">Note:</span> <br>
-                <span class="font-semibold mr-2">Post Back URL:</span>
-                <span
-                    class="text-blue-600">//{base_url}/traffic/post-back/{serviceId}/{channel}/{operatorName}/{clickedID}/?...</span>
-            </h1>
         </div>
     </div>
     @include('publisher.createAndUpdate')

@@ -20,6 +20,6 @@ class DatabaseSeeder extends Seeder
         new CountrySeeder();
         new ServiceSeeder();
         new PublisherSeeder();
-        // new CampaignSeeder();
+        new CampaignSeeder();
     }
 }

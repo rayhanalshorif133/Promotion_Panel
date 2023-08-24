@@ -142,7 +142,10 @@ Route::prefix('traffic')
     Route::get('/{campaignId}/{serviceId}/{operatorName}/{clickedID}', [TrafficController::class, 'redirect'])
         ->name('redirect');
     // post-back
-    Route::get('/post-back/{serviceId}/{channel}/{operatorName}/{clickedID}', [TrafficController::class, 'postBack'])
+    Route::get('/post-back/{serviceId}/{channel}/{operatorName}/{clickedID}', [PostBackController::class, 'postBack'])
         ->name('post-back');
+    Route::get('/check/publisher/url/', [TrafficController::class, 'checkURL'])->name('check-url');
 });
+
+
 

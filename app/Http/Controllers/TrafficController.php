@@ -10,6 +10,8 @@ use App\Models\Service;
 use App\Models\Traffic;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\Response;
 
 class TrafficController extends Controller
 {
@@ -33,6 +35,12 @@ class TrafficController extends Controller
                 ->addColumn('operator_name', function (Traffic $traffic) {
                     return $traffic->operator->name;
                 })
+                ->addColumn('post_back_received', function (Traffic $traffic) {
+                    return $traffic->callback_received_status == 1 ? "success" : "failed";
+                })
+                ->addColumn('post_back_sent', function (Traffic $traffic) {
+                    return $traffic->callback_sent_status == 1 ? "success" : "failed";
+                })
                 ->addColumn('action', function (Traffic $traffic) {
                     return '';
                 })
@@ -41,17 +49,18 @@ class TrafficController extends Controller
         return view('traffic.index');
     }
 
-    public function fetchById($id){
+    public function fetchById($id)
+    {
         $traffic = Traffic::with(['campaign', 'service', 'operator'])->find($id);
         $traffic->others = json_decode($traffic->others);
 
-        if(!$traffic){
+        if (!$traffic) {
             return $this->respondWithError('Traffic not found.');
         }
         return $this->respondWithSuccess('Traffic found.', $traffic);
     }
 
-    public function redirect($campaignId, $serviceId , $operatorName,  $clickedID, Request $request)
+    public function redirect($campaignId, $serviceId, $operatorName,  $clickedID, Request $request)
     {
 
         $data = [
@@ -72,8 +81,8 @@ class TrafficController extends Controller
             ], 203);
         }
 
-        if($clickedID == null){
-            return $this->respondWithError('Please provide clickedID.',$data);
+        if ($clickedID == null) {
+            return $this->respondWithError('Please provide clickedID.', $data);
         }
 
         $operator = Operator::where('name', $operatorName)->first();
@@ -82,90 +91,28 @@ class TrafficController extends Controller
         $traffic = new Traffic();
         $traffic->campaign_id = $campaignId;
         $traffic->service_id = $serviceId;
-        $traffic->operator_id = $operator? $operator->id : null;
+        $traffic->operator_id = $operator ? $operator->id : null;
         $traffic->clicked_id = $clickedID;
         $traffic->others = json_encode($request->all());
         $traffic->received_at = now();
         $traffic->callback_received_status =  0;
         $traffic->callback_sent_status = 0;
-        $traffic->save();  
+        $traffic->save();
         return redirect($service->traffic_redirect_url);
-
     }
 
-    // /post-back/{serviceId}/{channel}/{operatorName}/{clickedID}
-    public function postBack($serviceId , $channel, $operatorName,  $clickedID, Request $request)
-    {
-
-        try{
-
-            $traffic = Traffic::select()->where('clicked_id', $clickedID)
-            ->with(['campaign', 'service', 'operator'])    
-            ->first();
-            $traffic->callback_received_status =  1;
-            $traffic->save();
-
-            // find publisher by short_name like
-            $publisher = Publisher::where('short_name', 'like', '%'.$channel.'%')->first();
-            $publisher->post_back_url = $request->fullUrl();
-            $publisher->save();
-
-
-            // PostBackReceivedLog
-            $postBackReceivedLog = new PostBackReceivedLog();
-            $postBackReceivedLog->operator_id = $traffic->operator_id;
-            $postBackReceivedLog->service_id = $traffic->service_id;
-            $postBackReceivedLog->channel = $channel;
-            $postBackReceivedLog->clicked_id = $clickedID;
-            $postBackReceivedLog->received_at = now();
-            $postBackReceivedLog->save();
-
-
-            // PostBackSentLog
-            $postBackSentLog = new PostBackSentLog();
-            $postBackSentLog->operator_id = $traffic->operator_id;
-            $postBackSentLog->service_id = $traffic->service_id;
-            $postBackSentLog->channel = $channel;
-            $postBackSentLog->clicked_id = $clickedID;
-            $postBackSentLog->others = json_encode($request->all());
-            $postBackSentLog->sent_at = now();
-            $postBackSentLog->save();
-
-            $postBackData = [
-                'operator' => [
-                    'id' => $traffic->operator_id,
-                    'name' => $traffic->operator->name,
-                ],
-                'service' => [
-                    'id' => $traffic->service_id,
-                    'name' => $traffic->service->name,
-                ],
-                'channel' => $channel,
-                'clickedId' => $clickedID,
-                'others' => $request->all(),
-                'received_at' => now(),
-                'sent_at' => now(),
-            ];
-
-            return $this->respondWithSuccess('Post back received successfully.', $postBackData);
-
-        }catch (\Throwable $e){
-            return response()->json([
-                'status'   => false,
-                'errors'  => true,
-                'message'  => 'Post back failed to receive.',
-            ], 203);
-        }
-    }
+   
 
 
     public function destroy($id)
     {
         $traffic = Traffic::find($id);
-        if(!$traffic){
+        if (!$traffic) {
             return $this->respondWithError('Traffic not found.');
         }
         $traffic->delete();
         return $this->respondWithSuccess('Traffic deleted successfully.');
-    }   
+    }
+
+    
 }

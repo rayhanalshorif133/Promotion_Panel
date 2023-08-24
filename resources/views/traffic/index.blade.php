@@ -20,11 +20,11 @@
         <h2 class="text-3xl font-bold text-gray-700">Traffics</h2>
     </div>
 
-    <div class="w-8/12 px-5 mx-auto card">
+    <div class="w-10/12 px-5 mx-auto card">
         <div class="flex justify-between px-4 my-4">
             <h6 class="text-xl">Traffic's List</h6>
         </div>
-        <div class="table-responsive">
+        <div class="py-4 table-responsive">
             <table class="table px-2 pb-3 mb-0 align-items-center" id="trafficTableId">
                 <thead>
                     <tr>
@@ -46,6 +46,14 @@
                             Operator Name
                         </th>
                         <th
+                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                            Post Back Received
+                        </th>
+                        <th
+                            class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                            Post Back Sent
+                        </th>
+                        <th
                             class="text-xs align-self-start text-start text-uppercase text-secondary font-weight-bolder opacity-7">
                             Actions
                         </th>
@@ -53,14 +61,6 @@
                 </thead>
                 <tbody></tbody>
             </table>
-        </div>
-        <div class="px-4 py-2">
-            <h1 class="text-sm font-semibold">
-                <span class="mr-2 font-bold">Note:</span> <br>
-                <span class="mr-2 font-semibold">Post Back URL:</span>
-                <span
-                    class="text-blue-600">//{base_url}/traffic/post-back/{serviceId}/{channel}/{operatorName}/{clickedID}/?...</span>
-            </h1>
         </div>
     </div>
     @include('traffic.show')
@@ -146,6 +146,30 @@
                     {
                         data: 'operator_name',
                         name: 'operator_name'
+                    },
+                    {
+                        data: function(row) {
+                            if (row.post_back_received == 'success') {
+                                return "<span class='badge bg-gradient-success'>" + row.post_back_received +
+                                    "</span>";
+                            } else {
+                                return "<span class='badge bg-gradient-primary'>" + row.post_back_received +
+                                    "</span>";
+                            }
+                        },
+                        name: 'post_back_received'
+                    },
+                    {
+                        data: function(row) {
+                            if (row.post_back_sent == 'success') {
+                                return "<span class='badge bg-gradient-success'>" + row.post_back_sent +
+                                    "</span>";
+                            } else {
+                                return "<span class='badge bg-gradient-primary'>" + row.post_back_sent +
+                                    "</span>";
+                            }
+                        },
+                        name: 'post_back_sent'
                     },
                     {
                         data: function(row) {
