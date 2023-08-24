@@ -70,7 +70,6 @@ class PostBackController extends Controller
              $postBackSentLog->save();
  
              $postBackData = [
-                 'response' => $response->successful(),
                  'operator' => [
                      'id' => $traffic->operator_id,
                      'name' => $traffic->operator->name,
