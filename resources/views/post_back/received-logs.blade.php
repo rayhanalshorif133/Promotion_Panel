@@ -20,12 +20,12 @@
         <h2 class="text-3xl font-bold text-gray-700">Received Logs</h2>
     </div>
 
-    <div class="w-8/12 mx-auto card">
+    <div class="w-8/12 mx-auto card py-5">
         <div class="flex justify-between px-4 my-4">
             <h6>Post Back Receives Logs</h6>
         </div>
-        <div class="table-responsive">
-            <table class="table px-2 pb-3 mb-0 align-items-center">
+        <div class="table-responsive px-5">
+            <table class="table px-2 pb-3 mb-0 align-items-center" id="postBackReceivesLogsTableId">
                 <thead>
                     <tr>
                         <th
@@ -49,28 +49,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($sendReceives as $sendReceived)
-                        <tr>
-                            <td class="text-center align-middle">
-                                <p class="mb-0 text-xs font-weight-bold">{{ $loop->index + 1 }}</p>
-                            </td>
-                            <td class="text-center align-middle">
-                                <p class="mb-0 text-xs font-weight-bold">{{ $sendReceived->clicked_id }}</p>
-                            </td>
-                            <td class="text-center align-middle">
-                                <p class="mb-0 text-xs font-weight-bold">{{ $sendReceived->service->name }}</p>
-                            </td>
-                            <td class="text-center align-middle">
-                                <p class="mb-0 text-xs font-weight-bold">{{ $sendReceived->operator->name }}</p>
-                            </td>
-                            <td class="text-center align-middle">
-                                @php
-                                    $sendReceived->received_at = date('d-M-Y H:i:s a', strtotime($sendReceived->received_at));
-                                @endphp
-                                <p class="mb-0 text-xs font-weight-bold">{{ $sendReceived->received_at }}</p>
-                            </td>
-                        </tr>
-                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -78,4 +56,48 @@
 @endsection
 
 @push('scripts')
+    <script>
+        $(function() {
+            $('#postBackReceivesLogsTableId').DataTable({
+                processing: true,
+                serverSide: true,
+                searchable: true,
+                ajax: "{{ route('post-back.received-logs') }}",
+                columns: [{
+                        data: function(row, type, set, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        },
+                        searchable: false,
+                        orderable: false,
+                        className: "text-center",
+                        name: 'item'
+                    },
+                    {
+                        data: 'clicked_id',
+                        name: 'clicked_id',
+                        searchable: true,
+                        className: "text-center"
+                    },
+                    {
+                        data: 'service_name',
+                        name: 'service_name',
+                        searchable: true,
+                        className: "text-center"
+                    },
+                    {
+                        data: 'operator_name',
+                        name: 'operator_name',
+                        searchable: true,
+                        className: "text-center"
+                    },
+                    {
+                        data: 'received_at',
+                        name: 'received_at',
+                        searchable: true,
+                        className: "text-center"
+                    },
+                ]
+            });
+        });
+    </script>
 @endpush

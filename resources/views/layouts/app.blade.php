@@ -53,6 +53,7 @@
             width: 4.2rem !important;
         }
     </style>
+
     @yield('head')
 
 </head>

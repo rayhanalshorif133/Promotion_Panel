@@ -28,32 +28,23 @@
             </button>
         </div>
         <div class="table-responsive px-5">
-            <table class="table px-2 pb-3 mb-0 align-items-center" id="publisherTableId">
+
+            <table class="display nowrap" cellspacing="0" width="100%" id="publisherTableId">
                 <thead>
                     <tr>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            #</th>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            Name</th>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            Short Name</th>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            Post Back URL</th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            Status</th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions
-                        </th>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Short Name</th>
+                        <th>Post Back URL</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                 </tbody>
             </table>
         </div>
-        <div class="px-4 py-2">
+        <div class="px-5 py-2">
             <h1 class="text-sm font-semibold">
                 <span class="font-bold mr-2">Note:</span> <br>
                 <span class="font-semibold mr-2">Post Back URL:</span>
@@ -230,6 +221,7 @@
                         $("#publisher_id").val(data.id);
                         $("#updateName").val(data.name);
                         $("#updateShortName").val(data.short_name);
+                        $("#update_post_back_url").val(data.post_back_url);
                         $("#updateStatus").val(data.status);
                     });
             });

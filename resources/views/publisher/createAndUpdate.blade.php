@@ -28,6 +28,11 @@
                             </label>
                     </div>
                     <div class="form-group">
+                        <label for="post_back_url" class="required">Post Back URL</label>
+                        <input type="text" class="form-control" id="post_back_url" name="post_back_url"
+                            placeholder="Enter publisher's url" required>
+                    </div>
+                    <div class="form-group">
                         <label for="status" class="optional">Select status</label>
                         <select class="form-control" name="status" id="status" required>
                             <option selected value="active">Active</option>
@@ -73,6 +78,11 @@
                             <label for="shortName" class="text-danger required">
                                 Space is not allowed. Use underscore (_) instead.
                             </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="update_post_back_url" class="required">Post Back URL</label>
+                        <input type="text" class="form-control" id="update_post_back_url" name="post_back_url"
+                            placeholder="Enter publisher's url" required>
                     </div>
                     <div class="form-group">
                         <label for="updateStatus" class="optional">Select status</label>

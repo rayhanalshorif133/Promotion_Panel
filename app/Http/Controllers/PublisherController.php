@@ -47,6 +47,7 @@ class PublisherController extends Controller
         $request->validate([
             'name' => 'required',
             'short_name' => 'required|unique:publishers',
+            'post_back_url' => 'required',
             'status' => 'required'
         ]);
 
@@ -57,6 +58,7 @@ class PublisherController extends Controller
             $publisher->name = $request->name;
             $shortName = str_replace(' ', '', $request->short_name);
             $publisher->short_name = $shortName;
+            $publisher->post_back_url = $request->post_back_url;
             $publisher->status = $request->status;
             $publisher->save();
 
@@ -76,7 +78,8 @@ class PublisherController extends Controller
         $request->validate([
             'name' => 'required',
             'short_name' => 'required|unique:publishers,short_name,' . $request->id,
-            'status' => 'required'
+            'status' => 'required',
+            'post_back_url' => 'required',
         ]);
 
 
@@ -86,6 +89,7 @@ class PublisherController extends Controller
             $publisher->name = $request->name;
             $shortName = str_replace(' ', '', $request->short_name);
             $publisher->short_name = $shortName;
+            $publisher->post_back_url = $request->post_back_url;
             $publisher->status = $request->status;
             $publisher->save();
             Session::flash('message', 'Successfully update this publisher');

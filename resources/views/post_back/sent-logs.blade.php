@@ -25,8 +25,8 @@
     <div class="flex justify-between px-4 my-4">
         <h6>Post Back Sent Logs</h6>
     </div>
-    <div class="table-responsive">
-        <table class="table px-2 pb-3 mb-0 align-items-center">
+    <div class="table-responsive px-4 py-5">
+        <table class="table px-2 pb-3 mb-0 align-items-center" id="postBackSentLogsTableId">
             <thead>
                 <tr>
                     <th
@@ -49,34 +49,54 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach ($sentLogs as $sentLog)
-                    <tr>
-                        <td class="text-center align-middle">
-                            <p class="mb-0 text-xs font-weight-bold">{{ $loop->index + 1 }}</p>
-                        </td>
-                        <td class="text-center align-middle">
-                            <p class="mb-0 text-xs font-weight-bold">{{ $sentLog->clicked_id }}</p>
-                        </td>
-                        <td class="text-center align-middle">
-                            <p class="mb-0 text-xs font-weight-bold">{{ $sentLog->service->name }}</p>
-                        </td>
-                        <td class="text-center align-middle">
-                            <p class="mb-0 text-xs font-weight-bold">{{ $sentLog->operator->name }}</p>
-                        </td>
-                        <td class="text-center align-middle">
-                            @php
-                                $sentLog->sent_at = date('d-M-Y H:i:s a', strtotime($sentLog->sent_at));
-                            @endphp
-                            <p class="mb-0 text-xs font-weight-bold">{{ $sentLog->sent_at }}</p>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
         </table>
     </div>
 </div>
 @endsection
 
 @push('scripts')
+    <script>
+        $(function() {
+            $('#postBackSentLogsTableId').DataTable({
+                processing: true,
+                serverSide: true,
+                searchable: true,
+                ajax: "{{ route('post-back.send-logs') }}",
+                columns: [{
+                        data: function(row, type, set, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        },
+                        searchable: false,
+                        orderable: false,
+                        className: "text-center",
+                        name: 'item'
+                    },
+                    {
+                        data: 'clicked_id',
+                        name: 'clicked_id',
+                        searchable: true,
+                        className: "text-center"
+                    },
+                    {
+                        data: 'service_name',
+                        name: 'service_name',
+                        searchable: true,
+                        className: "text-center"
+                    },
+                    {
+                        data: 'operator_name',
+                        name: 'operator_name',
+                        searchable: true,
+                        className: "text-center"
+                    },
+                    {
+                        data: 'sent_at',
+                        name: 'sent_at',
+                        searchable: true,
+                        className: "text-center"
+                    },
+                ]
+            });
+        });
+    </script>
 @endpush

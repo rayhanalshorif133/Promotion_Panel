@@ -1557,6 +1557,10 @@ input:checked + .toggle-bg {
   padding-left: 22px;
   padding-right: 22px;
 }
+.px-7 {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
 .pb-0 {
   padding-bottom: 0px;
 }
