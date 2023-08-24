@@ -20,7 +20,7 @@
         <h2 class="text-3xl font-bold text-gray-700">Publisher</h2>
     </div>
 
-    <div class="w-full px-[2rem] mx-auto lg:px-[4rem] lg:w-8/12 card">
+    <div class="w-full px-[2rem] mx-auto lg:px-[4rem] lg:w-8/12 card ">
         <div class="flex flex-col justify-between px-4 my-4 sm:flex-row">
             <h6>Publisher's List</h6>
             <button class="btn bg-gradient-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createPublisher">

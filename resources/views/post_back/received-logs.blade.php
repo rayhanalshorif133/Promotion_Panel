@@ -20,32 +20,19 @@
         <h2 class="text-3xl font-bold text-gray-700">Received Logs</h2>
     </div>
 
-    <div class="w-8/12 mx-auto card py-5">
-        <div class="flex justify-between px-4 my-4">
+    <div class="w-full px-[2rem] mx-auto lg:px-[4rem] lg:w-8/12 card py-5">
+        <div class="flex flex-col justify-between px-4 my-4 sm:flex-row">
             <h6>Post Back Receives Logs</h6>
         </div>
-        <div class="table-responsive px-5">
-            <table class="table px-2 pb-3 mb-0 align-items-center" id="postBackReceivesLogsTableId">
+        <div class="px-5 table-responsive">
+            <table class="table table-bordered table-hover dt-responsive" id="postBackReceivesLogsTableId">
                 <thead>
                     <tr>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            #</th>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            Clicked Id</th>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            Service Name
-                        </th>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            Operator Name
-                        </th>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            Received At
-                        </th>
+                        <th>#</th>
+                        <th>Clicked Id</th>
+                        <th>Service Name</th>
+                        <th>Operator Name</th>
+                        <th>Received At</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,6 +49,7 @@
                 processing: true,
                 serverSide: true,
                 searchable: true,
+                responsive: true,
                 ajax: "{{ route('post-back.received-logs') }}",
                 columns: [{
                         data: function(row, type, set, meta) {

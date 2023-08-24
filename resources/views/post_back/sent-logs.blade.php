@@ -21,32 +21,19 @@
     <h2 class="text-3xl font-bold text-gray-700">Sent Logs</h2>
 </div>
 
-<div class="w-8/12 mx-auto card">
-    <div class="flex justify-between px-4 my-4">
+<div class="w-full px-[2rem] mx-auto lg:px-[4rem] lg:w-8/12 card py-5">
+    <div class="flex flex-col justify-between px-4 my-4 sm:flex-row">
         <h6>Post Back Sent Logs</h6>
     </div>
-    <div class="table-responsive px-4 py-5">
-        <table class="table px-2 pb-3 mb-0 align-items-center" id="postBackSentLogsTableId">
+    <div class="px-4 py-5 table-responsive">
+        <table class="table table-bordered table-hover dt-responsive" id="postBackSentLogsTableId">
             <thead>
                 <tr>
-                    <th
-                        class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                        #</th>
-                    <th
-                        class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        Clicked Id</th>
-                    <th
-                        class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        Service Name
-                    </th>
-                    <th
-                        class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        Operator Name
-                    </th>
-                    <th
-                        class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                        Sent At
-                    </th>
+                    <th>#</th>
+                    <th>Clicked Id</th>
+                    <th>Service Name</th>
+                    <th>Operator Name</th>
+                    <th>Sent At</th>
                 </tr>
             </thead>
         </table>
@@ -61,6 +48,7 @@
                 processing: true,
                 serverSide: true,
                 searchable: true,
+                responsive: true,
                 ajax: "{{ route('post-back.send-logs') }}",
                 columns: [{
                         data: function(row, type, set, meta) {
