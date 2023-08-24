@@ -20,16 +20,16 @@
         <h2 class="text-3xl font-bold text-gray-700">Publisher</h2>
     </div>
 
-    <div class="w-10/12 py-2 mx-auto card">
-        <div class="flex justify-between px-4 my-4">
+    <div class="w-full px-[2rem] mx-auto lg:px-[4rem] lg:w-8/12 card">
+        <div class="flex flex-col justify-between px-4 my-4 sm:flex-row">
             <h6>Publisher's List</h6>
-            <button class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#createPublisher">
+            <button class="btn bg-gradient-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createPublisher">
                 Add Publisher
             </button>
         </div>
         <div class="px-5 py-5 table-responsive">
 
-            <table class="display nowrap" cellspacing="0" width="100%" id="publisherTableId">
+            <table class="table table-bordered table-hover dt-responsive" id="publisherTableId">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -130,6 +130,7 @@
             $('#publisherTableId').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 ajax: "{{ route('publisher.index') }}",
                 columns: [{
                         data: function(row, type, set, meta) {
@@ -182,7 +183,7 @@
                         data: function(row) {
 
                             return `
-                            <div class="mt-2 btn-group" data-id=${row.id} role="group" aria-label="Basic outlined example">
+                            <div class="btn-group" data-id=${row.id} role="group" aria-label="Basic outlined example">
                                     <button class="px-3 btn btn-sm bg-gradient-info publisherEditBtn" data-bs-toggle="modal" data-bs-target="#updatePublisher"
                                         type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit item">
                                         <i class="fa fa-pen"></i>

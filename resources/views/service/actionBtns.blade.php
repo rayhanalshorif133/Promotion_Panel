@@ -1,4 +1,4 @@
-<div class="mt-2 btn-group" data-id="{{$id}}" role="group" aria-label="Basic outlined example">
+<div class="btn-group" data-id="{{$id}}" role="group" aria-label="Basic outlined example">
     <button class="px-3 btn btn-sm bg-gradient-info serviceEditBtn" data-bs-toggle="modal" data-bs-target="#updateService"
         type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit item">
         <i class="fa fa-pen"></i>

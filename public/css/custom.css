@@ -87,3 +87,8 @@ input[type='number']::-webkit-outer-spin-button {
     background-color: #337ab7;
     border-color: #337ab7;
 }
+
+table.dataTable thead .sorting:after {
+    opacity: 0.2;
+    content: "\e150";
+}

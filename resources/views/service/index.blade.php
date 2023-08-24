@@ -20,47 +20,31 @@
         <h2 class="text-3xl font-bold text-gray-700">Service</h2>
     </div>
 
-    <div class="w-8/12 px-5 mx-auto card">
-        <div class="flex justify-between px-4 my-4">
+    <div class="w-full px-[2rem] mx-auto lg:px-[4rem] lg:w-8/12 card">
+        <div class="flex flex-col justify-between px-4 my-4 sm:flex-row">
             <h6 class="text-xl">Service's List</h6>
-            <button class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#createService">
+            <button class="mt-[5px] btn bg-gradient-primary btn-sm sm:mt-0" data-bs-toggle="modal" data-bs-target="#createService">
                 Add Service
             </button>
         </div>
-        <div class="pb-5 table-responsive">
-            <table class="table px-2 pb-3 mb-0 align-items-center" id="serviceTableId">
+        <div class="w-full pb-5 table-responsive">
+            <table class="table table-bordered table-hover dt-responsive" id="serviceTableId">
                 <thead>
                     <tr>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            #</th>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            Name</th>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            Type
-                        </th>
-                        <th
-                            class="text-center align-middle text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            Traffic URL
-                        </th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            Status</th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions
-                        </th>
+                        <th> #</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Traffic URL</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($services as $service)
                         <tr>
-                            <td class="text-center align-middle">
-                                <p class="mb-0 text-xs font-weight-bold">{{ $loop->index + 1 }}</p>
-                            </td>
-                            <td class="text-center align-middle">
-                                <p class="mb-0 text-xs font-weight-bold">{{ $service->name }}</p>
-                            </td>
-                            <td class="text-sm text-center align-middle">
+                            <td>{{ $loop->index + 1 }}</td>
+                            <td>{{ $service->name }}</td>
+                            <td>
                                 @if ($service->type == 'daily')
                                     <span class="badge badge-sm bg-gradient-warning">
                                         {{ $service->type }}
@@ -71,10 +55,10 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="text-center align-middle">
+                            <td>
                                 <p class="mb-0 text-xs font-weight-bold">{{ $service->traffic_redirect_url }}</p>
                             </td>
-                            <td class="text-sm text-center align-middle">
+                            <td>
                                 @if ($service->status == 'active')
                                     <span class="badge badge-sm bg-gradient-success">
                                         {{ $service->status }}
@@ -85,7 +69,7 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="text-center align-middle">
+                            <td>
                                 @include('service.actionBtns', ['id' => $service->id])
                             </td>
                         </tr>
@@ -100,7 +84,9 @@
 @push('scripts')
 <script>
     $(function(){
-        $('#serviceTableId').DataTable();
+        $('#serviceTableId').DataTable({
+            responsive: true,
+        });
     });
 </script>
 @endpush
