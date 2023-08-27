@@ -377,6 +377,8 @@
                 });
 
                 $(".campaignReportLoading").html('');
+                $('.input-sm').addClass('form-control form-control-sm');
+                $('#campaignReportTableId_filter').addClass('px-5');
             });
         };
     </script>

@@ -179,6 +179,9 @@
                     },
                 ]
             });
+
+            $('.input-sm').addClass('form-control form-control-sm');
+            $('#userTableId_filter').addClass('px-5');
         };
     </script>
 @endpush

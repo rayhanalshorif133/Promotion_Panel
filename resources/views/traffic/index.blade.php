@@ -181,6 +181,9 @@
                     }
                 ]
             });
+
+            $('.input-sm').addClass('form-control form-control-sm');
+            $('#trafficTableId_filter').addClass('px-5');
         };
     </script>
 @endpush

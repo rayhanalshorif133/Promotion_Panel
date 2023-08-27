@@ -74,6 +74,8 @@
             $('#countryTableId').DataTable({
                 responsive: true,
             });
+            $('.input-sm').addClass('form-control form-control-sm');
+            $('#countryTableId_filter').addClass('px-5');
         });
     </script>
 @endpush

@@ -72,6 +72,8 @@
                 "responsive": true,
                 "autoWidth": false,
             });
+            $('.input-sm').addClass('form-control form-control-sm');
+            $('#operatorTableId_filter').addClass('px-5');
         });
     </script>
 

@@ -87,6 +87,8 @@
         $('#serviceTableId').DataTable({
             responsive: true,
         });
+        $('.input-sm').addClass('form-control form-control-sm');
+        $('#serviceTableId_filter').addClass('px-5');
     });
 </script>
 @endpush

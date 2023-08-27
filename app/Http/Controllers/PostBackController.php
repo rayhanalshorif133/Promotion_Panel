@@ -103,12 +103,11 @@ class PostBackController extends Controller
             $model = PostBackSentLog::query()->with(['operator', 'service'])
                 ->orderBy('id', 'desc');
             return DataTables::eloquent($model)
-                ->addColumn('DT_RowIndex', function () {
-                    static $index = 1;
-                    return $index++;
-                })
                 ->addColumn('service_name', function (PostBackSentLog $log) {
                     return $log->service->name;
+                })
+                ->addColumn('channel', function (PostBackSentLog $log) {
+                    return $log->channel;
                 })
                 ->addColumn('operator_name', function (PostBackSentLog $log) {
                     return $log->operator->name;
@@ -129,9 +128,8 @@ class PostBackController extends Controller
             $model = PostBackReceivedLog::query()->with(['operator', 'service'])
                 ->orderBy('id', 'desc');
             return DataTables::eloquent($model)
-                ->addColumn('DT_RowIndex', function () {
-                    static $index = 1;
-                    return $index++;
+                ->addColumn('channel', function (PostBackReceivedLog $log) {
+                    return $log->channel;
                 })
                 ->addColumn('service_name', function (PostBackReceivedLog $log) {
                     return $log->service->name;

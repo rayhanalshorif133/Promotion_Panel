@@ -195,6 +195,9 @@
                     },
                 ]
             });
+
+            $('.input-sm').addClass('form-control form-control-sm');
+            $('#campaignTableId_filter').addClass('px-5');
         };
     </script>
 @endpush

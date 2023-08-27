@@ -29,8 +29,8 @@
         <table class="table table-bordered table-hover dt-responsive" id="postBackSentLogsTableId">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Clicked Id</th>
+                    <th>Channel</th>
                     <th>Service Name</th>
                     <th>Operator Name</th>
                     <th>Sent At</th>
@@ -50,32 +50,30 @@
                 searchable: true,
                 responsive: true,
                 ajax: "{{ route('post-back.send-logs') }}",
-                columns: [{
-                        data: function(row, type, set, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        },
-                        searchable: false,
-                        orderable: false,
-                        className: "text-center",
-                        name: 'item'
-                    },
+                columns: [
                     {
                         data: 'clicked_id',
                         name: 'clicked_id',
                         searchable: true,
-                        className: "text-center"
+                        className: "text-left"
+                    },
+                    {
+                        data: 'channel',
+                        name: 'channel',
+                        searchable: true,
+                        className: "text-left"
                     },
                     {
                         data: 'service_name',
                         name: 'service_name',
                         searchable: true,
-                        className: "text-center"
+                        className: "text-left"
                     },
                     {
                         data: 'operator_name',
                         name: 'operator_name',
                         searchable: true,
-                        className: "text-center"
+                        className: "text-left"
                     },
                     {
                         data: 'sent_at',
@@ -85,6 +83,9 @@
                     },
                 ]
             });
+
+            $('.input-sm').addClass('form-control form-control-sm');
+            $('#postBackSentLogsTableId_filter').addClass('px-5');
         });
     </script>
 @endpush
