@@ -55,7 +55,7 @@
                         data: 'clicked_id',
                         name: 'clicked_id',
                         searchable: true,
-                        className: "text-left"
+                        className: "text-left w-10"
                     },
                     {
                         data: 'channel',
