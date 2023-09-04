@@ -66,7 +66,6 @@
             <table class="table table-bordered table-hover dt-responsive" id="campaignReportTableId">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Date</th>
                         <th>Service</th>
                         <th>
@@ -148,6 +147,8 @@
                     end_date = $("#report_campaign_start_date").val();
                 }
 
+                console.log(end_date);
+
                 const countDays = moment(end_date).diff(moment(start_date), 'days') + 1;
 
                 if (countDays < 0) {
@@ -176,15 +177,7 @@
                     responsive: true,
                     pagingType: 'full_numbers',
                     ajax: `/campaign/fetch-report-data/${campaign_id}/${start_date}/${end_date}`,
-                    columns: [{
-                            data: function(row, type, set, meta) {
-                                return meta.row + meta.settings._iDisplayStart + 1;
-                            },
-                            searchable: false,
-                            orderable: false,
-                            className: "align-self-start text-start",
-                            name: 'item'
-                        },
+                    columns: [
                         {
                             data: function(row) {
                                 var date = moment(row?.date).format('DD-MMM-YYYY');
