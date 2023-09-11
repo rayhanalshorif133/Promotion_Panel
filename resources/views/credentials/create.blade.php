@@ -46,7 +46,7 @@
             </div>    
         </div>
         <div class="flex justify-start px-2 ml-auto card-footer text-start">
-            <button type="button" class="mx-2 btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+            <a href="{{route('credentials.index')}}" type="button" class="mx-2 btn bg-gradient-secondary">Back</a>
             <button type="submit" class="mx-2 btn bg-gradient-primary">Save</button>
         </div>
     </form>

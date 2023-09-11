@@ -64,6 +64,12 @@ class CredentialController extends Controller
     }
 
     // view
+    public function show($id)
+    {
+        $credential = Credential::find($id);
+        $decrypted = Crypt::decryptString($credential->password);
+        return view('credentials.view', compact('credential', 'decrypted'));
+    }
 
     // edit
     public function edit($id)

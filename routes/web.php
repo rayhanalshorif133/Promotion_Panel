@@ -156,6 +156,7 @@ Route::name('credentials.')
         Route::get('/', [CredentialController::class, 'index'])->name('index');
         Route::get('/create', [CredentialController::class, 'create'])->name('create');
         Route::post('/store', [CredentialController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [CredentialController::class, 'show'])->name('show');
         Route::get('/edit/{id}', [CredentialController::class, 'edit'])->name('edit');
         Route::get('/get-password/{id}', [CredentialController::class, 'getPassword'])->name('get-password');
         Route::put('/update/{id}', [CredentialController::class, 'update'])->name('update');

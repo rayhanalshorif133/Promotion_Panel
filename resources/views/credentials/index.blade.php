@@ -53,10 +53,10 @@
                             <td class="">{!! $credential->details !!}</td>
                             <td class="">
                                 <div class="mt-2 btn-group" role="group" aria-label="Basic outlined example">
-                                    <button class="px-3 btn btn-sm bg-gradient-primary" type="button"
+                                    <a href="{{route('credentials.show', $credential->id)}}" class="px-3 btn btn-sm bg-gradient-primary" type="button"
                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Show info">
                                         <i class="fa fa-eye"></i>
-                                    </button>
+                                    </a>
                                     <a href="{{route('credentials.edit', $credential->id)}}" class="px-3 btn btn-sm bg-gradient-info" type="button" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Edit item">
                                         <i class="fa fa-pen"></i>
