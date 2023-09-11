@@ -180,6 +180,17 @@
                 </a>
             </li>
             @endif
+            <li class="nav-item">
+                <a class="nav-link  @if ($currentRoute == 'credentials.index') active @endif"
+                    href="{{ route('credentials.index') }}">
+                    <div
+                        class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
+                        <i
+                            class="@if ($currentRoute == 'credentials.index') text-white @else text-dark @endif fa-solid fa-key fa-xl"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Credentials</span>
+                </a>
+            </li>
             
         </ul>
         <div class="ps__rail-x" style="left: 0px; bottom: 0px;">

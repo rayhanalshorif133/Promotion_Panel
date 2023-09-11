@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CredentialController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PostBackController;
@@ -147,6 +148,17 @@ Route::prefix('traffic')
         ->name('post-back');
     Route::get('/check/publisher/url/', [TrafficController::class, 'checkURL'])->name('check-url');
 });
+
+// credentials
+Route::name('credentials.')
+    ->prefix('credentials')
+    ->group(function () {
+        Route::get('/', [CredentialController::class, 'index'])->name('index');
+        Route::get('/create', [CredentialController::class, 'create'])->name('create');
+        Route::post('/store', [CredentialController::class, 'store'])->name('store');
+        Route::put('/update', [CredentialController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [CredentialController::class, 'destroy'])->name('destroy');
+    });
 
 
 Route::get('table', [ResponsiveTableController::class, 'index'])->name('table');
