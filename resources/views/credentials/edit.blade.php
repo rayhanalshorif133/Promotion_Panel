@@ -13,7 +13,7 @@
             </a>
         </li>
         <li class="text-sm breadcrumb-item text-dark active" aria-current="page">
-            Create New Credential
+            Update Credential
         </li>
     </ol>
 </nav>
@@ -24,25 +24,26 @@
 <div class="px-2 card">
     <div class="card-header">
         <h5 class="card-title" id="createCredentialLabel">
-            Create New Credential
+            Update Credential
         </h5>
     </div>
-    <form action="{{ route('credentials.store') }}" method="POST">
+    <form action="{{ route('credentials.update',$credential->id) }}" method="POST">
         @csrf
+        @method('PUT')
         <div class="card-body">
             <div class="form-group">
                 <label for="title" class="required">Title</label>
                 <input type="text" class="form-control" id="title" name="title"
-                    placeholder="title">
+                    placeholder="title" value="{{$credential->title}}">
             </div>
             <div class="form-group">
                 <label for="password" class="required">Password</label>
                 <input type="text" class="form-control" id="password" name="password"
-                    placeholder="password">
+                    placeholder="password" value="{{$decrypted}}">
             </div> 
             <div class="form-group">
                 <label for="details" class="required">Details</label>
-                <textarea id="details" class="form-control"  name="details"></textarea>                            
+                <textarea id="details" class="form-control"  name="details">{!!$credential->details!!}</textarea>                            
             </div>    
         </div>
         <div class="flex justify-start px-2 ml-auto card-footer text-start">

@@ -20,7 +20,7 @@
     <div class="w-full mx-auto mb-5">
         <h2 class="text-3xl font-bold text-gray-700">Campaigns</h2>
     </div>
-    <div class="w-full px-5 mx-auto lg:w-8/12 card">
+    <div class="w-full px-5 mx-auto card">
         <div class="flex justify-between my-4">
             <h6 class="text-xl">Campaign's List</h6>
             <a href="{{ route('campaign.create') }}" class="btn bg-gradient-primary">

@@ -18,7 +18,7 @@ class CreateCredentialsTable extends Migration
             $table->foreignId('added_by')->constrained('users');
             $table->string('title');
             $table->text('details');
-            $table->string('password');
+            $table->text('password');
             $table->timestamps();
         });
     }

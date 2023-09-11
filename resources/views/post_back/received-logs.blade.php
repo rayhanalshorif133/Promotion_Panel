@@ -20,7 +20,7 @@
         <h2 class="text-3xl font-bold text-gray-700">Received Logs</h2>
     </div>
 
-    <div class="w-full px-[2rem] mx-auto lg:px-[4rem] lg:w-8/12 card py-5">
+    <div class="w-full px-[2rem] mx-auto card py-5">
         <div class="flex flex-col justify-between px-4 my-4 sm:flex-row">
             <h6>Post Back Receives Logs</h6>
         </div>

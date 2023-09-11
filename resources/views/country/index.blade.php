@@ -23,7 +23,7 @@
         <h2 class="text-3xl font-bold text-gray-700">country</h2>
     </div>
 
-    <div class="w-full px-[2rem] mx-auto lg:px-[4rem] lg:w-8/12 card">
+    <div class="w-full px-[2rem] mx-auto card">
         <div class="flex flex-col justify-between px-4 my-4 sm:flex-row">
             <h6 class="text-xl">Country's List</h6>
             <button class="mt-[5px] btn bg-gradient-primary btn-sm sm:mt-0" data-bs-toggle="modal" data-bs-target="#createCountry">

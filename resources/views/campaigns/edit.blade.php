@@ -21,7 +21,7 @@
     <div class="w-full mx-auto mb-5">
         <h2 class="text-3xl font-bold text-gray-700">Campaigns</h2>
     </div>
-    <div class="w-10/12 mx-auto card">
+    <div class="w-full mx-auto card">
         <div class="flex justify-between px-4 my-4">
             <h6>
                 Update Campaign
