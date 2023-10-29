@@ -23,7 +23,7 @@
 @section('content')
 <div class="w-8/12 px-2 mx-auto card">
     <div class="card-header">
-        <h5 class="card-title" id="createCredentialLabel">
+        <h5 4class="card-title" id="createCredentialLabel">
             Credential's Details
             <div class="w-full my-2 bg-gray-400" style="height: 1px"></div>
         </h5>
