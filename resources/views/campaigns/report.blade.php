@@ -138,6 +138,7 @@
                 $("#setOperatorName").parent().removeClass('hidden');
                 $("#setCampaignName").text(campaignName);
 
+
                 if (!campaign_id || !start_date) {
                     toastr.error('campaign name, start date and end date are required');
                     return false;
@@ -147,7 +148,6 @@
                     end_date = $("#report_campaign_start_date").val();
                 }
 
-                console.log(end_date);
 
                 const countDays = moment(end_date).diff(moment(start_date), 'days') + 1;
 
@@ -191,6 +191,10 @@
                         {
                             data: function(row) {
                                 var names = [];
+                                const no_traffic = `<div class="py-2 text-xs px-[10px] text-gray-700 font-semibold border-l border-r border-gray-400">No Traffic</div>`
+                                if(!row.service){
+                                    return no_traffic;
+                                }
                                 for (var i = 0; i < row.service.length; i++) {
                                     names.push({
                                         name: row.service[i].name,
@@ -206,7 +210,7 @@
                                     }
                                     return html;
                                 } else if (names.length == 0)
-                                    return `<div class="py-2 text-xs px-[10px] text-gray-700 font-semibold border-l border-r border-gray-400">No Traffic</div>`;
+                                    return no_traffic;
                             },
                             searchable: false,
                             orderable: false,
@@ -216,6 +220,9 @@
                         {
                             data: function(row) {
                                 var operators = [];
+                                if(!row.traffic_received){
+                                    return 0;
+                                }
                                 row?.traffic_received.map(function(traffic_received) {
                                     operators.push({
                                         'name': traffic_received.operator_name,
@@ -262,6 +269,9 @@
                             data: function(row) {
                                 // row?.post_back_received
                                 var operatorAndServices = [];
+                                if(!row.post_back_received){
+                                    return 0;
+                                }
                                 row?.post_back_received.map(function(postBackReceived) {
                                     operatorAndServices.push({
                                         'operator_name': postBackReceived
@@ -316,6 +326,9 @@
                             data: function(row) {
                                 // row?.post_back_received
                                 var operatorAndServices = [];
+                                if(!row.post_back_sent){
+                                    return 0;
+                                }
                                 row?.post_back_sent.map(function(postBackReceived) {
                                     operatorAndServices.push({
                                         'operator_name': postBackReceived

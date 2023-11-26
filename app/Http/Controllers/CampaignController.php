@@ -228,6 +228,8 @@ class CampaignController extends Controller
     }
     public function campaignReportData($campaign_id, $start_date, $end_date = null)
     {
+        // $services = $this->getServices($campaign_id,$start_date);
+        // dd($services);
         // ajax request
         if (request()->ajax()) {
             // count of days 
@@ -307,7 +309,8 @@ class CampaignController extends Controller
     public function getServices($campaign_id,$date)
     {
         $serviceNameIds = [];
-        $services = Traffic::select("service_id")->where('campaign_id', $campaign_id)
+        $services = Traffic::select("service_id")
+            ->where('campaign_id', $campaign_id)
             ->where('received_at', 'like', '%' . $date . '%')
             ->with('service')
             ->get()
@@ -319,6 +322,15 @@ class CampaignController extends Controller
                 'count' => $this->countOfTrafficReceivedByService($value->service->id,$campaign_id,$date)
             ]);
         }
+
+        // if(count($serviceNameIds) == 0){
+        //     array_push($serviceNameIds, [
+        //         'id' => 5,
+        //         'name' => "come",
+        //         'count' => 0
+        //     ]);
+        // }
+        
         return $serviceNameIds;
     }
 
