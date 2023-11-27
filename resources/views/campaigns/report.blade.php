@@ -5,12 +5,17 @@
 <style>
     table{
         font-size:12px;
+        color:#000000!important;
     }
     
     .table thead .operator th{
         padding: 2px !important;
         width:5px!important;
+        color:#000000!important;
     }
+
+   
+    
     
 </style>
 @endsection
@@ -47,6 +52,7 @@
                             {{ $campaign->name }}
                         </option>
                     @endforeach
+                    <option value="all">All</option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -73,7 +79,7 @@
         </div>
         <div class="pb-5 mx-auto text-center align-middle campaignReportLoading">
             <p class="mb-0 text-base font-bold text-[#E00991]">
-                Please select a campaign and  th to view the report
+                Please select a campaign and date to view the report
             </p>
         </div>
 
@@ -81,78 +87,69 @@
 
         
 
-        <table class="table table-bordered table-hover dt-responsive" id="campaignReportTableId">
+        <table class="table table-bordered table-striped" id="campaignReportTableId">
             <thead>
                 <tr>
                     <th rowspan="2" width="2%">Date</th>
-                    <th rowspan="2" width="2%">Campaigns</th>
-                    <th width="auto" colspan="{{count($operators)}}">Traffic Received </th>
-                    <th width="auto" colspan="{{count($operators)}}">Postback Received </th>
-                    <th width="auto" colspan="{{count($operators)}}">Postback Sent</th>
-                </tr>
-                <tr class="operator">
-                    @foreach ($operators as $key => $operator)
-                        <th width="auto">{{ $operator->name }}</th>
-                    @endforeach     
-                    @foreach ($operators as $key => $operator)
-                        <th width="auto">{{ $operator->name }}</th>
-                    @endforeach   
-                    @foreach ($operators as $key => $operator)
-                        <th width="auto">{{ $operator->name }}</th>
-                    @endforeach                  
+                    <th rowspan="2" width="2%">Campaign</th>
+                    <th rowspan="2" width="2%">Operator</th>
+                    <th width="auto" class="text-center" width="20%">Traffic <br/> Received </th>
+                    <th width="auto" class="text-center" width="20%">Postback <br/> Received </th>
+                    <th width="auto" class="text-center" width="20%">Postback <br/> Sent</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody class="campain_details_tbody">
+                <tr>
+                    <td rowspan="7" class="text-center">
+                        10/20/2020
+                    </td>
+                    <td rowspan="7" class="text-center">
+                        Marvel
+                    </td>
+                </tr>
+                @foreach ($operators as $key => $operator)
+                    <tr>
+                        <td class="text-center">{{ $operator->name }}</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">10</td>
+                    </tr>
+                @endforeach 
+                <tr>
+                    <td rowspan="7" class="text-center">
+                        10/20/2020
+                    </td>
+                    <td rowspan="7" class="text-center">
+                        Marvel
+                    </td>
+                </tr>
+                @foreach ($operators as $key => $operator)
+                    <tr>
+                        <td class="text-center">{{ $operator->name }}</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">10</td>
+                    </tr>
+                @endforeach 
+                <tr>
+                    <td rowspan="7" class="text-center">
+                        10/20/2020
+                    </td>
+                    <td rowspan="7" class="text-center">
+                        Marvel
+                    </td>
+                </tr>
+                @foreach ($operators as $key => $operator)
+                    <tr>
+                        <td class="text-center">{{ $operator->name }}</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">10</td>
+                    </tr>
+                @endforeach 
+            </tbody>
         </table>
         {{-- design --}}
-
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-
-
-
-        <div class="pb-5 table-responsive">
-            <table class="table table-bordered table-hover dt-responsive" id="campaignReportTableId">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Service</th>
-                        <th>
-                            Traffic Received
-                            <div class="flex py-2">
-                                @foreach ($operators as $key => $operator)
-                                    <span
-                                        class="text-xs px-[10px] text-gray-700 font-semibold @if ($key == 0) border-l border-r @else border-r @endif  border-gray-400">{{ $operator->name }}</span>
-                                @endforeach
-                            </div>
-                        </th>
-                        <th>
-                            Postback Received
-                            <div class="flex py-2">
-                                @foreach ($operators as $key => $operator)
-                                    <span
-                                        class="text-xs px-[10px] text-gray-700 font-semibold @if ($key == 0) border-l border-r @else border-r @endif  border-gray-400">{{ $operator->name }}</span>
-                                @endforeach
-                            </div>
-                        </th>
-                        <th>
-                            Postback Sent
-                            <div class="flex py-2">
-                                @foreach ($operators as $key => $operator)
-                                    <span
-                                        class="text-xs px-[10px] text-gray-700 font-semibold @if ($key == 0) border-l border-r @else border-r @endif  border-gray-400">{{ $operator->name }}</span>
-                                @endforeach
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-
-        </div>
     </div>
 @endsection
 
@@ -220,219 +217,68 @@
                     return false;
                 }
 
-                $("#campaignReportTableId").DataTable().destroy();
+                var table = $(".campain_details_tbody");
+                const url = `/campaign/fetch-report/${campaign_id}/${start_date}/${end_date}`;
+                axios.get(url)
+                .then((res)=>{
+                    const data = res.data.data;
+                    // console.log(data);
+                    const operators = data.operators;
+                    const reports = data.reports;
+                    // moment().format('YYYY-MM-DD')
+                    table.html('');
+                    var html = "";
 
-                const hasDataTable = $("#campaignReportTableId").DataTable({
-                    processing: true,
-                    serverSide: true,
-                    searching: false,
-                    responsive: true,
-                    pagingType: 'full_numbers',
-                    ajax: `/campaign/fetch-report-data/${campaign_id}/${start_date}/${end_date}`,
-                    columns: [
-                        {
-                            data: function(row) {
-                                var date = moment(row?.date).format('DD-MMM-YYYY');
-                                return date;
-                            },
-                            searchable: false,
-                            orderable: false,
-                            className: "align-self-start text-start",
-                            name: 'date'
-                        },
-                        {
-                            data: function(row) {
-                                var names = [];
-                                const no_traffic = `<div class="py-2 text-xs px-[10px] text-gray-700 font-semibold border-l border-r border-gray-400">No Traffic</div>`
-                                if(!row.service){
-                                    return no_traffic;
-                                }
-                                for (var i = 0; i < row.service.length; i++) {
-                                    names.push({
-                                        name: row.service[i].name,
-                                        count: row.service[i].count
-                                    });
-                                }
-                                if (names.length > 0) {
-                                    var html = "";
-                                    for (let index = 0; index < names.length; index++) {
-                                        html += `<div class="py-2">
-                                                <span class="text-xs px-[10px] text-gray-700 font-semibold border-l border-r border-gray-400">${names[index].name} (${names[index].count})</span>
-                                            </div>`;
-                                    }
-                                    return html;
-                                } else if (names.length == 0)
-                                    return no_traffic;
-                            },
-                            searchable: false,
-                            orderable: false,
-                            className: "align-self-start text-start",
-                            name: 'service'
-                        },
-                        {
-                            data: function(row) {
-                                var operators = [];
-                                if(!row.traffic_received){
-                                    return 0;
-                                }
-                                row?.traffic_received.map(function(traffic_received) {
-                                    operators.push({
-                                        'name': traffic_received.operator_name,
-                                        'count': 0
-                                    });
-                                });
-                                // remove duplicates
-                                operators = operators.filter((v, i, a) => a.findIndex(t => (t
-                                    .name === v
-                                    .name)) === i);
-                                row?.traffic_received.map(function(traffic_received) {
-                                    for (var i = 0; i < operators.length; i++) {
-                                        if (operators[i].name == traffic_received
-                                            .operator_name) {
-                                            operators[i].count == 0 ? operators[i]
-                                                .count = traffic_received.count :
-                                                operators[i].count = operators[i].count;
-                                        }
-                                    }
-                                })
-                                var countTotal = 0;
-                                var html = `<div class="flex">`;
-                                for (let index = 0; index < operators.length; index++) {
-                                    html += `<div class="py-2">
-                                                    <span class="text-base px-[18px] text-gray-700 font-normal border-l border-r border-gray-400 cursor-pointer" title="${operators[index].name}">${operators[index].count}</span>
-                                                </div>`;
-                                    countTotal += operators[index].count;
-                                }
-                                html += `</div>`;
-                                html += `<div class="border mx-auto border-gray-400 cursor-pointer w-[7rem]">
-                                        <h2 class="text-sm text-start px-[18px] text-gray-700 font-normal mt-2 tracking-wide">
-                                            Total: ${countTotal}
-                                        </h2>
-                                    </div>`;
-                                return html;
 
-                            },
-                            searchable: false,
-                            orderable: false,
-                            className: "align-self-start text-start",
-                            name: 'traffic_received'
-                        },
-                        {
-                            data: function(row) {
-                                // row?.post_back_received
-                                var operatorAndServices = [];
-                                if(!row.post_back_received){
-                                    return 0;
-                                }
-                                row?.post_back_received.map(function(postBackReceived) {
-                                    operatorAndServices.push({
-                                        'operator_name': postBackReceived
-                                            .operator_name,
-                                        'count': 0,
-                                    });
-                                });
-                                // remove duplicates operator_name
-                                operatorAndServices = operatorAndServices.filter((v, i, a) => a
-                                    .findIndex(t => (t
-                                        .operator_name === v
-                                        .operator_name)) === i);
+                    reports.map((item) =>{
+                        var campaings = '';
+                        const trafficReceiveds = item.traffic_received;
+                        item.campaings.map((campaing) => {
+                            campaings += `<span>${campaing.name} <br/></span>`;
+                        });
+                        
+                        
 
-                                row?.post_back_received.map(function(post_back_received) {
-                                    for (var i = 0; i < operatorAndServices
-                                        .length; i++) {
-                                        if (operatorAndServices[i].operator_name ==
-                                            post_back_received
-                                            .operator_name) {
-                                            operatorAndServices[i].count == 0 ?
-                                                operatorAndServices[i].count =
-                                                post_back_received.count :
-                                                operatorAndServices[i].count =
-                                                operatorAndServices[i].count;
-                                        }
-                                    }
+                        html += `<tr>
+                            <td rowspan="7" class="text-center">
+                                ${item.date}
+                                </td>
+                                <td rowspan="7" class="text-center">
+                                    ${campaings}
+                                </td>
+                        </tr>`;
+                        var operatorHtml = "";
+                        operators.map((item) =>{
+
+                               const name =  trafficReceiveds.find((trs) => {
+                                    return 2020;
                                 });
 
-                                var countTotal = 0;
-                                var html = `<div class="flex">`;
-                                for (let index = 0; index < operatorAndServices
-                                    .length; index++) {
-                                    html += `<div class="py-2">
-                                                    <span class="text-base px-[18px] text-gray-700 font-normal border-l border-r border-gray-400 cursor-pointer" title="${operatorAndServices[index].operator_name}">${operatorAndServices[index].count}</span>
-                                                </div>`;
-                                    countTotal += operatorAndServices[index].count;
-                                }
-                                html += `</div>`;
-                                html += `<div class="border mx-auto border-gray-400 cursor-pointer w-[7rem]">
-                                        <h2 class="text-sm text-start px-[18px] text-gray-700 font-normal mt-2 tracking-wide">
-                                            Total: ${countTotal}
-                                        </h2>
-                                    </div>`;
-                                return html;
-                            },
-                            searchable: false,
-                            orderable: false,
-                            className: "align-self-start text-start",
-                            name: 'post_back_received'
-                        },
-                        {
-                            data: function(row) {
-                                // row?.post_back_received
-                                var operatorAndServices = [];
-                                if(!row.post_back_sent){
-                                    return 0;
-                                }
-                                row?.post_back_sent.map(function(postBackReceived) {
-                                    operatorAndServices.push({
-                                        'operator_name': postBackReceived
-                                            .operator_name,
-                                        'count': 0,
-                                    });
-                                });
-                                // remove duplicates operator_name
-                                operatorAndServices = operatorAndServices.filter((v, i, a) => a
-                                    .findIndex(t => (t
-                                        .operator_name === v
-                                        .operator_name)) === i);
+                                console.log(name);
+                                
 
-                                row?.post_back_sent.map(function(post_back_sent) {
-                                    for (var i = 0; i < operatorAndServices
-                                        .length; i++) {
-                                        if (operatorAndServices[i].operator_name ==
-                                            post_back_sent
-                                            .operator_name) {
-                                            operatorAndServices[i].count == 0 ?
-                                                operatorAndServices[i].count =
-                                                post_back_sent.count :
-                                                operatorAndServices[i].count =
-                                                operatorAndServices[i].count;
-                                        }
-                                    }
-                                });
+                                operatorHtml += `
+                                <tr>
+                                     <td class="text-center">${item.name}</td>
+                                     <td class="text-center">${name}</td>
+                                     <td class="text-center">30</td>
+                                     <td class="text-center">10</td>
+                                 </tr>
+                                `;
+                            });
+                            html +=operatorHtml
+                        });
+                        table.html(html);
+                    });
 
-                                var countTotal = 0;
-                                var html = `<div class="flex">`;
-                                for (let index = 0; index < operatorAndServices
-                                    .length; index++) {
-                                    html += `<div class="py-2">
-                                                    <span class="text-base px-[18px] text-gray-700 font-normal border-l border-r border-gray-400 cursor-pointer" title="${operatorAndServices[index].operator_name}">${operatorAndServices[index].count}</span>
-                                                </div>`;
-                                    countTotal += operatorAndServices[index].count;
-                                }
-                                html += `</div>`;
-                                html += `<div class="border mx-auto border-gray-400 cursor-pointer w-[7rem]">
-                                        <h2 class="text-sm text-start px-[18px] text-gray-700 font-normal mt-2 tracking-wide">
-                                            Total: ${countTotal}
-                                        </h2>
-                                    </div>`;
-                                return html;
-                            },
-                            searchable: false,
-                            orderable: false,
-                            className: "align-self-start text-start",
-                            name: 'post_back_sent'
-                        }
-                    ]
-                });
+                    
+
+
+
+                    
+                
+
+                
 
                 $(".campaignReportLoading").html('');
                 $('.input-sm').addClass('form-control form-control-sm');

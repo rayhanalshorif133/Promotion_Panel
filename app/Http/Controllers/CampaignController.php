@@ -271,6 +271,43 @@ class CampaignController extends Controller
         }
     }
 
+    public function campaignReport($campaign_id, $start_date, $end_date = null){
+        $operators = Operator::select('name')->get();
+
+        $campaings = "";
+
+        if($campaign_id == 'all'){
+            $campaigns = Campaign::select('id','name')->get();
+        }else{
+            $campaigns = Campaign::select('id','name')->where('id',$campaign_id)->get();
+        }
+
+        $start_date = date('Y-m-d', strtotime($start_date));
+        $end_date = date('Y-m-d', strtotime($end_date));
+        $days = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24);
+        $days = $days + 1;
+        $report = [];        
+        
+        for ($index = 0; $index < $days; $index++) {
+            $date = date('Y-m-d', strtotime($start_date . ' + ' . $index . ' days'));
+            $services = $this->getServices($campaign_id,$date);
+            $report[$index]['date'] = $date;
+            $report[$index]['campaings'] = $campaigns;
+            $report[$index]['services'] = $services;
+            $report[$index]['traffic_received'] = $this->countOfTrafficReceived($services,$campaign_id,$date);
+        }
+
+
+        // send data
+        $data = [
+            'reports' => $report,
+            'operators' => $operators,
+        ];
+        return $this->respondWithSuccess("Successfully fetch campaing report",$data);
+    }
+
+
+
     public function countOfTrafficReceived($services, $campaign_id,$date)
     {
         // $services
@@ -279,13 +316,23 @@ class CampaignController extends Controller
         foreach ($services as $value) {
             $service_id = $value['id'];
             foreach ($operators as $operator) {
-                $operatorIds = Traffic::select('operator_id')
+
+                if($campaign_id == 'all'){
+                    $operatorIds = Traffic::select('operator_id')
+                    ->where('service_id', $service_id)
+                    ->where('received_at', 'like', '%' . $date . '%')
+                    ->where('operator_id', $operator->id)
+                    ->with('operator')
+                    ->get();
+                }else{
+                    $operatorIds = Traffic::select('operator_id')
                     ->where('campaign_id', $campaign_id)
                     ->where('service_id', $service_id)
                     ->where('received_at', 'like', '%' . $date . '%')
                     ->where('operator_id', $operator->id)
                     ->with('operator')
                     ->get();
+                }
                 array_push($trafficReceived, [
                     'operator_name' => $operator->name,
                     'count' => count($operatorIds)
@@ -297,21 +344,36 @@ class CampaignController extends Controller
     }
 
     protected function countOfTrafficReceivedByService($service_id,$campaign_id,$date){
-        $count = Traffic::where('campaign_id', $campaign_id)
-            ->where('service_id', $service_id)
-            ->where('received_at', 'like', '%' . $date . '%')
-            ->count();
+        if($campaign_id == 'all'){
+            $count = Traffic::where('campaign_id', $campaign_id)
+                ->where('service_id', $service_id)
+                ->where('received_at', 'like', '%' . $date . '%')
+                ->count();
+        }else{
+            $count = Traffic::where('service_id', $service_id)
+                ->where('received_at', 'like', '%' . $date . '%')
+                ->count();
+        }
         return $count;
     }
     
     public function getServices($campaign_id,$date)
     {
         $serviceNameIds = [];
-        $services = Traffic::select("service_id")->where('campaign_id', $campaign_id)
-            ->where('received_at', 'like', '%' . $date . '%')
-            ->with('service')
-            ->get()
-            ->unique('service_id');
+        if($campaign_id == 'all'){
+            $services = Traffic::select("service_id")
+                ->where('campaign_id', $campaign_id)
+                ->where('received_at', 'like', '%' . $date . '%')
+                ->with('service')
+                ->get()
+                ->unique('service_id');
+        }else{
+            $services = Traffic::select("service_id")
+                ->where('received_at', 'like', '%' . $date . '%')
+                ->with('service')
+                ->get()
+                ->unique('service_id'); 
+        }
         foreach ($services as $key => $value) {
             array_push($serviceNameIds, [
                 'id' => $value->service->id,
