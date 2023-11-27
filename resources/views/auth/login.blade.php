@@ -56,22 +56,14 @@
                                         for="grid-password">Email</label>
                                     <input type="email" id="email" name="email"
                                         class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                        placeholder="Email" value="admin@example.com">
+                                        placeholder="Email" value="">
                                 </div>
                                 <div class="relative w-full mb-3">
                                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                         for="grid-password">Password</label>
                                     <input type="password" id="password" name="password"
                                         class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                        placeholder="Password" value="password">
-                                </div>
-                                <div>
-                                    <label class="inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" name="remember" id="remember"
-                                            {{ old('remember') ? 'checked' : '' }}
-                                            class="cursor-pointer form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150">
-                                        <span class="ml-2 text-sm font-semibold text-blueGray-600">Remember me</span>
-                                    </label>
+                                        placeholder="Password" value="">
                                 </div>
                                 <div class="text-center mt-6 bg-[#1E293B]">
                                     <button
