@@ -295,6 +295,8 @@ class CampaignController extends Controller
             $report[$index]['campaings'] = $campaigns;
             $report[$index]['services'] = $services;
             $report[$index]['traffic_received'] = $this->countOfTrafficReceived($services,$campaign_id,$date);
+            $report[$index]['post_back_received'] = $this->countOfPostBackReceived($services,$date);
+            $report[$index]['post_back_sent'] = $this->countOfPostBackSent($services,$date);
         }
 
 

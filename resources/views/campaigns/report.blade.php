@@ -99,54 +99,7 @@
                 </tr>
             </thead>
             <tbody class="campain_details_tbody">
-                <tr>
-                    <td rowspan="7" class="text-center">
-                        10/20/2020
-                    </td>
-                    <td rowspan="7" class="text-center">
-                        Marvel
-                    </td>
-                </tr>
-                @foreach ($operators as $key => $operator)
-                    <tr>
-                        <td class="text-center">{{ $operator->name }}</td>
-                        <td class="text-center">10</td>
-                        <td class="text-center">10</td>
-                        <td class="text-center">10</td>
-                    </tr>
-                @endforeach 
-                <tr>
-                    <td rowspan="7" class="text-center">
-                        10/20/2020
-                    </td>
-                    <td rowspan="7" class="text-center">
-                        Marvel
-                    </td>
-                </tr>
-                @foreach ($operators as $key => $operator)
-                    <tr>
-                        <td class="text-center">{{ $operator->name }}</td>
-                        <td class="text-center">10</td>
-                        <td class="text-center">10</td>
-                        <td class="text-center">10</td>
-                    </tr>
-                @endforeach 
-                <tr>
-                    <td rowspan="7" class="text-center">
-                        10/20/2020
-                    </td>
-                    <td rowspan="7" class="text-center">
-                        Marvel
-                    </td>
-                </tr>
-                @foreach ($operators as $key => $operator)
-                    <tr>
-                        <td class="text-center">{{ $operator->name }}</td>
-                        <td class="text-center">10</td>
-                        <td class="text-center">10</td>
-                        <td class="text-center">10</td>
-                    </tr>
-                @endforeach 
+                
             </tbody>
         </table>
         {{-- design --}}
@@ -233,6 +186,8 @@
                     reports.map((item) =>{
                         var campaings = '';
                         const trafficReceiveds = item.traffic_received;
+                        const postBackReceiveds = item.post_back_received;
+                        const postBackSents = item.post_back_sent;
                         item.campaings.map((campaing) => {
                             campaings += `<span>${campaing.name} <br/></span>`;
                         });
@@ -248,21 +203,38 @@
                                 </td>
                         </tr>`;
                         var operatorHtml = "";
+                        
                         operators.map((item) =>{
 
-                               const name =  trafficReceiveds.find((trs) => {
-                                    return 2020;
+                                var trafficReceivedCount = 0;
+                                trafficReceiveds.map((trs) =>{
+                                    if(item.name == trs.operator_name){
+                                        trafficReceivedCount = trs.count;
+                                    }
                                 });
 
-                                console.log(name);
+                                var postBackReceivedCount = 0;
+                                postBackReceiveds.map((trs) =>{
+                                    if(item.name == trs.operator_name){
+                                        postBackReceivedCount = trs.count;
+                                    }
+                                });
+                                
+                                var postBackSentCount = 0;
+                                postBackSents.map((trs) =>{
+                                    if(item.name == trs.operator_name){
+                                        postBackSentCount = trs.count;
+                                    }
+                                });
+
                                 
 
                                 operatorHtml += `
                                 <tr>
                                      <td class="text-center">${item.name}</td>
-                                     <td class="text-center">${name}</td>
-                                     <td class="text-center">30</td>
-                                     <td class="text-center">10</td>
+                                     <td class="text-center">${trafficReceivedCount}</td>
+                                     <td class="text-center">${postBackReceivedCount}</td>
+                                     <td class="text-center">${postBackSentCount}</td>
                                  </tr>
                                 `;
                             });
