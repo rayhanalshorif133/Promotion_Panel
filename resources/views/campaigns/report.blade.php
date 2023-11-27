@@ -1,5 +1,19 @@
 @extends('layouts.app')
 
+
+@section('head')
+<style>
+    table{
+        font-size:12px;
+    }
+    
+    .table thead .operator th{
+        padding: 2px !important;
+        width:5px!important;
+    }
+    
+</style>
+@endsection
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="px-0 pt-1 pb-0 mb-0 bg-transparent breadcrumb me-sm-6 me-5">
@@ -19,7 +33,7 @@
     <div class="w-full mx-auto mb-5">
         <h2 class="text-3xl font-bold text-gray-700">Campaign's Report</h2>
     </div>
-    <div class="w-full px-5 mx-auto card">
+    <div class="w-full px-1 mx-auto card">
         <div class="mt-3 mb-1 row">
             <h6 class="text-xl">Campaign's Report List</h6>
             <div class="col-md-3">
@@ -59,9 +73,47 @@
         </div>
         <div class="pb-5 mx-auto text-center align-middle campaignReportLoading">
             <p class="mb-0 text-base font-bold text-[#E00991]">
-                Please select a campaign and operator to view the report
+                Please select a campaign and  th to view the report
             </p>
         </div>
+
+        {{-- design --}}
+
+        
+
+        <table class="table table-bordered table-hover dt-responsive" id="campaignReportTableId">
+            <thead>
+                <tr>
+                    <th rowspan="2" width="2%">Date</th>
+                    <th rowspan="2" width="2%">Campaigns</th>
+                    <th width="auto" colspan="{{count($operators)}}">Traffic Received </th>
+                    <th width="auto" colspan="{{count($operators)}}">Postback Received </th>
+                    <th width="auto" colspan="{{count($operators)}}">Postback Sent</th>
+                </tr>
+                <tr class="operator">
+                    @foreach ($operators as $key => $operator)
+                        <th width="auto">{{ $operator->name }}</th>
+                    @endforeach     
+                    @foreach ($operators as $key => $operator)
+                        <th width="auto">{{ $operator->name }}</th>
+                    @endforeach   
+                    @foreach ($operators as $key => $operator)
+                        <th width="auto">{{ $operator->name }}</th>
+                    @endforeach                  
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        {{-- design --}}
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
+
+
         <div class="pb-5 table-responsive">
             <table class="table table-bordered table-hover dt-responsive" id="campaignReportTableId">
                 <thead>

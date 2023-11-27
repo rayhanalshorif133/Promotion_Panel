@@ -1,4 +1,4 @@
-<nav class="px-0 mx-4 mt-4 shadow-none navbar navbar-main navbar-expand-lg position-sticky top-1 border-radius-xl z-index-sticky"
+<nav class="px-0 mt-4 shadow-none navbar navbar-main navbar-expand-lg position-sticky top-1 border-radius-xl z-index-sticky"
     id="navbarBlur" data-scroll="true" style="background-color: #e0dddd;">
     <div class="px-3 py-1 container-fluid">
         @yield('breadcrumb')
