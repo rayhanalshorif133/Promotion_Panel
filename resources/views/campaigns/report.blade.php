@@ -47,12 +47,12 @@
                     <option disabled selected value="">
                         Select a campaign
                     </option>
+                    <option value="all">All</option>
                     @foreach ($campaigns as $campaign)
                         <option value="{{ $campaign->id }}">
                             {{ $campaign->name }}
                         </option>
                     @endforeach
-                    <option value="all">All</option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -171,6 +171,7 @@
                 }
 
                 var table = $(".campain_details_tbody");
+                console.log(campaign_id, start_date, end_date);
                 const url = `/campaign/fetch-report/${campaign_id}/${start_date}/${end_date}`;
                 axios.get(url)
                 .then((res)=>{
