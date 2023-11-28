@@ -7,18 +7,26 @@
         font-size:12px;
         color:#000000!important;
     }
-    
+
+    .table thead{
+        /* background-image:linear-gradient(310deg, #2152ff 0%, #21d4fd 100%); */
+        background-image:linear-gradient(310deg, #7928CA 0%, rgb(47, 114, 114) 100%);
+        color:#ffffff!important;
+    }
+
     .table thead .operator th{
         padding: 2px !important;
         width:5px!important;
         color:#000000!important;
     }
+    .table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: rgb(213 212 212)!important;
+    color: #2b2c2f!important;
+    }
 
-   
-    
-    
 </style>
 @endsection
+
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="px-0 pt-1 pb-0 mb-0 bg-transparent breadcrumb me-sm-6 me-5">
@@ -32,10 +40,11 @@
             </li>
         </ol>
     </nav>
+
 @endsection
 
 @section('content')
-    <div class="w-full mx-auto mb-5">
+    <div class="w-full mx-auto mb-1">
         <h2 class="text-3xl font-bold text-gray-700">Campaign's Report</h2>
     </div>
     <div class="w-full px-1 mx-auto card">
@@ -63,7 +72,7 @@
                 <label for="report_campaign_end_date" class="optional">End Date</label>
                 <input type="date" class="form-control" id="report_campaign_end_date">
             </div>
-            <div class="my-4 text-center col-md-3">
+            <div class="my-1 text-center col-md-3">
                 <button class="mt-1 btn bg-gradient-primary campaignReportSearchBtn" id="search">
                     Search
                 </button>
@@ -77,7 +86,8 @@
                 </h2>
             </div>
         </div>
-        <div class="pb-5 mx-auto text-center align-middle campaignReportLoading">
+
+        <div class="pb-1 mx-auto text-center align-middle campaignReportLoading">
             <p class="mb-0 text-base font-bold text-[#E00991]">
                 Please select a campaign and date to view the report
             </p>
@@ -85,7 +95,7 @@
 
         {{-- design --}}
 
-        
+
 
         <table class="table table-bordered table-striped" id="campaignReportTableId">
             <thead>
@@ -99,8 +109,9 @@
                 </tr>
             </thead>
             <tbody class="campain_details_tbody">
-                
+
             </tbody>
+            <tfoot class="campain_details_tfoot"></tfoot>
         </table>
         {{-- design --}}
     </div>
@@ -140,6 +151,11 @@
                 $("#setOperatorName").parent().removeClass('hidden');
                 $("#setCampaignName").text(campaignName);
 
+                const loading = `<div class="spinner-border text-[#E00991]" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                    </div>`;
+                $(".campaignReportLoading").html(loading);
+
 
                 if (!campaign_id || !start_date) {
                     toastr.error('campaign name, start date and end date are required');
@@ -171,40 +187,38 @@
                 }
 
                 var table = $(".campain_details_tbody");
-                console.log(campaign_id, start_date, end_date);
+                var tableFooter = $(".campain_details_tfoot");
                 const url = `/campaign/fetch-report/${campaign_id}/${start_date}/${end_date}`;
                 axios.get(url)
                 .then((res)=>{
                     const data = res.data.data;
-                    // console.log(data);
                     const operators = data.operators;
                     const reports = data.reports;
-                    // moment().format('YYYY-MM-DD')
                     table.html('');
                     var html = "";
 
+                    var allCountOftrafficReceived = 0;
+                    var allCountOfpostBackReceived = 0;
+                    var allCountOfpostBackSent = 0;
+
 
                     reports.map((item) =>{
-                        var campaings = '';
+                        var campaigns = '';
                         const trafficReceiveds = item.traffic_received;
                         const postBackReceiveds = item.post_back_received;
                         const postBackSents = item.post_back_sent;
-                        item.campaings.map((campaing) => {
-                            campaings += `<span>${campaing.name} <br/></span>`;
+                        item.campaigns.map((campaign) => {
+                            campaigns += `<span>${campaign.name} <br/></span>`;
                         });
-                        
-                        
 
-                        html += `<tr>
-                            <td rowspan="7" class="text-center">
-                                ${item.date}
-                                </td>
-                                <td rowspan="7" class="text-center">
-                                    ${campaings}
-                                </td>
-                        </tr>`;
+
+                        const date = item.date;
+
+
                         var operatorHtml = "";
-                        
+                        var isCountOfNotZero = 1;
+
+
                         operators.map((item) =>{
 
                                 var trafficReceivedCount = 0;
@@ -220,7 +234,7 @@
                                         postBackReceivedCount = trs.count;
                                     }
                                 });
-                                
+
                                 var postBackSentCount = 0;
                                 postBackSents.map((trs) =>{
                                     if(item.name == trs.operator_name){
@@ -228,32 +242,49 @@
                                     }
                                 });
 
-                                
+                                allCountOftrafficReceived += trafficReceivedCount;
+                                allCountOfpostBackReceived += postBackReceivedCount;
+                                allCountOfpostBackSent += postBackSentCount;
 
-                                operatorHtml += `
-                                <tr>
-                                     <td class="text-center">${item.name}</td>
-                                     <td class="text-center">${trafficReceivedCount}</td>
-                                     <td class="text-center">${postBackReceivedCount}</td>
-                                     <td class="text-center">${postBackSentCount}</td>
-                                 </tr>
-                                `;
+
+                                if(trafficReceivedCount > 0){
+                                    isCountOfNotZero++;
+                                    operatorHtml += `
+                                        <tr>
+                                             <td class="text-center">${item.name}</td>
+                                             <td class="text-center">${trafficReceivedCount}</td>
+                                             <td class="text-center">${postBackReceivedCount}</td>
+                                             <td class="text-center">${postBackSentCount}</td>
+                                         </tr>
+                                    `;
+                                }
                             });
-                            html +=operatorHtml
+                            html += `<tr>
+                                <td rowspan="${isCountOfNotZero}" class="text-center" style="padding-top:2rem">
+                                    ${date}
+                                    </td>
+                                    <td rowspan="${isCountOfNotZero}" class="text-center" style="padding-top:2rem">
+                                        ${campaigns}
+                                    </td>
+                                </tr>`;
+                            html +=operatorHtml;
                         });
+
                         table.html(html);
+
+                        var footerHtml = `
+                        <tr>
+                            <th colspan="3" class="text-center">Total</th>
+                            <th class="text-center">${allCountOftrafficReceived}</th>
+                            <th class="text-center">${allCountOfpostBackReceived}</th>
+                            <th class="text-center">${allCountOfpostBackSent}</th>
+                        </tr>
+                        `;
+                        tableFooter.html(footerHtml);
+                        $(".campaignReportLoading").html('');
+
                     });
 
-                    
-
-
-
-                    
-                
-
-                
-
-                $(".campaignReportLoading").html('');
                 $('.input-sm').addClass('form-control form-control-sm');
                 $('#campaignReportTableId_filter').addClass('px-5');
             });

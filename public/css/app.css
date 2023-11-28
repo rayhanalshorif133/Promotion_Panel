@@ -1047,10 +1047,6 @@ input:checked + .toggle-bg {
   margin-left: 0.75rem;
   margin-right: 0.75rem;
 }
-.mx-4 {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1213,9 +1209,6 @@ input:checked + .toggle-bg {
 .w-64 {
   width: 16rem;
 }
-.w-\[7rem\] {
-  width: 7rem;
-}
 .w-\[90\%\] {
   width: 90%;
 }
@@ -1355,20 +1348,8 @@ input:checked + .toggle-bg {
 .border-\[1px\] {
   border-width: 1px;
 }
-.border-l {
-  border-left-width: 1px;
-}
-.border-r {
-  border-right-width: 1px;
-}
 .border-r-\[1px\] {
   border-right-width: 1px;
-}
-.border-b {
-  border-bottom-width: 1px;
-}
-.border-b-\[1px\] {
-  border-bottom-width: 1px;
 }
 .border-blue-600 {
   --tw-border-opacity: 1;
@@ -1389,10 +1370,6 @@ input:checked + .toggle-bg {
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
-}
-.border-gray-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(156 163 175 / var(--tw-border-opacity));
 }
 .border-gray-800 {
   --tw-border-opacity: 1;
@@ -1464,6 +1441,10 @@ input:checked + .toggle-bg {
   padding-left: 0px;
   padding-right: 0px;
 }
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -1483,14 +1464,6 @@ input:checked + .toggle-bg {
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-}
-.px-\[10px\] {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.px-\[18px\] {
-  padding-left: 18px;
-  padding-right: 18px;
 }
 .px-\[1px\] {
   padding-left: 1px;
@@ -1536,10 +1509,6 @@ input:checked + .toggle-bg {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
 }
-.px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-}
 .pb-0 {
   padding-bottom: 0px;
 }
@@ -1581,6 +1550,9 @@ input:checked + .toggle-bg {
 }
 .pt-5 {
   padding-top: 1.25rem;
+}
+.pb-1 {
+  padding-bottom: 0.25rem;
 }
 .text-left {
   text-align: left;
@@ -1651,9 +1623,6 @@ input:checked + .toggle-bg {
 }
 .leading-9 {
   line-height: 2.25rem;
-}
-.tracking-wide {
-  letter-spacing: 0.025em;
 }
 .text-\[\#E00991\] {
   --tw-text-opacity: 1;

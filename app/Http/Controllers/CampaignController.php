@@ -270,7 +270,7 @@ class CampaignController extends Controller
     public function campaignReport($campaign_id, $start_date, $end_date = null){
         $operators = Operator::select('name')->get();
 
-        $campaings = "";
+        $campaigns = "";
 
         if($campaign_id == 'all'){
             $campaigns = Campaign::select('id','name')->get();
@@ -288,7 +288,7 @@ class CampaignController extends Controller
             $date = date('Y-m-d', strtotime($start_date . ' + ' . $index . ' days'));
             $services = $this->getServices($campaign_id,$date);
             $report[$index]['date'] = $date;
-            $report[$index]['campaings'] = $campaigns;
+            $report[$index]['campaigns'] = $campaigns;
             $report[$index]['services'] = $services;
             $report[$index]['traffic_received'] = $this->countOfTrafficReceived($services,$campaign_id,$date);
             $report[$index]['post_back_received'] = $this->countOfPostBackReceived($services,$date);
@@ -360,13 +360,13 @@ class CampaignController extends Controller
         $serviceNameIds = [];
         if($campaign_id == 'all'){
             $services = Traffic::select("service_id")
-                ->where('campaign_id', $campaign_id)
-                ->where('received_at', 'like', '%' . $date . '%')
-                ->with('service')
-                ->get()
-                ->unique('service_id');
+            ->where('received_at', 'like', '%' . $date . '%')
+            ->with('service')
+            ->get()
+            ->unique('service_id');
         }else{
             $services = Traffic::select("service_id")
+                ->where('campaign_id', $campaign_id)
                 ->where('received_at', 'like', '%' . $date . '%')
                 ->with('service')
                 ->get()
