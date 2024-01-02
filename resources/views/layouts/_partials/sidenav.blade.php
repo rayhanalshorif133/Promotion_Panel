@@ -46,6 +46,17 @@
                     <span class="nav-link-text ms-1">Campaign Report</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link  @if ($currentRoute == 'campaign.summary-report') active @endif"
+                    href="{{ route('campaign.summary-report') }}">
+                    <div
+                        class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
+                        <i
+                            class="@if ($currentRoute == 'campaign.summary-report') text-white @else text-dark @endif fa-solid fa-bolt fa-xl"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Summary Report</span>
+                </a>
+            </li>
             @endif
             @if (auth()->user()->can('campaign') ||
                     auth()->user()->can('traffic'))
@@ -79,7 +90,7 @@
                     </a>
                 </li>
             @endif
-            
+
             @if (auth()->user()->can('operator') || auth()->user()->can('country') || auth()->user()->can('service') || auth()->user()->can('publisher'))
             <li class="mt-3 nav-item">
                 <h6 class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6">Management sections</h6>
@@ -181,7 +192,7 @@
                 </a>
             </li>
             @endif
-            
+
         </ul>
         <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
             <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
@@ -190,5 +201,5 @@
             <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
         </div>
     </div>
-    
+
 </aside>

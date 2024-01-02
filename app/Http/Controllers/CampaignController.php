@@ -267,15 +267,16 @@ class CampaignController extends Controller
         }
     }
 
-    public function campaignReport($campaign_id, $start_date, $end_date = null, Request $request){
-
-
-        if($request->fetch == "all"){
-            return $this->fetchAllReport($start_date, $end_date);
-        }
-
+    public function campaignReport($campaign_id, $start_date, $end_date = null){
         $operators = Operator::select('name')->get();
-        $campaigns = Campaign::select('id','name')->where('id',$campaign_id)->get();
+
+        $campaigns = "";
+
+        if($campaign_id == 'all'){
+            $campaigns = Campaign::select('id','name')->get();
+        }else{
+            $campaigns = Campaign::select('id','name')->where('id',$campaign_id)->get();
+        }
 
         $start_date = date('Y-m-d', strtotime($start_date));
         $end_date = date('Y-m-d', strtotime($end_date));
@@ -302,36 +303,6 @@ class CampaignController extends Controller
         ];
         return $this->respondWithSuccess("Successfully fetch campaing report",$data);
     }
-
-
-
-    public function  fetchAllReport($start_date, $end_date){
-        $campaigns = Campaign::select('id','name')->get();
-        $start_date = date('Y-m-d', strtotime($start_date));
-        $end_date = date('Y-m-d', strtotime($end_date));
-        $days = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24);
-        $days = $days + 1;
-        $operators = Operator::select('name')->get();
-        // Traffic::where('campaign_id', $campaign->id)
-        // ->where('service_id', $service_id)
-        // ->where('received_at', 'like', '%' . $date . '%')
-        // ->count();
-        foreach($campaigns as $campaign){
-            foreach($operators as $operator){
-                $operator['traffic_rec'] = 0;
-                $operator['post_back_rec'] = 0;
-                $operator['post_back_sent'] = 0;
-            }
-            $campaign->operators = $operators;
-        }
-        $data = [
-            'campaigns' => $campaigns,
-            'start_date' => $start_date,
-            'end_date' => $end_date
-        ];
-        return $this->respondWithSuccess("Successfully fetch all campaing report",$data);
-    }
-
 
 
 
@@ -372,12 +343,12 @@ class CampaignController extends Controller
 
     protected function countOfTrafficReceivedByService($service_id,$campaign_id,$date){
         if($campaign_id == 'all'){
-            $count = Traffic::where('campaign_id', $campaign_id)
-                ->where('service_id', $service_id)
+            $count = Traffic::where('service_id', $service_id)
                 ->where('received_at', 'like', '%' . $date . '%')
                 ->count();
         }else{
-            $count = Traffic::where('service_id', $service_id)
+            $count = Traffic::where('campaign_id', $campaign_id)
+                ->where('service_id', $service_id)
                 ->where('received_at', 'like', '%' . $date . '%')
                 ->count();
         }
@@ -418,11 +389,18 @@ class CampaignController extends Controller
         foreach ($services as $value) {
             $service_id = $value['id'];
             foreach ($operators as $operator) {
-                $count = PostBackReceivedLog::where('received_at', 'like', '%' . $date . '%')
+                if($campaign_id == 'all'){
+                    $count = PostBackReceivedLog::where('received_at', 'like', '%' . $date . '%')
                     ->where('operator_id', $operator->id)
                     ->where('service_id', $service_id)
-                    ->where('campaign_id', $campaign_id)
                     ->count();
+                }else{
+                    $count = PostBackReceivedLog::where('received_at', 'like', '%' . $date . '%')
+                        ->where('operator_id', $operator->id)
+                        ->where('service_id', $service_id)
+                        ->where('campaign_id', $campaign_id)
+                        ->count();
+                }
                 array_push($postBackTrafficReceived, [
                     'operator_name' => $operator->name,
                     'service_name' => $value['name'],
@@ -440,11 +418,18 @@ class CampaignController extends Controller
         foreach ($services as $value) {
             $service_id = $value['id'];
             foreach ($operators as $operator) {
-                $count = PostBackSentLog::where('sent_at', 'like', '%' . $date . '%')
+                if($campaign_id == 'all'){
+                    $count = PostBackSentLog::where('sent_at', 'like', '%' . $date . '%')
                     ->where('operator_id', $operator->id)
                     ->where('service_id', $service_id)
-                    ->where('campaign_id', $campaign_id)
                     ->count();
+                }else{
+                    $count = PostBackSentLog::where('sent_at', 'like', '%' . $date . '%')
+                        ->where('operator_id', $operator->id)
+                        ->where('service_id', $service_id)
+                        ->where('campaign_id', $campaign_id)
+                        ->count();
+                }
                 array_push($postBackTrafficSent, [
                     'operator_name' => $operator->name,
                     'service_name' => $value['name'],

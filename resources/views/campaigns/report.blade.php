@@ -2,39 +2,29 @@
 
 
 @section('head')
-    <style>
-        table {
-            font-size: 12px;
-            color: #000000 !important;
-        }
+<style>
+    table{
+        font-size:12px;
+        color:#000000!important;
+    }
 
-        .table thead {
-            /* background-image:linear-gradient(310deg, #2152ff 0%, #21d4fd 100%); */
-            background-image: linear-gradient(310deg, #7928CA 0%, rgb(47, 114, 114) 100%);
-            color: #ffffff !important;
-        }
+    .table thead{
+        /* background-image:linear-gradient(310deg, #2152ff 0%, #21d4fd 100%); */
+        background-image:linear-gradient(310deg, #7928CA 0%, rgb(47, 114, 114) 100%);
+        color:#ffffff!important;
+    }
 
-        .table thead .operator th {
-            padding: 2px !important;
-            width: 5px !important;
-            color: #000000 !important;
-        }
+    .table thead .operator th{
+        padding: 2px !important;
+        width:5px!important;
+        color:#000000!important;
+    }
+    .table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: rgb(213 212 212)!important;
+    color: #2b2c2f!important;
+    }
 
-        .table-striped>tbody>tr:nth-of-type(odd)>* {
-            --bs-table-accent-bg: rgb(213 212 212) !important;
-            color: #2b2c2f !important;
-        }
-
-        .campaignReportTableId {
-            font-size: 12px;
-            color: #000000 !important;
-        }
-
-        .campaignReportTableId tbody {
-            background-image: linear-gradient(310deg, #7928CA 0%, rgb(47, 114, 114) 100%);
-            color: #ffffff !important;
-        }
-    </style>
+</style>
 @endsection
 
 @section('breadcrumb')
@@ -50,6 +40,7 @@
             </li>
         </ol>
     </nav>
+
 @endsection
 
 @section('content')
@@ -65,7 +56,7 @@
                     <option disabled selected value="">
                         Select a campaign
                     </option>
-                    <option value="all" selected>All</option>
+                    <option value="all">All</option>
                     @foreach ($campaigns as $campaign)
                         <option value="{{ $campaign->id }}">
                             {{ $campaign->name }}
@@ -75,7 +66,7 @@
             </div>
             <div class="col-md-3">
                 <label for="report_campaign_start_date" class="required">Start Date</label>
-                <input type="date" class="form-control" id="report_campaign_start_date" required value="2024-01-02">
+                <input type="date" class="form-control" id="report_campaign_start_date" required>
             </div>
             <div class="col-md-3">
                 <label for="report_campaign_end_date" class="optional">End Date</label>
@@ -105,28 +96,21 @@
         {{-- design --}}
 
 
-        {{-- table-bordered table-striped --}}
-        <table class="table" id="campaignReportTableId">
-            <thead id="thead_with_date">
+
+        <table class="table table-bordered table-striped" id="campaignReportTableId">
+            <thead>
                 <tr>
                     <th rowspan="2" width="2%">Date</th>
                     <th rowspan="2" width="2%">Campaign</th>
                     <th rowspan="2" width="2%">Operator</th>
-                    <th width="auto" class="text-center" width="20%">Traffic Received </th>
-                    <th width="auto" class="text-center" width="20%">Postback Received </th>
-                    <th width="auto" class="text-center" width="20%">Postback Sent</th>
+                    <th width="auto" class="text-center" width="20%">Traffic <br/> Received </th>
+                    <th width="auto" class="text-center" width="20%">Postback <br/> Received </th>
+                    <th width="auto" class="text-center" width="20%">Postback <br/> Sent</th>
                 </tr>
             </thead>
-            <thead id="thead_without_date" class="d-none">
-                <tr>
-                    <th rowspan="2" width="2%">Campaign</th>
-                    <th rowspan="2" width="2%">Operator</th>
-                    <th width="auto" class="text-center" width="20%">Traffic Received </th>
-                    <th width="auto" class="text-center" width="20%">Postback Received </th>
-                    <th width="auto" class="text-center" width="20%">Postback Sent</th>
-                </tr>
-            </thead>
-            <tbody class="campain_details_tbody"></tbody>
+            <tbody class="campain_details_tbody">
+
+            </tbody>
             <tfoot class="campain_details_tfoot"></tfoot>
         </table>
         {{-- design --}}
@@ -136,7 +120,6 @@
 @push('scripts')
     <script>
         $(function() {
-            console.clear();
             handleCampaignReportSearch();
             handleCampaignReportReset();
         });
@@ -203,65 +186,58 @@
                     return false;
                 }
 
-                $("#thead_without_date").addClass('d-none');
-                $("#thead_with_date").removeClass('d-none');
                 var table = $(".campain_details_tbody");
                 var tableFooter = $(".campain_details_tfoot");
-                if (campaignName == "All") {
-                    allCampaignReport(campaign_id, start_date, end_date, table, tableFooter);
-                    return false;
-                }
-
                 const url = `/campaign/fetch-report/${campaign_id}/${start_date}/${end_date}`;
                 axios.get(url)
-                    .then((res) => {
-                        const data = res.data.data;
-                        const operators = data.operators;
-                        const reports = data.reports;
-                        table.html('');
-                        var html = "";
+                .then((res)=>{
+                    const data = res.data.data;
+                    const operators = data.operators;
+                    const reports = data.reports;
+                    table.html('');
+                    var html = "";
 
-                        var allCountOftrafficReceived = 0;
-                        var allCountOfpostBackReceived = 0;
-                        var allCountOfpostBackSent = 0;
-
-
-                        reports.map((item) => {
-                            var campaigns = '';
-                            const trafficReceiveds = item.traffic_received;
-                            const postBackReceiveds = item.post_back_received;
-                            const postBackSents = item.post_back_sent;
-                            item.campaigns.map((campaign) => {
-                                campaigns += `<span>${campaign.name} <br/></span>`;
-                            });
+                    var allCountOftrafficReceived = 0;
+                    var allCountOfpostBackReceived = 0;
+                    var allCountOfpostBackSent = 0;
 
 
-                            const date = item.date;
+                    reports.map((item) =>{
+                        var campaigns = '';
+                        const trafficReceiveds = item.traffic_received;
+                        const postBackReceiveds = item.post_back_received;
+                        const postBackSents = item.post_back_sent;
+                        item.campaigns.map((campaign) => {
+                            campaigns += `<span>${campaign.name} <br/></span>`;
+                        });
 
 
-                            var operatorHtml = "";
-                            var isCountOfNotZero = 1;
+                        const date = item.date;
 
 
-                            operators.map((item) => {
+                        var operatorHtml = "";
+                        var isCountOfNotZero = 1;
+
+
+                        operators.map((item) =>{
 
                                 var trafficReceivedCount = 0;
-                                trafficReceiveds.map((trs) => {
-                                    if (item.name == trs.operator_name) {
+                                trafficReceiveds.map((trs) =>{
+                                    if(item.name == trs.operator_name){
                                         trafficReceivedCount = trs.count;
                                     }
                                 });
 
                                 var postBackReceivedCount = 0;
-                                postBackReceiveds.map((trs) => {
-                                    if (item.name == trs.operator_name) {
+                                postBackReceiveds.map((trs) =>{
+                                    if(item.name == trs.operator_name){
                                         postBackReceivedCount = trs.count;
                                     }
                                 });
 
                                 var postBackSentCount = 0;
-                                postBackSents.map((trs) => {
-                                    if (item.name == trs.operator_name) {
+                                postBackSents.map((trs) =>{
+                                    if(item.name == trs.operator_name){
                                         postBackSentCount = trs.count;
                                     }
                                 });
@@ -271,7 +247,7 @@
                                 allCountOfpostBackSent += postBackSentCount;
 
 
-                                if (trafficReceivedCount > 0) {
+                                if(trafficReceivedCount > 0){
                                     isCountOfNotZero++;
                                     operatorHtml += `
                                         <tr>
@@ -291,7 +267,7 @@
                                         ${campaigns}
                                     </td>
                                 </tr>`;
-                            html += operatorHtml;
+                            html +=operatorHtml;
                         });
 
                         table.html(html);
@@ -312,56 +288,6 @@
                 $('.input-sm').addClass('form-control form-control-sm');
                 $('#campaignReportTableId_filter').addClass('px-5');
             });
-        };
-
-
-        const allCampaignReport = (campaign_id, start_date, end_date, table, tableFooter) => {
-            console.log('all');
-            $("#thead_without_date").removeClass('d-none');
-            $("#thead_with_date").addClass('d-none');
-            const url = `/campaign/fetch-report/${campaign_id}/${start_date}/${end_date}/?fetch=all`;
-            axios.get(url)
-                .then((res) => {
-                    const data = res.data.data;
-                    const campaigns = data.campaigns;
-                    table.html('');
-                    var html = "";
-                    campaigns.length > 0 && campaigns.map((item) => {
-                        const operators = item.operators;
-                        const operatorLen = operators.length;
-                        console.log(operatorLen);
-                        html += `
-                        <tr>
-                            <td  rowspan="7" class="text-center border">
-                                <span style="padding-top: 6rem;display: block;">${item.name}</span>
-                            </td>
-                        </tr>
-                        `;
-                        operatorLen > 0 && operators.map((operator) => {
-                            console.log(operator)
-                            html += `
-                            <tr>
-                                <td class="text-center border">
-                                    ${operator.name}
-                                </td>
-                                <td class="text-center border">
-                                    ${operator.traffic_rec}
-                                </td>
-                                <td class="text-center border">
-                                    ${operator.post_back_rec}
-                                </td>
-                                <td class="text-center border">
-                                    ${operator.post_back_sent}
-                                </td>
-                            </tr>
-                            `;
-                        });
-                    });
-                    table.html(html);
-                });
-            $(".campaignReportLoading").html('');
-            $('.input-sm').addClass('form-control form-control-sm');
-            $('#campaignReportTableId_filter').addClass('px-5');
         };
     </script>
 @endpush

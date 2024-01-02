@@ -10,6 +10,7 @@ use App\Http\Controllers\ResponsiveTableController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TrafficController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CampaignReportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -117,6 +118,8 @@ Route::middleware('auth')
                 Route::get('/report', [CampaignController::class, 'report'])->name('report');
                 Route::get('/fetch-report/{campaign_id}/{start_date}/{end_date?}', [CampaignController::class, 'campaignReport'])->name('fetch-report');
                 Route::get('/fetch-report-data/{campaign_id}/{start_date}/{end_date?}', [CampaignController::class, 'campaignReportData'])->name('fetch-report-data');
+
+                Route::get('/summary-report', [CampaignReportController::class, 'index'])->name('summary-report');
             });
 
         // traffic

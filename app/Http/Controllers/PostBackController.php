@@ -14,16 +14,14 @@ use Carbon\Carbon;
 
 class PostBackController extends Controller
 {
-
-    // localhost
-    // http://127.0.0.1:8000/api/post-back/Chayachobi/marvel/robi/click_id
-    // http://promotion.b2mwap.com/api/post-back/Chayachobi/marvel/robi/click_id
-
+    // http://promotion.b2mwap.com/traffic/post-back/{serviceId}/{channel}/{operatorName}/{clickedID}
+    // http://promotion.b2mwap.com/traffic/post-back/1/marvel/GP/+8801323174104
+    //  http://promotion.b2mwap.com/api/traffic/post-back/BDG/marvel/gp/12313
      public function postBack($serviceName, $channel, $operatorName,  $clickedID, Request $request)
      {
          try {
              $service = Service::where('name', 'like', '%' . $serviceName . '%')->first();
-
+ 
              $traffic = Traffic::select()
                     ->where('clicked_id', $clickedID)
                     ->where('service_id', $service->id)
@@ -31,7 +29,7 @@ class PostBackController extends Controller
                     ->first();
              $traffic->callback_received_status =  1;
              $traffic->save();
-
+ 
              // find publisher by short_name like
              $publisher = Publisher::where('short_name', 'like', '%' . $channel . '%')->first();
              // Post Back Sent to Publisher url
@@ -55,7 +53,7 @@ class PostBackController extends Controller
 
             //$request_parm
             // http://b2mp.b2mwap.com/api/postback/bd/blink/$channel/$postback_service/$zoneid?msisdn=$msisdn&opr=BANGLALINK&shortcode=27575&text=sub
-
+            
             // PostBackReceivedLog
             $postBackReceivedLog = new PostBackReceivedLog();
             $postBackReceivedLog->operator_id = $traffic->operator_id;
@@ -80,7 +78,7 @@ class PostBackController extends Controller
                 ->where('created_at', 'like', '%' . $date . '%')
                 ->where('campaign_id', $traffic->campaign->id)
                 ->count();
-
+ 
             if($postBackSendCount / $postBackReceiveCount  <= (float)$traffic->campaign->ratio){
                 // PostBackSentLog
                 $postBackSentLog = new PostBackSentLog();
@@ -107,7 +105,7 @@ class PostBackController extends Controller
 
             // end
 
-
+ 
              $postBackData = [
                  'operator' => [
                      'id' => $traffic->operator_id,
@@ -124,8 +122,8 @@ class PostBackController extends Controller
                  'sent_at' => now(),
              ];
 
-
-
+             
+ 
              return $this->respondWithSuccess('Post back received successfully.', $postBackData);
          } catch (\Throwable $e) {
              return response()->json([
