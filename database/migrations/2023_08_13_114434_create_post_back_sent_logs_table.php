@@ -22,6 +22,7 @@ class CreatePostBackSentLogsTable extends Migration
             $table->string('clicked_id');
             $table->string('others')->nullable();
             $table->dateTime('sent_at')->nullable();
+            $table->string('post_back_url')->nullable();
             $table->text('response')->nullable();
             $table->timestamps();
         });

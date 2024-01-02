@@ -69,7 +69,7 @@
         <!-- Navbar -->
         @include('layouts._partials.nav_bar')
         <!-- end Navbar -->
-        <div class="py-4">
+        <div class="py-4 container-fluid">
             @include('layouts._partials.alert')
             @yield('content')
         </div>

@@ -9,7 +9,7 @@ class PostBackSentLog extends Model
 {
     use HasFactory;
 
-    
+
     protected $fillable = [
         'operator_id',
         'service_id',
@@ -18,6 +18,7 @@ class PostBackSentLog extends Model
         'clicked_id',
         'others',
         'response',
+        'post_back_url',
         'sent_at'
     ];
 

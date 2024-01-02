@@ -190,7 +190,5 @@
             <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
         </div>
     </div>
-    <div class="mx-3 sidenav-footer">
-        <a class="mt-3 btn bg-gradient-primary w-100" href="{{ route('dashboard') }}">Home</a>
-    </div>
+    
 </aside>

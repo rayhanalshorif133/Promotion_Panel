@@ -57,7 +57,7 @@ Route::middleware('auth')
                 Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
                 Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('destroy');
             });
-            
+
         // Operator
         Route::name('operator.')
             ->prefix('operator')
@@ -143,8 +143,7 @@ Route::prefix('traffic')
     ->group(function(){
     Route::get('/{campaignId}/{serviceId}/{operatorName}/{clickedID}', [TrafficController::class, 'redirect'])
         ->name('redirect');
-    // post-back
-    
+
     Route::get('/check/publisher/url/', [TrafficController::class, 'checkURL'])->name('check-url');
 });
 
