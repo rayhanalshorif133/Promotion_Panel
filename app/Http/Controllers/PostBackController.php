@@ -14,13 +14,11 @@ use Carbon\Carbon;
 
 class PostBackController extends Controller
 {
-    // http://promotion.b2mwap.com/traffic/post-back/{serviceId}/{channel}/{operatorName}/{clickedID}
-    // http://promotion.b2mwap.com/traffic/post-back/1/marvel/GP/+8801323174104
-    // http://promotion.b2mwap.com/api/post-back/Chayachobi/marvel/robi/0192039230
-    // http://127.0.0.1:8000/api/post-back/Chayachobi/marvel/robi/0192039230
 
     // localhost
-    // http://127.0.0.1:8000/api/post-back/Chayachobi/marvel/robi/0192039230
+    // http://127.0.0.1:8000/api/post-back/Chayachobi/marvel/robi/click_id
+    // http://promotion.b2mwap.com/api/post-back/Chayachobi/marvel/robi/click_id
+
      public function postBack($serviceName, $channel, $operatorName,  $clickedID, Request $request)
      {
          try {

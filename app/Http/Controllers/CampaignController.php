@@ -226,7 +226,7 @@ class CampaignController extends Controller
     {
         // ajax request
         if (request()->ajax()) {
-            // count of days 
+            // count of days
             $start_date = date('Y-m-d', strtotime($start_date));
             $end_date = date('Y-m-d', strtotime($end_date));
             $days = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24);
@@ -267,23 +267,22 @@ class CampaignController extends Controller
         }
     }
 
-    public function campaignReport($campaign_id, $start_date, $end_date = null){
-        $operators = Operator::select('name')->get();
+    public function campaignReport($campaign_id, $start_date, $end_date = null, Request $request){
 
-        $campaigns = "";
 
-        if($campaign_id == 'all'){
-            $campaigns = Campaign::select('id','name')->get();
-        }else{
-            $campaigns = Campaign::select('id','name')->where('id',$campaign_id)->get();
+        if($request->fetch == "all"){
+            return $this->fetchAllReport($start_date, $end_date);
         }
+
+        $operators = Operator::select('name')->get();
+        $campaigns = Campaign::select('id','name')->where('id',$campaign_id)->get();
 
         $start_date = date('Y-m-d', strtotime($start_date));
         $end_date = date('Y-m-d', strtotime($end_date));
         $days = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24);
         $days = $days + 1;
-        $report = [];        
-        
+        $report = [];
+
         for ($index = 0; $index < $days; $index++) {
             $date = date('Y-m-d', strtotime($start_date . ' + ' . $index . ' days'));
             $services = $this->getServices($campaign_id,$date);
@@ -303,6 +302,36 @@ class CampaignController extends Controller
         ];
         return $this->respondWithSuccess("Successfully fetch campaing report",$data);
     }
+
+
+
+    public function  fetchAllReport($start_date, $end_date){
+        $campaigns = Campaign::select('id','name')->get();
+        $start_date = date('Y-m-d', strtotime($start_date));
+        $end_date = date('Y-m-d', strtotime($end_date));
+        $days = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24);
+        $days = $days + 1;
+        $operators = Operator::select('name')->get();
+        // Traffic::where('campaign_id', $campaign->id)
+        // ->where('service_id', $service_id)
+        // ->where('received_at', 'like', '%' . $date . '%')
+        // ->count();
+        foreach($campaigns as $campaign){
+            foreach($operators as $operator){
+                $operator['traffic_rec'] = 0;
+                $operator['post_back_rec'] = 0;
+                $operator['post_back_sent'] = 0;
+            }
+            $campaign->operators = $operators;
+        }
+        $data = [
+            'campaigns' => $campaigns,
+            'start_date' => $start_date,
+            'end_date' => $end_date
+        ];
+        return $this->respondWithSuccess("Successfully fetch all campaing report",$data);
+    }
+
 
 
 
@@ -354,7 +383,7 @@ class CampaignController extends Controller
         }
         return $count;
     }
-    
+
     public function getServices($campaign_id,$date)
     {
         $serviceNameIds = [];
@@ -370,7 +399,7 @@ class CampaignController extends Controller
                 ->where('received_at', 'like', '%' . $date . '%')
                 ->with('service')
                 ->get()
-                ->unique('service_id'); 
+                ->unique('service_id');
         }
         foreach ($services as $key => $value) {
             array_push($serviceNameIds, [
