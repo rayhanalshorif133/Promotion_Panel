@@ -31,8 +31,10 @@ class CampaignReportController extends Controller
 
             // dd($request->start_date);
 
-            $campaigns = Campaign::with('campaignDetails')->get();
+            $campaigns = Campaign::select()->get();
+            $operators = Operator::all();
             foreach($campaigns as $campaign){
+
                 $campaign->traffic_received = $this->trafficReceived($campaign->id);
                 $campaign->postback_received = $this->postBackReceived($campaign->id);
                 $campaign->postback_sent = $this->postBackSent($campaign->id);
@@ -62,9 +64,9 @@ class CampaignReportController extends Controller
     {
         $operators = Operator::all();
         $traffic_received = [];
-
-
-
+        
+        
+        
         foreach($operators as $operator){
 
             $traffic_received_count = Traffic::whereBetween('received_at', [$this->start_date, $this->end_date])
@@ -148,6 +150,7 @@ class CampaignReportController extends Controller
      // totalPostBackReceived
      public function totalPostBackReceived()
      {
+        
          $operators = Operator::all();
          $postback_received = [];
          foreach($operators as $operator){

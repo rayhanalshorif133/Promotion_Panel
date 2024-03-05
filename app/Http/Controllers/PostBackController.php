@@ -14,6 +14,7 @@ use Carbon\Carbon;
 
 class PostBackController extends Controller
 {
+    // http://promotion.b2mwap.com/api/post-back/BDGGL/249media/GP/wiJLtEczooeYCJhRqZismO?msisdn=00&opr=GRAMEENPHONE&shortcode=27575&text=sub
     // http://promotion.b2mwap.com/traffic/post-back/{serviceId}/{channel}/{operatorName}/{clickedID}
     // http://promotion.b2mwap.com/traffic/post-back/1/marvel/GP/+8801323174104
     //  http://promotion.b2mwap.com/api/traffic/post-back/BDG/marvel/gp/12313
@@ -21,6 +22,7 @@ class PostBackController extends Controller
      {
          try {
              $service = Service::where('name', 'like', '%' . $serviceName . '%')->first();
+            //  dd($service);
  
              $traffic = Traffic::select()
                     ->where('clicked_id', $clickedID)
@@ -40,13 +42,15 @@ class PostBackController extends Controller
                 $postBackUrl = str_replace('$clickedID', $clickedID, $postBackUrl);
             }
 
+            
             $postBackUrl = str_replace('$msisdn', $request->msisdn, $postBackUrl);
             $postBackUrl = str_replace('$operator', $operatorName, $postBackUrl);
             $postBackUrl = str_replace('$shortcode', $request->shortcode, $postBackUrl);
             $postBackUrl = str_replace('$shortcode', $request->shortcode, $postBackUrl);
             $postBackUrl = str_replace('$service', $serviceName, $postBackUrl);
             $postBackUrl = str_replace('$tagp', $clickedID, $postBackUrl);
-
+            
+            // dd($postBackUrl);
             //$response = Http::get($postBackUrl);
             //dd($postBackUrl);
             //https://api.marvelmanager.com/g/mtgbmbd/mo/?msisdn=$msisdn&country=BD&operator=$operator&moid=$clickid&shortcode=$shortcode&msg=$service&refid=$tagp
@@ -93,7 +97,11 @@ class PostBackController extends Controller
                 $postBackSentLog->post_back_url = $postBackUrl;
                 $response = Http::get($postBackUrl);
                 if($response){
-                    $postBackSentLog->response = $response->body();
+                    if(json_encode($response->body())){
+                        $postBackSentLog->response = $response->body();
+                    }else{
+                        $postBackSentLog->response = 'ok';
+                    }
                     $traffic->callback_sent_status = 1;
                 }else{
                     $traffic->callback_sent_status = 0;
@@ -104,6 +112,7 @@ class PostBackController extends Controller
 
 
             // end
+
 
  
              $postBackData = [
@@ -122,6 +131,8 @@ class PostBackController extends Controller
                  'sent_at' => now(),
              ];
 
+
+             
              
  
              return $this->respondWithSuccess('Post back received successfully.', $postBackData);

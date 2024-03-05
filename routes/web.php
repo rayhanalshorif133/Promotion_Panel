@@ -11,6 +11,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TrafficController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CampaignReportController;
+use App\Http\Controllers\SummaryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -137,6 +138,13 @@ Route::middleware('auth')
             ->group(function () {
                 Route::get('/send-logs', [PostBackController::class, 'sendLogs'])->name('send-logs');
                 Route::get('/received-logs', [PostBackController::class, 'receivedLogs'])->name('received-logs');
+            });
+
+        // summary
+        Route::name('summary.')
+            ->prefix('summary')
+            ->group(function () {
+                Route::get('/', [SummaryController::class, 'index'])->name('index');
             });
     });
 

@@ -12,6 +12,7 @@ use App\Models\Service;
 use App\Models\Traffic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class CampaignController extends Controller
@@ -272,6 +273,7 @@ class CampaignController extends Controller
 
         $campaigns = "";
 
+
         if($campaign_id == 'all'){
             $campaigns = Campaign::select('id','name')->get();
         }else{
@@ -283,6 +285,8 @@ class CampaignController extends Controller
         $days = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24);
         $days = $days + 1;
         $report = [];
+
+
 
         for ($index = 0; $index < $days; $index++) {
             $date = date('Y-m-d', strtotime($start_date . ' + ' . $index . ' days'));
@@ -357,26 +361,30 @@ class CampaignController extends Controller
 
     public function getServices($campaign_id,$date)
     {
+
         $serviceNameIds = [];
         if($campaign_id == 'all'){
-            $services = Traffic::select("service_id")
-            ->where('received_at', 'like', '%' . $date . '%')
-            ->with('service')
-            ->get()
-            ->unique('service_id');
+            $getServiceIds = DB::table('traffic')
+                ->select("service_id")
+                ->where('received_at', 'like', '%' . $date . '%')
+                ->distinct()
+                ->pluck('service_id');
         }else{
-            $services = Traffic::select("service_id")
+            $getServiceIds = DB::table('traffic')
+                ->select("service_id")
                 ->where('campaign_id', $campaign_id)
                 ->where('received_at', 'like', '%' . $date . '%')
-                ->with('service')
-                ->get()
-                ->unique('service_id');
+                ->distinct()
+                ->pluck('service_id');
         }
+        $services = Service::select('id', 'name')
+                ->whereIn('id', $getServiceIds)
+                ->get();
         foreach ($services as $key => $value) {
             array_push($serviceNameIds, [
-                'id' => $value->service->id,
-                'name' => $value->service->name,
-                'count' => $this->countOfTrafficReceivedByService($value->service->id,$campaign_id,$date)
+                'id' => $value->id,
+                'name' => $value->name,
+                'count' => $this->countOfTrafficReceivedByService($value->id,$campaign_id,$date)
             ]);
         }
         return $serviceNameIds;

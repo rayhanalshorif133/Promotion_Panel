@@ -119,13 +119,9 @@
         $(function() {
             console.clear();
             handleCampaignReportSearch();
-            handleCampaignReportReset();
         });
 
-
-        const handleCampaignReportReset = () => {
-            console.log('handleCampaignReportReset');
-        };
+        
         const handleCampaignReportSearch = () => {
             $(".campaignSummaryreportSearchBtn").click(function() {
                 const start_date = $("#summaryreport_campaign_start_date").val();
@@ -147,8 +143,8 @@
             });
         };
 
-        const fetchData = async (url, table, tableFooter, loadingHtml) => {
-            await axios.get(url)
+        const fetchData = (url, table, tableFooter, loadingHtml) => {
+             axios.get(url)
                 .then((res) => {
                     const data = res.data.data;
                     const campaigns = data.campaigns;

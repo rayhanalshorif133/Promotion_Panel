@@ -46,7 +46,7 @@
                     <span class="nav-link-text ms-1">Campaign Report</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link  @if ($currentRoute == 'campaign.summary-report') active @endif"
                     href="{{ route('campaign.summary-report') }}">
                     <div
@@ -55,6 +55,16 @@
                             class="@if ($currentRoute == 'campaign.summary-report') text-white @else text-dark @endif fa-solid fa-bolt fa-xl"></i>
                     </div>
                     <span class="nav-link-text ms-1">Summary Report</span>
+                </a>
+            </li> --}}
+            <li class="nav-item">
+                <a class="nav-link  @if ($currentRoute == 'summary.index') active @endif"
+                    href="{{ route('summary.index') }}">
+                    <div
+                        class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
+                        <i class="@if ($currentRoute == 'summary.index') text-white @else text-dark @endif fa-solid fa-bolt fa-xl"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Summary</span>
                 </a>
             </li>
             @endif
